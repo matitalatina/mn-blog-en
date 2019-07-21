@@ -508,6 +508,17 @@ export const PostFullContent = styled.section`
     cursor: help;
   }
   /* End Syntax Highlighting */
+
+  .gatsby-highlight {
+    width: 100%;
+  }
+
+  .post-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 920px;
+  }
 `;
 
 const renderAst = new RehypeReact({
