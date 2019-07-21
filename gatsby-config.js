@@ -26,7 +26,7 @@ module.exports = {
           {
             resolve: 'gatsby-remark-responsive-iframe',
             options: {
-              wrapperStyle: 'margin-bottom: 1rem',
+              wrapperStyle: 'margin-bottom: 1rem; width: 100%;',
             },
           },
           'gatsby-remark-prismjs',
