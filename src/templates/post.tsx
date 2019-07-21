@@ -289,7 +289,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
               {(post.frontmatter.image && post.frontmatter.image.childImageSharp) && (
                 <PostFullImage>
                   <Img
-                    style={{ height: '100%' }}
+                    style={{ height: '100%', 'border-radius': '5px' }}
                     fluid={post.frontmatter.image.childImageSharp.fluid}
                   />
                 </PostFullImage>
@@ -344,7 +344,7 @@ export const query = graphql`
       timeToRead
       frontmatter {
         title
-        userDate: date(formatString: "D MMMM YYYY")
+        userDate: date(locale: "it", formatString: "D MMMM YYYY")
         date
         tags
         image {
