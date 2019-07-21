@@ -383,19 +383,26 @@ export const PostFullContent = styled.section`
   }
 
   /* Start Syntax Highlighting */
-  /* Taken from overreacted https://github.com/gaearon/overreacted.io/blob/942b41555f5e5ccbb5f93f6c26142cd90b314236/src/utils/global.css#L68 */
-  code[class*='language-'],
-  pre[class*='language-'] {
-    background: none;
-    font-family: Consolas, Menlo, Monaco, source-code-pro, Courier New, monospace;
-    font-feature-settings: normal;
+  /**
+  * okaidia theme for JavaScript, CSS and HTML
+  * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+  * @author ocodia
+  */
+
+  code[class*="language-"],
+  pre[class*="language-"] {
+    color: #f8f8f2;
+    background: #272822;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.8em;
+    padding-top: 0.35em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
     word-break: normal;
     word-wrap: normal;
     line-height: 1.5;
-    margin-bottom: 0;
 
     -moz-tab-size: 4;
     -o-tab-size: 4;
@@ -408,138 +415,97 @@ export const PostFullContent = styled.section`
   }
 
   /* Code blocks */
-  pre[class*='language-'] {
+  pre[class*="language-"] {
+    padding: 1em;
+    margin: .5em 0;
     overflow: auto;
-    padding: 1.3125rem;
+    border-radius: 0.3em;
   }
 
-  pre[class*='language-']::-moz-selection {
-    /* Firefox */
-    background: hsl(207, 4%, 16%);
-  }
-
-  pre[class*='language-']::selection {
-    /* Safari */
-    background: hsl(207, 4%, 16%);
-  }
-
-  /* Text Selection colour */
-  pre[class*='language-']::-moz-selection,
-  pre[class*='language-'] ::-moz-selection {
-    text-shadow: none;
-    background: hsla(0, 0%, 100%, 0.15);
-  }
-
-  pre[class*='language-']::selection,
-  pre[class*='language-'] ::selection {
-    text-shadow: none;
-    background: hsla(0, 0%, 100%, 0.15);
+  :not(pre) > code[class*="language-"],
+  pre[class*="language-"] {
+    background: #272822;
   }
 
   /* Inline code */
-  :not(pre) > code[class*='language-'] {
-    border-radius: 0.3em;
-    background: var(--inlineCode-bg);
-    color: var(--inlineCode-text);
-    padding: 0.15em 0.2em 0.05em;
+  :not(pre) > code[class*="language-"] {
+    padding: .1em;
+    border-radius: .3em;
     white-space: normal;
   }
 
-  .token.attr-name {
-    color: rgb(173, 219, 103);
-    font-style: italic;
-  }
-
-  .token.comment {
-    color: rgb(128, 147, 147);
-  }
-
-  .token.string,
-  .token.url {
-    color: rgb(173, 219, 103);
-  }
-
-  .token.variable {
-    color: rgb(214, 222, 235);
-  }
-
-  .token.number {
-    color: rgb(247, 140, 108);
-  }
-
-  .token.builtin,
-  .token.char,
-  .token.constant,
-  .token.function {
-    color: rgb(130, 170, 255);
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: slategray;
   }
 
   .token.punctuation {
-    color: rgb(199, 146, 234);
+    color: #f8f8f2;
+  }
+
+  .namespace {
+    opacity: .7;
+  }
+
+  .token.property,
+  .token.tag,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: #f92672;
+  }
+
+  .token.boolean,
+  .token.number {
+    color: #ae81ff;
   }
 
   .token.selector,
-  .token.doctype {
-    color: rgb(199, 146, 234);
-    font-style: 'italic';
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: #a6e22e;
   }
 
-  .token.class-name {
-    color: rgb(255, 203, 139);
-  }
-
-  .token.tag,
   .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string,
+  .token.variable {
+    color: #f8f8f2;
+  }
+
+  .token.atrule,
+  .token.attr-value,
+  .token.function,
+  .token.class-name {
+    color: #e6db74;
+  }
+
   .token.keyword {
-    color: #ffa7c4;
+    color: #66d9ef;
   }
 
-  .token.boolean {
-    color: rgb(255, 88, 116);
+  .token.regex,
+  .token.important {
+    color: #fd971f;
   }
 
-  .token.property {
-    color: rgb(128, 203, 196);
+  .token.important,
+  .token.bold {
+    font-weight: bold;
+  }
+  .token.italic {
+    font-style: italic;
   }
 
-  .token.namespace {
-    color: rgb(178, 204, 214);
-  }
-
-  pre[data-line] {
-    padding: 1em 0 1em 3em;
-    position: relative;
-  }
-
-  .gatsby-highlight-code-line {
-    background-color: hsla(207, 95%, 15%, 1);
-    display: block;
-    margin-right: -1.3125rem;
-    margin-left: -1.3125rem;
-    padding-right: 1em;
-    padding-left: 1.25em;
-    border-left: 0.25em solid #ffa7c4;
-  }
-
-  .gatsby-highlight {
-    margin-bottom: 1.75rem;
-    margin-left: -1.3125rem;
-    margin-right: -1.3125rem;
-    border-radius: 10px;
-    background: #011627;
-    -webkit-overflow-scrolling: touch;
-    overflow: auto;
-  }
-
-  @media (max-width: 672px) {
-    .gatsby-highlight {
-      border-radius: 0;
-    }
-  }
-
-  .gatsby-highlight pre[class*='language-'] {
-    float: left;
-    min-width: 100%;
+  .token.entity {
+    cursor: help;
   }
   /* End Syntax Highlighting */
 `;

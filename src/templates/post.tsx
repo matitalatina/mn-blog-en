@@ -289,7 +289,7 @@ const PageTemplate: React.FC<PageTemplateProps> = props => {
               {(post.frontmatter.image && post.frontmatter.image.childImageSharp) && (
                 <PostFullImage>
                   <Img
-                    style={{ height: '100%', 'border-radius': '5px' }}
+                    style={{ height: '100%', borderRadius: '5px' }}
                     fluid={post.frontmatter.image.childImageSharp.fluid}
                   />
                 </PostFullImage>
