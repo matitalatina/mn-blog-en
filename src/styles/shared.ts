@@ -93,6 +93,18 @@ export const SiteHeaderContent = styled.div`
   text-align: center;
 `;
 
+export const SiteHeaderDim = css`
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  display: block;
+  height: 180px;
+  background: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+`;
+
 export const SiteHeaderStyles = css`
   content: '';
   position: absolute;

@@ -21,6 +21,7 @@ import {
   SiteHeaderContent,
   SiteMain,
   SiteTitle,
+  SiteHeaderDim,
 } from '../styles/shared';
 import { PageContext } from './post';
 
@@ -131,6 +132,7 @@ const IndexPage: React.FC<IndexProps> = props => {
             backgroundImage: `url('${props.data.header.childImageSharp.fluid.src}')`,
           }}
         >
+          <div css={SiteHeaderDim}></div>
           <div css={inner}>
             <SiteHeaderContent>
               <SiteTitle>
