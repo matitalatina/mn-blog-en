@@ -394,7 +394,7 @@ export const PostFullContent = styled.section`
     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 0.8em;
-    padding-top: 0.35em;
+    padding: 0.2em 0.5em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;

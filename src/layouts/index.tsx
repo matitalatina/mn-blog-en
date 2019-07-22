@@ -406,6 +406,7 @@ const GlobalStyles = css`
   a {
     color: ${darken('0.05', colors.primary)};
     text-decoration: none;
+    transition: color 300ms ease;
   }
 
   a:hover {
