@@ -13,4 +13,4 @@ Eccomi qui, sull'Eurocity diretto per la Svizzera, ovviamente fermo a causa dei 
 
 Proprio per questo motivo ho deciso di impiegare il mio tempo che passo sui treni a scrivere questo mio piccolo blog (e anche a crearlo).
 
-Non ho ancora ben deciso cosa e quanto scriverò. Probabilmente molti post saranno delle guide per risolvere i milioni di problemi che ogni tanto risolvo a chi mi "ingaggia" come tecnico informatico. Oppure altro, davvero non lo so ancora. Per ora mi sono divertito a creare questo piccolo blog. Ora mancano solo i contenuti! :)
+Non ho ancora ben deciso cosa e quanto scriverò. Probabilmente molti articoli saranno delle guide per risolvere i milioni di problemi che ogni tanto risolvo a chi mi "ingaggia" come tecnico informatico. Oppure altro, davvero non lo so ancora. Per ora mi sono divertito a creare questo piccolo blog. Ora mancano solo i contenuti! :)

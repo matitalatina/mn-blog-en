@@ -54,10 +54,10 @@ const SubscribeFormButton = styled.button`
     color(var(--blue) lightness(-4%) saturation(-10%))
   ); */
   background: linear-gradient(
-    ${mix('0.1', '#fff', colors.blue)},
-    ${desaturate('0.1', darken('0.07', colors.blue))} 60%,
-    ${desaturate('0.1', darken('0.07', colors.blue))} 90%,
-    ${desaturate('0.1', darken('0.04', colors.blue))}
+    ${mix('0.1', '#fff', colors.primary)},
+    ${desaturate('0.1', darken('0.07', colors.primary))} 60%,
+    ${desaturate('0.1', darken('0.07', colors.primary))} 90%,
+    ${desaturate('0.1', darken('0.04', colors.primary))}
   );
   border-radius: 5px;
   box-shadow: 0 0 0 1px inset rgba(0, 0, 0, 0.14);
@@ -67,7 +67,7 @@ const SubscribeFormButton = styled.button`
   :active,
   :focus {
     /* background: color(var(--blue) lightness(-9%) saturation(-10%)); */
-    background: ${desaturate('0.1', darken('0.09', colors.blue))};
+    background: ${desaturate('0.1', darken('0.09', colors.primary))};
   }
   @media (max-width: 500px) {
     margin: 10px 0 0;

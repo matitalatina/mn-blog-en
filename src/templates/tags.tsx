@@ -91,7 +91,7 @@ const Tags: React.FC<TagTemplateProps> = props => {
           style={{
             backgroundImage:
               tagData && tagData.node.image ?
-                `url('${tagData.node.image.childImageSharp.fluid.src}')` :
+                `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url('${tagData.node.image.childImageSharp.fluid.src}')` :
                 '',
           }}
         >

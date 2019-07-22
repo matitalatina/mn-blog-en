@@ -10,7 +10,6 @@ export const PostFullContent = styled.section`
   margin: 0 auto;
   padding: 70px 100px 0;
   min-height: 230px;
-  font-family: Georgia, serif;
   font-size: 2.2rem;
   line-height: 1.6em;
   background: #fff;
@@ -78,11 +77,11 @@ export const PostFullContent = styled.section`
   a {
     color: #000;
     word-break: break-word;
-    box-shadow: ${colors.blue} 0 -1px 0 inset;
+    box-shadow: ${colors.primary} 0 -1px 0 inset;
   }
 
   a:hover {
-    color: ${colors.blue};
+    color: ${colors.primary};
     text-decoration: none;
   }
 
@@ -278,8 +277,7 @@ export const PostFullContent = styled.section`
     margin: 0.5em 0;
     padding: 1em 0 1.5em;
     border: 0;
-    color: ${colors.blue};
-    font-family: Georgia, serif;
+    color: ${colors.primary};
     font-size: 3.2rem;
     line-height: 1.35em;
     text-align: center;

@@ -40,7 +40,6 @@ const AuthorMeta = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 0 10px 0;
-  font-family: Georgia, serif;
   font-style: italic;
 `;
 

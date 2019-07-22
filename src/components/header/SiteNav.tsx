@@ -10,6 +10,8 @@ import Facebook from '../icons/facebook';
 import Twitter from '../icons/twitter';
 import SubscribeModal from '../subscribe/SubscribeOverlay';
 import SiteNavLogo from './SiteNavLogo';
+import GitHub from '../icons/github';
+import LinkedIn from '../icons/linkedin';
 
 const HomeNavRaise = css`
   @media (min-width: 900px) {
@@ -154,6 +156,28 @@ class SiteNav extends React.Component<SiteNavProps, SiteNaveState> {
         </SiteNavLeft>
         <SiteNavRight>
           <SocialLinks>
+          {config.linkedin && (
+              <a
+                css={SocialLink}
+                href={config.linkedin}
+                target="_blank"
+                title="LinkedIn"
+                rel="noopener noreferrer"
+              >
+                <LinkedIn />
+              </a>
+            )}
+            {config.github && (
+              <a
+                css={SocialLink}
+                href={config.github}
+                target="_blank"
+                title="GitHub"
+                rel="noopener noreferrer"
+              >
+                <GitHub />
+              </a>
+            )}
             {config.facebook && (
               <a
                 css={SocialLink}

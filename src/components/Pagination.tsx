@@ -32,9 +32,10 @@ const navCss = css`
     min-width: 50px;
 
     &.active {
-      -webkit-box-shadow:inset 3px 0px 0px 0px ${darken(0.05, colors.darkgrey)};
-      -moz-box-shadow:inset 3px 0px 0px 0px ${darken(0.05, colors.darkgrey)};
-      box-shadow:inset 3px 0px 0px 0px ${darken(0.05, colors.darkgrey)};
+      /* -webkit-box-shadow:inset 0 0 1px 1px ${darken(0.05, colors.primary)};
+      -moz-box-shadow:inset 0 0 1px 1px ${darken(0.05, colors.primary)};
+      box-shadow:inset 0 0 1px 1px ${darken(0.05, colors.primary)}; */
+      border: 1px solid #555;
     }
 
     &:hover:not(.active) {
