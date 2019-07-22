@@ -165,6 +165,7 @@ export const PostFullContent = styled.section`
 
   p code {
     word-break: break-all;
+    padding: 0.15em 0.4em;
   }
 
   pre {
@@ -394,7 +395,6 @@ export const PostFullContent = styled.section`
     text-shadow: 0 1px rgba(0, 0, 0, 0.3);
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 0.8em;
-    padding: 0.2em 0.5em;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
