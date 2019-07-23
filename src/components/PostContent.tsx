@@ -163,9 +163,13 @@ export const PostFullContent = styled.section`
     border-radius: 3px;
   }
 
-  p code {
+  p code, 
+  li code,
+  p code[class*="language-"],
+  li code[class*="language-"] {
     word-break: break-all;
     padding: 0.15em 0.4em;
+    white-space: normal;
   }
 
   pre {
