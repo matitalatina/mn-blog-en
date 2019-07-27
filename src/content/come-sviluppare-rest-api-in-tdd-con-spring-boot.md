@@ -13,16 +13,24 @@ tags:
 draft: true
 ---
 
-[In questo articolo](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero) abbiamo visto cosa significa sviluppare in Test Driven Development (TDD) e i pregi che ne derivano. L'esempio utilizzato potrebbe sembrare un giochino fino a se stesso, ma il mio focus lì era di spiegare il TDD per chi proprio non ne aveva mai sentito parlare.
+[In questo articolo](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero) abbiamo visto cosa significa sviluppare in Test Driven Development (TDD) e i pregi che ne derivano. L'esempio utilizzato potrebbe sembrare un giochino fine a se stesso, ma il mio focus lì era di spiegare il TDD per chi proprio non ne aveva mai sentito parlare.
 
 In questa guida invece vediamo insieme un caso d'uso che ci sarà molto più familiare: lo sviluppo delle REST API. Per far ciò ho deciso di utilizzare il framework Spring Boot, il linguaggio scelto è Java.
 Spring boot è molto utilizzato in ambito enterprise per creare un'architettura a microservizi. Anche [Netflix lo utilizza](https://hub.packtpub.com/netflix-adopts-spring-boot-as-its-core-java-framework/). Inoltre Java è un linguaggio di programmazione ormai noto a tutti e quindi penso sia una buona scelta per vedere insieme un esempio pratico.
 
-Come sempre iniziamo completamente da zero, per non lasciare nulla al caso. Oltre al TDD, vedremo insieme anche come strutturare in modo corretto il progetto e altre librerie molto comode che uso ogni giorno per aumentare la mia produttività, come per esempio la libreria [Lombok](https://projectlombok.org/).
+Come sempre iniziamo completamente da zero, per non lasciare nulla al caso. Oltre al TDD, vedremo insieme anche come strutturare in modo corretto il progetto e altre librerie molto comode che uso ogni giorno per aumentare la nostra produttività, come per esempio la libreria [Lombok](https://projectlombok.org/).
+
+## Requisiti
+
+Il lettore che mi sto immaginando è uno **sviluppatore che ha già sentito parlare di Spring Boot, non si spaventa se parliamo di API RESTful, ha voglia di utilizzare il TDD come driver principale di sviluppo ma che non riesce ad applicarlo in modo efficace**.
+
+La mia guida si basa su un sistema operativo UNIX-like (Mac OS X), ma può essere facilmente seguito anche da chi utilizza Windows.
+
+Sul nostro PC deve essere installato [Java Development Kit 12](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html).
 
 ## Obiettivo
 
-Immaginiamo che dobbiamo creare due endpoints:
+Immaginiamo che dobbiamo creare due endpoint:
 
 - `GET - /api/v1/vehicles/{id}`: per il recupero di un veicolo tramite id.
 - `POST - /api/v1/vehicles`: per l'aggiunta di un veicolo.
@@ -40,49 +48,52 @@ Il veicolo è composto da queste proprietà
 
 Il `brand`, `model` e `year` sono obbligatori, l'anno di produzione del veicolo non può essere antecedente al `1950` per ragioni di business.
 
-Per ora non siamo interessati ad altri endpoints.
+Per ora non siamo interessati ad altri endpoint.
 
 [Potete trovare l'implementazione di questo piccolo progetto in questa mia repository pubblica](https://github.com/matitalatina/tdd-spring-boot-api), in questo modo se vi state perdendo potete ritrovare il filo del discorso direttamente leggendo il codice.
 
 ## Creiamo il progetto
 
-Ora che abbiamo le idee chiare su cosa dobbiamo fare, andiamo a generare il progetto.
+Ora che abbiamo le idee chiare su cosa dobbiamo fare, **andiamo a generare il progetto**.
 Il modo migliore per farlo è andando sul sito [Spring Initializr](https://start.spring.io/). Da qui possiamo decidere quali librerie integrare, versione di Java ecc.
 
-La configurazione che ho scelto io è la seguente:
+![Spring Initializr](img/tdd-spring-boot/spring-initializr.png)
 
-- Project: Gradle Project. Probabilmente avrete già sentito parlare di Maven come gestore delle dipendenze e build tool per Java. Se invece sviluppate su Android, con Gradle vi sentirete a casa, dato che è quello usato di default.
-- Language: Java.
-- Spring Boot: 2.1.6.
-- Project Metadata:
-  - Group: it.mattianatali.
-  - Artifact: tdd-spring-boot-api.
-  - Name: tdd-spring-boot-api.
-  - Description: Sample project to explain how to develop APIs in TDD with Spring Boot.
-  - Package Name: it.mattianatali.tdd-spring-boot-api.
-  - Packaging: Jar.
-  - Java: 12.
-- Dependencies:
-  - Spring Web Starter: fornisce le varie annotazioni per creare delle API RESTful in modo semplice e veloce.
-  - Lombok: è una libreria Java che ci permette di ridurre la verbosità del nostro codice Java.
-  - Spring Data JPA: fornisce tutto l'occorrente per la persistenza dei dati.
-  - H2 Database: fornisce un DB in memory. In produzione sarebbe opportuno usare un DB PostgreSQL o MySQL, ma per non perderci troppo nella configurazione del DB, ho preferito usare H2.
+La configurazione che ho scelto è la seguente:
+
+- *Project*: Gradle Project. Probabilmente avrete già sentito parlare di Maven come gestore delle dipendenze e build tool per Java. Se invece sviluppate su Android, con Gradle vi sentirete a casa, dato che è quello usato di default.
+- *Language*: Java.
+- *Spring Boot*: 2.1.6.
+- *Project Metadata*:
+  - *Group*: it.mattianatali.
+  - *Artifact*: tdd-spring-boot-api.
+  - *Name*: tdd-spring-boot-api.
+  - *Description*: Sample project to explain how to develop APIs in TDD with Spring Boot.
+  - *Package Name*: it.mattianatali.tdd-spring-boot-api.
+  - *Packaging*: Jar.
+  - *Java*: 12.
+- *Dependencies*:
+  - *Spring Web Starter*: fornisce le varie annotazioni per creare delle API RESTful in modo semplice e veloce.
+  - *Lombok*: è una libreria Java che ci permette di ridurre la verbosità del nostro codice Java.
+  - *Spring Data JPA*: fornisce tutto l'occorrente per la persistenza dei dati.
+  - *H2 Database*: fornisce un DB in memory. In produzione sarebbe opportuno usare un DB PostgreSQL o MySQL, ma per non perderci troppo nella configurazione del DB, ho preferito usare H2.
 
 Premiamo "Generate the project". Ci ritroviamo un bel file zip. Scompattiamo in una cartella a nostro piacimento.
 Apriamo il progetto, io utilizzo IntelliJ.
 
 ### Abilitiamo lombok e l'annotation processor in IntelliJ
 
-Se è la prima volta che usate Lombok, avete bisogno del Plugin "Lombok". Aprite "Preferences", andate su "Plugins", cercate "Lombok" sul marketplace e installatelo.
+Se è la prima volta che usate [Lombok](https://projectlombok.org/), **avete bisogno del Plugin "Lombok"**. Aprite "Preferences", andate su "Plugins", cercate "Lombok" sul marketplace e installatelo.
 
-Una volta aperto il progetto in IntelliJ, dobbiamo abilitare l'annotation processor. Per fare questo aprite "Preferences", cercate "annotation" e spuntate l'opzione "Enable annotation processing".
+![IntelliJ - Installiamo Lombok plugin](img/tdd-spring-boot/lombok-plugin.png)
 
+Una volta aperto il progetto in IntelliJ, **dobbiamo abilitare l'annotation processor**. Per fare questo aprite "Preferences", cercate "annotation" e spuntate l'opzione "Enable annotation processing".
 
 ![IntelliJ - Abilitiamo l'annotation processing](img/tdd-spring-boot/intellij-enable-annotation-processing.png)
 
 ### Carichiamo JUnit 5
 
-Purtroppo la dipendenza per i test `org.springframework.boot:spring-boot-starter-test`, che possiamo trovare nel file `build.gradle`, utilizza ancora JUnit 4. Siccome più avanti utilizzeremo delle funzionalità avanzate, abbiamo bisogno di JUnit 5.
+Purtroppo la dipendenza per i test `org.springframework.boot:spring-boot-starter-test`, che possiamo trovare nel file `build.gradle`, utilizza ancora JUnit 4. Siccome più avanti utilizzeremo delle funzionalità avanzate, abbiamo bisogno di **JUnit 5**.
 
 Per raggiungere l'obiettivo, aggiungiamo nel file `build.gradle` le dipendenze per JUnit 5.
 
@@ -96,7 +107,7 @@ dependencies {
 }
 ```
 
-Infine ci serve "avvisare" Gradle di utilizzare JUnit 5 durante il comando di test `./gradlew test` e di mostrare i logging completo. Così ci è più semplice debuggare in caso di problemi.
+Infine ci serve "avvisare" Gradle di utilizzare JUnit 5 durante il comando di test `./gradlew test` e di mostrare i log completi. Così ci è più semplice debuggare in caso di problemi.
 Sempre nel file `build.gradle` aggiungiamo in fondo
 
 ```groovy
@@ -108,11 +119,11 @@ test {
 }
 ```
 
-Nel nostro progetto, c'è già un file di test scritto in JUnit 4. Il file si trova in `src/test/java/it/mattianatali/tddspringbootapi/TddSpringBootApiApplicationTests.java`. Questo test prova semplicemente a caricare il contesto di Spring. Può sembrare un test banale, ma a mano a mano che il progetto cresce, basta poco per dimenticarsi qualche annotazione e che quindi Spring non si carica correttamente.
+Nel nostro progetto, c'è già un file di test scritto in JUnit 4. Il file si trova in `src/test/java/it/mattianatali/tddspringbootapi/TddSpringBootApiApplicationTests.java`. Questo test prova semplicemente a caricare il contesto di Spring. Può sembrare un test banale, ma a mano a mano che il progetto cresce, basta poco per dimenticarsi qualche annotazione e che quindi Spring non si carichi correttamente.
 
-Il nostro primo passo è di migrarlo a JUnit 5
+Il nostro primo passo è di **migrarlo a JUnit 5**
 
-Dovrebbe essere scritto così
+Dovrebbe essere scritto così:
 
 ```java
 package it.mattianatali.tddspringbootapi;
@@ -171,14 +182,14 @@ class TddSpringBootApiApplicationTests {
 
   @Test
 	public void shouldFail() {
-    fail("You shall not pass!");
+        fail("You shall not pass!");
 	}
 }
 ```
 
 I puntini di sospensione `...` nel codice significa che c'è altro nel file che però non ho scritto per evitare distrazioni.
 
-Proviamo a far girare i test: utiliziamo IntelliJ oppure Gradle con il comando `./gradlew test` (io utilizzo Mac quindi Unix style).
+Proviamo a far girare i test: utiliziamo IntelliJ oppure Gradle con il comando `./gradlew test`.
 Ci aspettiamo che un test passi e l'altro fallisca.
 
 L'output del test è il seguente
@@ -226,11 +237,11 @@ Solitamente, il minimo indispensabile per creare un backend che espone delle API
 - **Service**: al suo interno abbiamo la vera logica di business che dipende dal progetto, fa il lavoro sporco e se deve persistere qualche dato, invoca i repository.
 - **Repository**: esiste per persistere i dati da qualche parte, solitamente in un DB.
 
-Ovviamente si può fare tutto in una classe, ma se vogliamo strutturare del buon codice testabile e riusabile, questo è il minimo. Dobbiamo sempre ricordarci che più una classe ha uno scopo ben preciso, più è semplice da implementare ma soprattutto è facile da riutilizzare in altri punti.
+Ovviamente si può fare tutto in una classe, ma **se vogliamo strutturare del buon codice testabile e riusabile, questo è il minimo**. Dobbiamo sempre ricordarci che più una classe ha uno scopo ben preciso, più è semplice da implementare ma soprattutto è facile da riutilizzare in altri punti.
 
 ## Implementiamo la chiamata GET
 
-Iniziamo! La chiamata `GET - /api/v1/vehicles/{id}` abbiamo detto che deve fornire il dettaglio del veicolo. Per sviluppare immagino di essere la richiesta HTTP. La prima classe che viene intaccata dalla chiamata è il controller, come abbiamo detto la sua funzione è quella di validare i valori di input e di esporre appunto l'endpoint che andiamo a chiamare.
+Iniziamo! La chiamata `GET - /api/v1/vehicles/{id}` abbiamo detto che deve fornire il dettaglio del veicolo. Per sviluppare immagino di essere la richiesta HTTP. La prima classe che viene intaccata dalla chiamata è il controller, come abbiamo detto la sua funzione è quella di validare i valori di input e di esporre l'endpoint che andiamo a chiamare.
 Andiamo a creare il controller. Creiamo il file `src/main/java/it/mattianatali/tddspringbootapi/vehicle/VehicleController.java`.
 
 ```java
@@ -240,7 +251,7 @@ public class VehicleController {
 }
 ```
 
-Per ora ci basta questo, stiamo sviluppando in TDD quindi la nostra implementazione deve essere guidata dai test. Con IntelliJ possiamo premere `cmd` + `shift` + `T`, selezionare "Create New Test..." e confermare. In questo modo ci troviamo il file di test creato ad hoc per il nostro controller.
+Per ora ci basta questo, stiamo sviluppando in TDD quindi **la nostra implementazione deve essere guidata dai test**. Con IntelliJ possiamo premere `cmd` + `shift` + `T`, selezionare "Create New Test..." e confermare. In questo modo ci troviamo il file di test creato ad hoc per il nostro controller.
 
 Pensiamo ora cosa deve fare il nostro controller per raggiungere l'obiettivo:
 
@@ -292,16 +303,18 @@ class VehicleControllerTest {
 
 Ora spieghiamo punto per punto le cose nuove che non abbiamo mai visto:
 
-- `@ExtendWith(SpringExtension.class)` serve per collegare il contesto di JUnit con il framework di Spring Boot. In questo modo possiamo usare delle annotazioni che comunemente usiamo con Spring Boot più altre annotazioni che esistono apposta per semplificare la vita durante il testing, come appunto la successiva.
-- `@WebMvcTest(VehicleController.class)` è il nostro modo per dire a JUnit 5 + Spring Boot: "Voglio testare solo la parte adibita al controller `VehicleController`, quindi evita di caricare tutto il contesto di Spring Boot". In altre parole il nostro test si avvierà più velocemente perchè il nostro test sa bene che non deve caricare per esempio Hibernate, caricare i drivers del DB, configurazioni, servizi, repositories o altre cose, perchè non ne abbiamo bisogno. Stiamo testando solo quel controller. Se invece vogliamo testare qualcosa caricando tutto il contesto di Spring Boot possiamo usare l'annotazione `@SpringBootTest`. Ma è sempre meglio evitare per non rallentare il caricamente ed esecuzione dei test.
-- `@Autowired private MockMvc mvc` significa "Spring Boot: forniscimi un modo per comunicare con il controller che ho definito nell'annotazione precedente (`VehicleController`), facendo delle chiamate HTTP grazie ad esso". `@Autowired` significa che è Spring Boot a fornircelo, non dobbiamo preoccuparci come lo istanzia per noi. `MockMvc mvc` è la nostra istanza che useremo per fare le chiamate HTTP.
+- `@ExtendWith(SpringExtension.class)` serve per collegare il contesto di JUnit con il framework di Spring Boot. In questo modo possiamo usare le annotazioni che comunemente usiamo con Spring Boot più altre annotazioni che esistono apposta per semplificare la vita durante il testing, come la successiva.
+- `@WebMvcTest(VehicleController.class)` è il nostro modo per dire a JUnit 5 + Spring Boot: "Voglio testare solo la parte adibita al controller `VehicleController`, quindi evita di caricare tutto il contesto di Spring Boot". In altre parole il nostro test si avvierà più velocemente perché il nostro test sa bene che non deve caricare per esempio [Hibernate](https://hibernate.org/), caricare i drivers del DB, configurazioni, servizi, repositories o altre cose, perché non ne abbiamo bisogno. Stiamo testando solo quel controller. Se invece vogliamo testare qualcosa caricando tutto il contesto di Spring Boot possiamo usare l'annotazione `@SpringBootTest`. Ma è sempre meglio evitare per non rallentare il caricamente ed esecuzione dei test.
+- `@Autowired private MockMvc mvc` significa "Spring Boot: forniscimi un modo per comunicare con il controller che ho definito nell'annotazione precedente (`VehicleController`), che mi permetta di fare delle chiamate HTTP". `@Autowired` significa che è Spring Boot a fornircelo, non dobbiamo preoccuparci come lo istanzia per noi. `MockMvc mvc` è l'istanza fornita da Spring Boot che useremo per fare le chiamate HTTP.
 
-Io solitamente adotto questa convenzione per i nomi dei test: `nomeMetodo_cosaStiamoTestando`. Non preoccupatevi di scrivere un nome troppo lungo, non andrete mai a riscrivere il nome del metodo. Qui è importante essere chiarissimi cosa stiamo testando e cosa ci aspettiamo. Ogni volta che programmate mettetevi nei panni di un altro sviluppatore che non sa nulla di quello che state facendo, cercate di semplificare la vita al prossimo: in questo caso più siamo chiari, più i nostri colleghi saranno felici del nostro lavoro.
+Io solitamente adotto questa convenzione per i nomi dei test: `nomeMetodo_cosaStiamoTestando`. Non preoccupatevi di scrivere un nome troppo lungo, non andrete mai a riscrivere il nome del metodo. Qui **è importante essere chiarissimi su cosa stiamo testando e cosa ci aspettiamo**. Ogni volta che programmate mettetevi nei panni di un altro sviluppatore che non sa nulla di quello che state facendo, **cercate di semplificare la vita al prossimo**: in questo caso più siamo chiari, più i nostri colleghi saranno felici del nostro lavoro.
 
 - `mvc.perform(get("api/v1/vehicles/" + vehicleId))` è il nostro modo per fare una chiamata `GET` all'endpoint che stiamo testando.
-- `.andExpect(status().isOk())` è la nostra asserzione sullo `statusCode` della nostra chiamata HTTP, ci aspettiamo un bel `200`. 
+- `.andExpect(status().isOk())` è la nostra asserzione sullo `statusCode` della nostra chiamata HTTP, ci aspettiamo un bel `200 - Ok`. 
 
-Facciamo girare il test, ci aspettiamo che fallisca e che invece dello `statusCode` `200` ci restituisce un `404`, perchè l'endpoint non è stato ancora dichiarato. Con IntelliJ è molto facile testare un singolo test, basta premere sulla freccia verde vicino al nome del metodo.
+Facciamo girare il test, ci aspettiamo che fallisca e che invece dello `statusCode` `200` ci restituisca un `404 - Not Found`, perché l'endpoint non è stato ancora dichiarato. Con IntelliJ è molto facile testare un singolo test, basta premere sulla freccia verde vicino al nome del metodo.
+
+![IntelliJ - Far girare i test](img/tdd-spring-boot/intellij-test-execution.png)
 
 Questo è il risultato del nostro test:
 
@@ -402,16 +415,16 @@ class VehicleControllerTest {
 
 ```
 
-In questo momento c'è il nostro compilatore che si sta disperando perchè non trova `VehicleService` e nemmeno la classe `Vehicle`... Infatti non li abbiamo ancora creati!
+In questo momento c'è il nostro compilatore che si sta disperando perché non trova `VehicleService` e nemmeno la classe `Vehicle`... Infatti non li abbiamo ancora creati!
 
 Anche in questo caso vediamo cosa c'è di nuovo:
 
-- `@MockBean private VehicleService vehicleService` stiamo dicendo a Spring Boot: "Se qualche classe ti chiede il servizio `VehicleService`, tu non passare la vera implementazione, ma fornisci un'istanza finta, dove io posso decidere cosa ritornare nell'invocazione dei metodi". Infatti più avanti con il metodo `when` possiamo decidere cosa ritornare come valore, senza andare a richiamare la vera implementazione. Il discorso di cosa vuol dire "Mockare" le classi è già stato trattato nel mio articolo precedente, se non vi è chiaro è meglio che [leggiate la puntata precedente](*******************).
+- `@MockBean private VehicleService vehicleService` stiamo dicendo a Spring Boot: "Se qualche classe ti chiede il servizio `VehicleService`, tu non passare la vera implementazione, ma fornisci un'istanza finta, dove io posso decidere cosa ritornare nell'invocazione dei metodi". Infatti più avanti con il metodo `when` possiamo decidere cosa ritornare come valore, senza andare a richiamare la vera implementazione. Il discorso di cosa vuol dire "Mockare" le classi è già stato trattato nel mio articolo precedente, se non vi è chiaro è meglio che [leggiate la puntata precedente](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero).
 - `var returnedVehicle = Vehicle.builder()....build()` stiamo semplicemente creando un modello di veicolo che verrà restituito in output dal `VehicleService` e di conseguenza dal controller. In questo caso useremo il builder che ci fornisce Lombok, non preoccupatevi per ora, quando creeremo la classe sarà più chiaro.
 - `when(vehicleService.get(vehicleId)).thenReturn(Optional.of(returnedVehicle));` stiamo dicendo "se qualcuno invoca `vehicleService.get` con l'id `vehicleId`, allora ritorna un opzionale con il nostro veicolo appena creato".
-- `.andExpect(jsonPath("$.id", is(returnedVehicle.getId())))` significa che ci aspettiamo nel JSON ritornato un campo id, con dentro l'id del nostro veicolo creato. Le altre righe sono molto simili, cambia solo il campo che andiamo a controllare.
+- `.andExpect(jsonPath("$.id", is(returnedVehicle.getId())))` significa che ci aspettiamo nel body di risposta un JSON che contiene un campo `id`, con dentro l'id del nostro veicolo creato. Le altre righe sono molto simili, cambia solo il campo che andiamo a controllare.
 
-Non possiamo far girare i test perchè il codice non compila nemmeno. Andiamo allora a creare le classi mancanti. Con IntellJ è molto semplice creare classi o metodi che non esistono ancora, basta spostare il cursore sulla classe inesistente, premere `alt` + `Invio`, cliccare su "Create class ...", come target directory scegliere `main` e non `test`, e confermate.
+Non possiamo far girare i test perché il codice non compila nemmeno. Andiamo allora a creare le classi mancanti. Con IntellJ è molto semplice creare classi o metodi che non esistono ancora, basta spostare il cursore sulla classe inesistente, premere `alt` + `Invio`, cliccare su "*Create class ...*", come target directory scegliere `main` e non `test`, e confermate.
 
 Facciamo questo procedimento con `Vehicle`. Poi implementiamola.
 Il file dovrebbe trovarsi in `/src/main/java/it/mattianatali/tddspringbootapi/vehicle/Vehicle.java`
@@ -435,10 +448,10 @@ public class Vehicle {
 ```
 
 Qui possiamo vedere Lombok in azione! Grazie all'annotation `@Data` non dobbiamo scrivere ne getter, ne setter, ne fare l'override di equals o hash, fa tutto lui! Con `@Builder(toBuilder = true)` invece ci viene gratis un comodo builder che abbiamo già usato nel test. `toBuilder = true` ci fornisce un comodo metodo sull'istanza che ci permette di avere un builder dall'istanza stessa, molto comodo per creare per esempio un clone modificando magari qualche suo campo.
-`@NoArgsConstructor` e `@AllArgsConstructor` sono ancora due annotazioni di Lombok che ci fornisce gratis sia il costruttore con tutti i parametri, sia il costruttore che non richiede nessun parametro in input. Sono molto utili per la serializzazione delle istanze in JSON, se infatti non mettiamo queste due annotazioni [Jackson](https://github.com/FasterXML/jackson) si lamenterà che non riesce a serializzare l'oggetto.
+`@NoArgsConstructor` e `@AllArgsConstructor` sono ancora due annotazioni di Lombok che ci forniscono sia il costruttore con tutti i parametri, sia il costruttore vuoto. Sono molto utili per la serializzazione delle istanze in JSON. Se infatti non mettiamo queste due annotazioni, [Jackson](https://github.com/FasterXML/jackson), che è la libreria che utilizza Spring Boot per creare i JSON di risposta, si lamenterà perché non riesce a serializzare l'oggetto.
 Meno codice da scrivere significa meno codice da gestire e testare!
 
-Ora dobbiamo creare il `VehicleService`. In questo caso scriviamo il minimo indispensabile per poter compilare, ci dobbiamo ricordare che nel test usiamo la versione mockata, quindi la vera implementazione ora non ci interessa. Ci preoccuperemo quando andremo a sviluppare in TDD su di essa. Anche qui possiamo farci aiutare da IntelliJ.
+Ora dobbiamo creare il `VehicleService`. In questo caso **scriviamo il minimo indispensabile per poter compilare**, ci dobbiamo ricordare che **nel test usiamo la versione mockata, quindi la vera implementazione ora non ci interessa**. Ci preoccuperemo quando andremo a sviluppare in TDD su di essa. Anche qui possiamo farci aiutare da IntelliJ.
 
 Una volta creata la classe, possiamo dire ad IntelliJ di creare il metodo `VehicleService.get` che abbiamo invocato nella riga di test `when(vehicleService.get(vehicleId))`. `alt` + `invio` è il nostro migliore amico in questo caso.
 
@@ -460,11 +473,11 @@ public class VehicleService {
 
 ```
 
-- `@Service` serve a dire che la classe è un servizio e che può essere creata da Spring Boot tramite la Dependency Injection (DI) e iniettata nelle altre classi quando usano l'annotazione `@Autowired`.
+- `@Service` serve a dire che la classe è un servizio e che può essere creata da Spring Boot tramite la *Dependency Injection (DI)* e iniettata nelle altre classi quando usano l'annotazione `@Autowired`.
 
 Il metodo è ovviamente sbagliato, ma ripeto, ora ci interessa solo che compili in modo tale da far girare i test.
 
-Qui c'è una cosa molto interessante da notare: abbiamo definito prima la *firma* del metodo prima di pensare alla sua attuale implementazione. In questo molto definiamo le classi dal punto di vista dell'*utilizzatore* e non del *creatore*. Solitamente questo è un bene perchè si creano delle firme dei metodi facilmente utilizzabili. Se invertiamo il procedimento finiamo di semplificare l'implementazione ma rendiamo difficile l'utilizzo delle classi create perchè appunto non pensiamo a come un possibile utilizzatore possa sfruttare queste classi.
+Qui c'è una cosa molto interessante da notare: **abbiamo definito prima la *firma* del metodo prima di pensare alla sua attuale implementazione**. In questo molto **definiamo le classi dal punto di vista dell'*utilizzatore* e non del *creatore***. Solitamente questo è un bene perché si creano delle firme dei metodi facilmente utilizzabili. Se invertiamo il procedimento finiamo di semplificare l'implementazione ma rendiamo difficile l'utilizzo delle classi create perché appunto non pensiamo a come un possibile utilizzatore possa sfruttare queste classi.
 
 Facendo girare il test abbiamo il seguente errore
 
@@ -507,17 +520,17 @@ public class VehicleController {
 
 Possiamo vedere per la prima volta come si può sfruttare la [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) di Spring Boot. Possiamo chiedere a Spring Boot di fornirci delle istanze di classi che ci servono per svolgere il nostro compito (in questo caso il recupero del veicolo), senza che noi dobbiamo preoccuparci effettivamente di *come* queste istanze siano create. In altre parole, tramite l'annotazione `@Autowired` stiamo dicendo a Spring Boot di fornirci nel costruttore tutte le istanze che abbiamo bisogno, delegando al framework il come crearle.
 
-In questo modo possiamo creare delle classi disaccoppiate tra di loro e soprattutto nei test possiamo *iniettare* delle istanze finte (mockate). Iniettando nei test delle classi mockate possiamo pilotare il flusso di esecuzione senza distogliere lo sguardo dalla classe sotto test. Perchè infatti l'unica vera implementazione testata è il controller, il resto è tutta finzione (la finzione è data dall'annotazione `@MockBean` e dal metodo `when().thenReturn()`).
+In questo modo possiamo creare delle classi disaccoppiate tra di loro e soprattutto nei test possiamo *iniettare* delle istanze finte (mockate). Iniettando nei test delle classi mockate possiamo pilotare il flusso di esecuzione senza distogliere lo sguardo dalla classe sotto test. Perché infatti l'unica vera implementazione testata è il controller, il resto è tutta finzione (la finzione è data dall'annotazione `@MockBean` e dal metodo `when().thenReturn()`).
 
 Dobbiamo infatti immaginare che durante il test, il controller riceve la nostra istanza mockata nel costruttore, quindi non va a toccare la vera implementazione di `VehicleService` (che per ora non esiste ancora... ritorna sempre `null`!).
 
-Magari vi state chiedendo perchè c'è un doppio `get` in `vehicleService.get(id).get()`. Il primo è l'invocazione del nostro metodo di `VehicleService`, il secondo serve per estrapolare il valore contenuto in `Optional<Vehicle>`. È fortemente sconsigliato chiamare `get` su un opzionale perchè non stiamo gestendo affatto il caso in cui l'opzionale sia vuoto, nel nostro caso quando il veicolo non esiste. Ma per ora il nostro obiettivo è di far passare il test, poi quando faremo il test che testa il caso in cui il veicolo non esiste, lo sistemeremo.
+Magari vi state chiedendo perché c'è un doppio `get` in `vehicleService.get(id).get()`. Il primo è l'invocazione del nostro metodo di `VehicleService`, il secondo serve per estrapolare il valore contenuto in `Optional<Vehicle>`. **È fortemente sconsigliato chiamare `get` su un opzionale** perché non stiamo gestendo affatto il caso in cui l'opzionale sia vuoto, nel nostro caso quando il veicolo non esiste. Ma per ora il nostro obiettivo è di far passare il test, poi **quando faremo il test che testa il caso in cui il veicolo non esiste, lo sistemeremo**.
 
 Facendo girare il test vediamo che effettivamente funziona! Ritorniamo il JSON con tutti i campi.
 
 ### Testiamo il caso di assenza veicolo
 
-Abbiamo testato quando il veicolo viene ritornato dal `VehicleService`, ma cosa succede quando il non esiste? Noi ci aspettiamo che l'endpoint ritorni `404 - Not Found`.
+Abbiamo testato quando il veicolo viene ritornato dal `VehicleService`, ma cosa succede quando il veicolo con un determinato id non esiste? Noi ci aspettiamo che l'endpoint ritorni `404 - Not Found`.
 
 Andiamo a creare il test che verifica questo caso, nel `VehicleControllerTest` scriviamo:
 
@@ -547,7 +560,7 @@ Caused by: java.util.NoSuchElementException: No value present
 
 In pratica è il nostro famoso `get` sull'opzionale che abbiamo messo nel controller. Stiamo cercando di recuperare un dato che non esiste e quindi va in eccezione.
 
-Andiamo a modificare il controller in modo tale che ci restituisca uno status code `404` quando il service non ci restituisce alcun veicolo.
+Andiamo a modificare il controller in modo tale che ci restituisca uno status code `404 - Not Found` quando il service non ci restituisce alcun veicolo.
 Per rispondere `404` abbiamo bisogno di un'eccezione che ci generi quello status code.
 Quindi creiamo l'eccezione in  `src/main/java/it/mattianatali/tddspringbootapi/vehicle/errors/VehicleNotFoundException.java` e scriviamo
 
@@ -564,7 +577,7 @@ public class VehicleNotFoundException extends RuntimeException {
 
 Grazie a `@ResponseStatus(HttpStatus.NOT_FOUND)` siamo sicuri che lo status code della chiamata sarà `404 - Not Found`.
 
-Ora modifichiamo il metodo `VehicleController.getVehicleDetails`controller utilizzando questa nuova eccezione
+Ora modifichiamo il metodo `VehicleController.getVehicleDetails` utilizzando questa nuova eccezione
 
 ```java
 @GetMapping("/api/v1/vehicles/{id}")
@@ -594,8 +607,8 @@ Prendiamoci una pausa, tutti i concetti appena esposti hanno bisogno di un attim
 
 ### Implementiamo il servizio VehicleService
 
-Ora che ci siamo rigenerati un attimo, svolgiamo un lavoro abbastanza semplice: l'implementazione di `VehicleService`. In questa classe ci dovrebbe andare tutta la logica di business, ma la logica che ha la chiamata get è davvero banale: recuperare il veicolo dato il suo id. Non preoccupatevi, nei progetti veri la logica di business diventa sempre complessa a piacere. Noi siamo solo fortunati perchè siamo all'inizio.
-Insomma nel nostro caso dobbiamo testare che venga invocato il `VehicleRepository` per recuperare il veicolo, il valore di ritorno deve essere esattamente lo stesso che otteniamo dal `VehicleRepository`. `VehicleRepository` non esiste ancora e quindi dobbiamo pensare al metodo che fa al caso nostro. Non reinventiamo niente e quindi immaginiamo di utilizzare il metodo `VehicleRepository.findById(Long id)` che ci fornice gratis [JpaRepository](https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/jpa.repositories.html).
+Ora che ci siamo rigenerati un attimo, svolgiamo un lavoro abbastanza semplice: l'implementazione di `VehicleService`. In questa classe ci dovrebbe andare tutta la logica di business, ma la logica che ha la chiamata GET è davvero banale: recuperare il veicolo dato il suo id. Non preoccupatevi, nei progetti veri la logica di business diventa sempre complessa a piacere. Noi siamo solo fortunati perché siamo all'inizio.
+In altre parole, nel nostro caso dobbiamo testare che venga invocato il `VehicleRepository` per recuperare il veicolo, il valore di ritorno deve essere esattamente lo stesso che otteniamo dal `VehicleRepository`. `VehicleRepository` non esiste ancora e quindi dobbiamo pensare al metodo che fa al caso nostro. Non reinventiamo niente e quindi immaginiamo di utilizzare il metodo `VehicleRepository.findById(Long id)` che ci fornice gratis [JpaRepository](https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/jpa.repositories.html).
 
 Scriviamo i test nel nuovo file `src/test/java/it/mattianatali/tddspringbootapi/vehicle/VehicleServiceTest.java`:
 
@@ -660,7 +673,7 @@ Notiamo però delle diversità nelle annotazioni utilizzate, ci stiamo riferendo
 - `@Mock` invece di `@MockBean`.
 - `@InjectMocks` è nuovo.
 
-Perchè abbiamo queste differenze rispetto al nostro test sul controller? Perchè se ci pensiamo bene non abbiamo bisogno di caricare nessun componente di Spring Boot (nel controller avevamo bisogno di `MockMvc` di Spring Boot per simulare delle chiamate HTTP), quindi possiamo utilizzare solo la libreria [Mockito](https://site.mockito.org/) per testare il nostro servizio. Questo significa avere dei test più veloci ad avviarsi perchè non dobbiamo caricare il contesto di Spring Boot. Le annotazioni per usare Mockito sono appunto
+Perché abbiamo queste differenze rispetto al nostro test sul controller? Perché se ci pensiamo bene **non abbiamo bisogno di caricare nessun componente di Spring Boot** (nel controller avevamo bisogno di `MockMvc` di Spring Boot per simulare delle chiamate HTTP), quindi possiamo utilizzare solo la libreria [Mockito](https://site.mockito.org/) per testare il nostro servizio. Questo **significa avere dei test più veloci** ad avviarsi perché non dobbiamo caricare il contesto di Spring Boot. Le annotazioni per usare Mockito sono appunto
 
 - `@ExtendWith(MockitoExtension.class)` per avviare il contesto di Mockito e le sue annotazioni durante il test.
 - `@Mock` per creare un'istanza mockata che possiamo decidere le risposte da dare, attraverso il metodo `when(...).thenReturn(...)` durante i test.
@@ -759,9 +772,9 @@ class VehicleRepositoryTest {
 ```
 
 Con questo test salviamo un veicolo, poi lo recuperiamo con l'id che ci viene restituito nella `save` e poi verifichiamo che il `findById` ci restituisca il veicolo.
-Ma vediamo le annotazioni che abbiamo utilizzato: sono praticamente le stesse che abbiamo utilizzato per il controller, ma stavolta invece di `@WebMvcTest` abbiamo utilizzato `@DataJpaTest` che serve per testare la persistenza dei dati. Abbiamo bisogno di usare il contesto di Spring Boot, invece di utilizzare solamente Mockito come abbiamo fatto con `VehicleService`, perchè JPA lo richiede.
+Ma vediamo le annotazioni che abbiamo utilizzato: sono praticamente le stesse che abbiamo utilizzato per il controller, ma stavolta invece di `@WebMvcTest` abbiamo utilizzato `@DataJpaTest` che serve per testare la persistenza dei dati. Abbiamo bisogno di usare il contesto di Spring Boot perché JPA lo richiede, di conseguenza non possiamo usare solamente Mockito come abbiamo fatto con `VehicleService`.
 
-Anche in questo caso non compila, perchè non abbiamo il metodo `save` dichiarato in `VehicleRepository`. Andiamo a sistemare in modo intelligente la questione. Trasformiamo `VehicleRepository` in questo modo:
+Anche in questo caso non compila, perché non abbiamo il metodo `save` dichiarato in `VehicleRepository`. Andiamo a sistemare in modo intelligente la questione. Trasformiamo `VehicleRepository` in questo modo:
 
 ```java
 package it.mattianatali.tddspringbootapi.vehicle;
@@ -788,9 +801,9 @@ Caused by: java.lang.IllegalArgumentException: Not a managed type: class it.matt
 	...
 ```
 
-Quello che Spring Boot sta cercando di dirci è che sul modello `Vehicle` mancano le annotazioni per poterlo utilizzare insieme al `CrudRepository`, infatti se ci pensiamo bene nessuno ha detto qual'è il campo id del nostro veicolo, come generarlo se non glielo passiamo.
+Quello che Spring Boot sta cercando di dirci è che sul modello `Vehicle` mancano le annotazioni per poterlo utilizzare insieme al `CrudRepository`, infatti se ci pensiamo bene nessuno ha detto qual'è il campo id del nostro veicolo e come generarlo. Il povero JPA sa solo che esiste il modello `Vehicle` e nient'altro.
 
-Andiamo a risolvere modificando il nostro file `Vehicle`:
+Andiamo a risolvere il problema modificando il nostro file `Vehicle`:
 
 ```java
 package it.mattianatali.tddspringbootapi.vehicle;
@@ -840,7 +853,7 @@ void findById_shouldReturnEmptyIfVehicleNotFound() {
 }
 ```
 
-Possiamo andare tranquilli che durante il test non esiste un valore con quell'id perchè l'annotazione `@DataJpaTest` ci garantisce che, ogni volta che eseguiamo il test, il DB è pulito.
+Possiamo andare tranquilli che durante il test non esiste un valore con quell'id perché l'annotazione `@DataJpaTest` ci garantisce che, ogni volta che eseguiamo il test, il DB è pulito.
 Eseguendolo vediamo che il test passa come ci aspettavamo, non dobbiamo implementare nient'altro.
 
 Dobbiamo ricordarci che il setup del DB solitamente è molto più impegnativo: ci sono migrazioni, creazioni di tabelle in modo esplicito, chiamate ad un DB remoto ecc. Noi ce la stiamo cavando facilmente con il DB H2 che abbiamo inserito durante la creazione del progetto. Purtroppo non tratteremo insieme queste tematiche per non perdere il focus dal TDD.
@@ -848,7 +861,7 @@ Dobbiamo ricordarci che il setup del DB solitamente è molto più impegnativo: c
 ### Chiamata GET completata!
 
 Finalmente ora abbiamo la chiamata GET completamente sviluppata in TDD! Abbiamo 3 componenti ben isolati, facili da testare, con una coverage del 100%.
-Sembra che sia stato lungo e difficile, ma solamente perchè abbiamo spiegato ogni singola riga di codice e anche perchè abbiamo spiegato ogni singolo passo che abbiamo svolto.
+Sembra che sia stato lungo e difficile, ma solamente perché abbiamo spiegato ogni singola riga di codice e anche perché abbiamo spiegato ogni singolo passo che abbiamo svolto.
 La buona notizia è che tramite questo processo possiamo creare qualsiasi endpoint che ci venga in mente: possiamo complicare la logica di business quanto vogliamo, ma il procedimento in TDD rimarrà sempre il medesimo.
 
 Ora andiamo ad implementare la chiamata POST, ma spiegheremo con lo stesso livello di dettaglio solo il controller, lo sviluppo dei metodi nel service e del repository sarà molto simile a quello che abbiamo fatto per la chiamata GET, quindi sarebbe poco utile ripetere le stesse cose.
@@ -909,7 +922,7 @@ class VehicleControllerTest {
 }
 ```
 
-Come possiamo leggere stiamo emulando una chiamata POST, settiamo correttamente il `contentType` della chiamata tramite `.contentType(MediaType.APPLICATION_JSON)` e inseriamo nel body il nostro veicolo da salvare tramite `.content(objectMapper.writeValueAsBytes(vehicleToSave))`.
+Come possiamo leggere, stiamo emulando una chiamata POST, settiamo correttamente il `contentType` della chiamata tramite `.contentType(MediaType.APPLICATION_JSON)` e inseriamo nel body il nostro veicolo da salvare tramite `.content(objectMapper.writeValueAsBytes(vehicleToSave))`.
 
 Con
 
@@ -989,7 +1002,7 @@ public class VehicleController {
 }
 ```
 
-- `@PostMapping` è l'annotazione che ci permette di definire un'enpoint POST.
+- `@PostMapping` è l'annotazione che ci permette di definire un'endpoint POST.
 - `@ResponseStatus(HttpStatus.CREATED)` possiamo definire lo status code di risposta, di default è `200 - Ok`, noi invece vogliamo `201 - Created`.
 - `@RequestBody` è l'annotazione che ci permette di prendere il valore passato nel body e di deserializzarlo a `Vehicle`.
 
@@ -997,7 +1010,7 @@ In questo caso ci basta invocare il metodo `vehicleService.save` e di ritornare 
 
 Facendo girare i test è tutto ok!
 
-Abbiamo quasi finito, ma ci manca da implementare una regola che ci è stata data quando salviamo un veicolo. La ripropongo qui
+Abbiamo quasi finito, ma ci manca da implementare una regola che ci è stata data quando salviamo un veicolo. La ripropongo qui:
 
 - Il `brand`, `model` e `year` sono obbligatori, l'anno di produzione del veicolo non può essere antecedente al `1950` per ragioni di business.
 
@@ -1058,7 +1071,7 @@ class VehicleControllerTest {
 }
 ```
 
-Qui possiamo vedere una bellissima funzionalità di JUnit 5, i test parametrici!
+Qui possiamo vedere una bellissima funzionalità di JUnit 5: i test parametrici!
 
 - Attraverso l'annotazione `@ParametrizedTest` definiamo un test che in input vuole un parametro.
 - `@MethodSource("getInvalidVehicles")` definiamo il metodo che ci fornirà i veicoli che sono invalidi e che dobbiamo testare.
@@ -1133,9 +1146,9 @@ Ora che abbiamo implementato il controller, manca il metodo `vehicleService.save
 
 È stata una lunga chiacchierata, spero proprio che dopo questa lettura abbiate imparato un po' di funzionalità offerte da JUnit 5, Spring Boot, Lombok, ma soprattutto sia entrato in voi la filosofia del TDD.
 
-La cosa importante che deve essere chiara è questa: **prima ci preoccupiamo di cosa vogliamo raggiungere, poi ci preoccupiamo di come raggiungerlo**. Il cosa vogliamo raggiungere si traduce in test, il come si traduce nell'implementazione.
+La cosa importante che deve essere chiara è questa: **prima ci preoccupiamo di cosa vogliamo raggiungere, poi ci preoccupiamo di come raggiungerlo**. Il *cosa* vogliamo raggiungere si traduce in test, il *come* si traduce nell'implementazione.
 
-In questo modo abbiamo un codice ben testato, ben organizzato in classi isolate (se una classe è facile da testare, significa che è ben isolata dal resto dei componenti) e soprattutto facile da mantenere (i refactor sono semplici perchè ogni singola funzionalità è testata, le regressioni sono pressochè azzerate).
+In questo modo abbiamo un codice ben testato, ben organizzato in classi isolate (se una classe è facile da testare, significa che è ben isolata dal resto dei componenti) e soprattutto facile da mantenere (i refactor sono semplici perché ogni singola funzionalità è testata, le regressioni sono pressochè azzerate).
 
 All'inizio può essere difficile, ma poi una volta internalizzato esce naturale e si ha un valore aggiunto che non si può capire fino a che si ha un produzione un progetto sviluppato in TDD. Provare per credere!
 
