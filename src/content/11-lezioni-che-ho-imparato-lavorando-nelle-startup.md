@@ -50,7 +50,7 @@ Insomma questi sono solo dei piccoli esempi e comportarsi in modo diverso con pe
 *Il lavoro è come l'acqua: fluisce dove viene fatto*. Quindi bisogna stare attenti a dire troppi sì, altrimenti finisce che tutto il lavoro si riversa su di te e poi hai due problemi molto seri: rischi il burnout perchè non hai un attimo di respiro ed in più ti accusano di essere il collo di bottiglia! È importante aiutare gli altri, fare del lavoro extra, ma lo è di più finire i propri task assegnati. Per l'azienda è importante rispettare il proprio piano, se fallisci nel rispettare le tempistiche originarie, tutto ciò avrà ripercussioni sul planning e questo avrà una ripercussione negativa su tutta l'azienda. Più si è in pochi e più le conseguenze sono visibili. Quindi **non bisogna avere paura a dire 'No'** a chi ci chiede di fare altro lavoro in più. Prima fai il tuo poi, se avanza tempo, accetta del lavoro extra.
 Altri 'No' che sono portanti sono quelli dal punto di vista tecnico. Non è raro che vengano calati dall'alto dei task che da un punto di vista tecnico o di usabilità non stanno né in cielo né in terra. In questi casi **è nostro dovere dire 'No' e dare le proprie motivazioni**: è lo sviluppatore che può capire le conseguenze di requirement esotici (debito tecnico, logiche fumose già dall'inizio, eccessiva complessità della UX ecc).
 
-![Io e il team di CloudAcademy che lavoriamo seriamente](img/startup-lesson/CAWork2.JPG)
+![Io e il team di CloudAcademy che lavoriamo seriamente](img/startup-lesson/CAWork2.jpeg)
 
 ## Un fallimento è realmente tale se non si impara nulla
 
