@@ -86,7 +86,7 @@ git checkout d09f1068a14ddcdb857f1ced90b532680b050917
 Una volta forkato e rimosso il file possiamo andare sui settaggi di Travis CI (menu utente in alto a destra -> Settings). In questa pagina dovrebbero comparire tutti i nostri repo, compreso questo appena forkato. Se non vedete nulla cliccate sul bottone `Sync Account`, per sincronizzare Travis CI. Poi possiamo vedere il repo gaslow come in figura, abilitiamo il toggle.
 Ora abbiamo la repo forkata, Travis CI pronto e connesso ad esso. Ora inizia la parte divertente: mettiamo in piedi il primo step della nostra pipeline.
 
-![travis-activate-repo](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2019/03/travis-activate-repo.png)
+![travis-activate-repo](img/ci/travis-activate-repo.png)
 
 
 # Implementazione della pipeline di Continuous Integration (fase di testing)
@@ -167,7 +167,7 @@ Per chi volesse saperne di più sul linguaggio specifico di Travis CI, lascio qu
 - [Per sapere come aggiungere dei nuovi servizi](https://docs.travis-ci.com/user/database-setup/) come MongoDB.
 - [Per conoscere le varie fasi di un job](https://docs.travis-ci.com/user/job-lifecycle/).
 
-![travis-test-ok](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2019/03/travis-test-ok.png)
+![travis-test-ok](img/ci/travis-test-ok.png)
 
 ## Deployment usando Travis CI
 
@@ -177,7 +177,7 @@ Ora che abbiamo eseguito i test vogliamo deployare il nostro codice su Heroku. [
 
 Ci registriamo e creiamo una nuova app.
 
-![Creazione nuova app su Heroku](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2019/03/heroku-new-app.png)
+![Creazione nuova app su Heroku](img/ci/heroku-new-app.png)
 
 Ora torniamo sul file `.travis.yml` e aggiungiamo alla fine:
 
@@ -339,7 +339,7 @@ travis encrypt $(heroku auth:token)
 Il comando ci ritornerà l'API Key, dobbiamo inserirla al posto di `'<API_KEY>'` nel file `.travis.yml`.
 Fatto questo avremo quindi concluso il lavoro e possiamo goderci la nostra pipeline di Continuous Integration e Continuous Deployment!
 
-![Test del deploy su Heroku](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2019/03/heroku-deploy-ok.png)
+![Test del deploy su Heroku](img/ci/heroku-deploy-ok.png)
 
 # Consigli sulla creazione delle pipeline
 

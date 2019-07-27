@@ -30,7 +30,7 @@ Sembra un procedimento lunghissimo ma non lo è: infatti, ad ogni nostra verific
 Come esempio ho usato un [mio piccolo progetto](http://8ball.mattianatali.it) che avevo creato per imparare un po' di concetti su [React](https://reactjs.org/). Supponiamo che vogliamo sapere chi ha aggiunto l'effetto particellare alla pagina.
 Durante il procedimento di `git bisect` etichettiamo come `bad` tutte le volte che il progetto ha la cartella `src/components/atoms/ParticlesBackground`. Mentre tutti i commit che non la possiedono saranno `good`.
 
-![git-bisect-app-preview](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/01/git-bisect-app-preview.png)
+![git-bisect-app-preview](img/git-bisect/git-bisect-app-preview.png)
 
 Iniziamo! Per prima cosa cloniamo il progetto ed entriamoci dentro con il terminale.
 
@@ -96,7 +96,7 @@ Date:   Mon Nov 6 22:24:32 2017 +0100
 :040000 040000 9f912726175c5d9794d00deffdb422136555846f a934e7f36f14c1ec38058bfbfbf403d3fb8043b3 M	src
 ```
 
-![git-bisect-terminal](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/01/git-bisect-terminal.png)
+![git-bisect-terminal](img/git-bisect/git-bisect-terminal.png)
 
 Già il messaggio del commit ci fa intuire che Git ha fatto centro ("Add particles")! Ma noi non ci fidiamo e allora vediamo effettivamente cosa è stato fatto in questo commit: prendiamo l'id del commit (`b7b5d042a8cba637c56cc52401dcd61ec785d9b4`) e scriviamo:
 

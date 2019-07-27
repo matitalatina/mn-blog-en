@@ -25,6 +25,6 @@ Purtroppo non permette lo scaricamento delle canzoni, ma utilizzando gli [strume
 ## Video tutorial
 6 passi vi sembrano troppi? Vi assicuro che dopo averci preso la mano potete scaricare quello che volete in meno di 2 secondi. Ecco qui i 6 passaggi racchiusi in un piccolo video.
 
-![Video tutorial](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2016/11/soundcloud-download.gif)
+![Video tutorial](img/soundcloud-download/soundcloud-download.gif)
 
 Alla prossima!

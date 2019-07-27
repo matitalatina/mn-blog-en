@@ -31,7 +31,7 @@ Una semplice ottimizzazione che tutti dovrebbero fare è di **diminuire il tempo
 Per farlo è molto semplice. Andiamo nel Mac in Settings -> Keyboard -> Tab Keyboard. Impostate *Key Repeat* a *Fast* e *Delay Until Repeat* a *Short*. Ora provate e la differenza sarà enorme. So che all'inizio sembra troppo veloce il cursore, ma poi ci si abitua e non si torna più indietro!
 
 
-![Impostazioni della tastiera, velocizziamo il cursore!](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2017/10/terminal-keyboard.png)
+![Impostazioni della tastiera, velocizziamo il cursore!](img/productivity/terminal-keyboard.png)
 
 ## Shortcuts
 
@@ -68,7 +68,7 @@ Ecco qui una lista di trucchetti che utilizzo quotidianamente nel terminale. Ho 
     Come avrete intuito sto creando una cartella, ed una volta creata ci entro senza dover scrivere tutto il path di nuovo.
 * `man <APPLICAZIONE>`: quante volte vi è capitato di non ricordarvi le opzioni di un comando e siete andati online a cercare la documentazione? Non serve andare online! Basta scrivere `man` seguito dall'applicazione e avrete tutta la documentazione a portata di mano senza googlare.
 
-![Esempio di "man ifconfig"](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2017/10/man-ifconfig.png)
+![Esempio di "man ifconfig"](img/productivity/man-ifconfig.png)
 * `cmd + t` e `cmd + w`: rispettivamente apre e chiude una nuova tab del terminale. Se ci fate caso questi comandi sono "universali", ossia funzionano anche con le tab del browser, del finder, del vostro text editor preferito ecc.
 * `open .`: apre nel Finder la cartella in cui ci troviamo.
 
@@ -134,7 +134,7 @@ I file di configurazione di Zsh si trovano nel file `~/.zshrc`. Con il vostro ed
 Io, come ho già detto in precedenza, sto utilizzando `eastwood`. Ha dei colori molto rilassanti e non distrae troppo l'attenzione rispetto ad altri temi.
 
 
-![Tema Zsh Eastwood](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2017/10/terminal-zsh-eastwood.png)
+![Tema Zsh Eastwood](img/productivity/terminal-zsh-eastwood.png)
 
 
 #### Modifica dei plugin
@@ -150,7 +150,7 @@ plugins=(django npm docker)
 Vi ricordo di separare i plugin con lo spazio e non con la virgola. Ovviamente [Zsh offre molti altri plugins](https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins), sceglietene il minimo indispensabile perchè potrebbero rallentare l'avvio del terminale.
 
 
-![Zsh Docker Plugin](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2017/10/terminal-zsh-docker-plugin.png)
+![Zsh Docker Plugin](img/productivity/terminal-zsh-docker-plugin.png)
 
 
 ### Alias, alias ovunque!
@@ -168,7 +168,7 @@ Ecco qui alcuni miei alias come esempio:
 
 * `alias gbd="git branch | grep -v '*' | xargs git branch -D"`: eseguendo `gbd` (Git Branch Delete) verranno cancellati tutti i branch locali di Git del progetto contenuto nella cartella. Avviatelo solo se siete sicuri di quello che fate!
 * `alias pycc='find . -name "*.pyc" -exec rm -f {} \;'`: eseguendo `pycc` (pyc clean) cancellerete ricorsivamente tutti i file compilati python presenti nella cartella. Molto utile se si fa refactoring in Python e abbiamo il timore che i file compilati non rispettino più il codice sorgente.
-* `alias yda='youtube-dl -x --audio-format m4a --audio-quality 160k'`: eseguendo `yda <YOUTUBE_URL>` (YouTube Download Audio) scaricherete il file audio di un video di YouTube. Questo comando funziona solo se avete seguito la mia guida su [come scaricare un video da YouTube](https://www.mattianatali.it/come-scaricare-i-video-da-youtube-con-il-terminale/).
+* `alias yda='youtube-dl -x --audio-format m4a --audio-quality 160k'`: eseguendo `yda <YOUTUBE_URL>` (YouTube Download Audio) scaricherete il file audio di un video di YouTube. Questo comando funziona solo se avete seguito la mia guida su [come scaricare un video da YouTube](come-scaricare-i-video-da-youtube-con-il-terminale/).
 * `alias ddev='docker-compose -f <ABSOLUTE_PATH_DOCKER_YAML_FILE>'`: eseguendo `ddev <DOCKER_COMPOSE_COMMAND>` (Docker dev) potete impartire qualsiasi al vostro Docker Compose senza preoccuparvi della cartella in cui vi trovate. Senza questo comando ero sempre costretto ad andare nella cartella del mio progetto Docker Compose `cd <PATH_TO_DOCKER_COMPOSE_PROJECT>` e poi scrivere `docker-compose -f <DOCKER_YAML_FILE> <DOCKER_COMPOSE_COMMAND>`... Tutto tempo buttato!
 * `alias c<PROJECT_NAME>='cd <PROJECT_NAME_ABSOLUTE_PATH>'`: se avete un progetto su cui ci lavorate quotidianamente vi consiglio di creare un alias per raggiungerlo velocemente. Io come convenzione utilizzo la lettera `c` iniziale che ricorda il comando `cd` e poi il nome del progetto.
 
@@ -191,7 +191,7 @@ Una volta riavvito il terminale possiamo usare:
 
 Ovviamente questi sono due miei comandi ma nessuno vi vieta di crearne dei vostri!
 
-![Comando "git st"](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2017/10/terminal-gitst.png)
+![Comando "git st"](img/productivity/terminal-gitst.png)
 
 
 #### SSH
@@ -225,7 +225,7 @@ Nel file di configurazione sono obbligatori i campi `HostName` ed `User`, il res
 
 I parametri SSH disponibili non sono solamente questi, se avete bisogno di funzionalità avanzate come il tunnelling vi consiglio di leggere la [guida ufficiale su SSH Config File](https://www.ssh.com/ssh/config/).
 
-![Esempio di connessione remota usando SSH config](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2017/10/ssh-config.png)
+![Esempio di connessione remota usando SSH config](img/productivity/ssh-config.png)
 
 ### Curiosità
 
