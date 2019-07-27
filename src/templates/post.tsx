@@ -386,6 +386,7 @@ export const query = graphql`
           excerpt
           frontmatter {
             title
+            description
           }
           fields {
             slug

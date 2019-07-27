@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Come sviluppare delle API in TDD con Spring Boot
-image: img/soundcloud-download/music.jpg
+description: Volete sviluppare delle API in TDD con Spring Boot, ma non sapete come iniziare? Questa guida fa per voi!
+image: img/tdd-spring-boot/intellij-spring-boot.jpg
 author: Mattia Natali
 date: 2019-08-13T07:03:47.149Z
 tags: 
@@ -41,7 +42,7 @@ Il `brand`, `model` e `year` sono obbligatori, l'anno di produzione del veicolo 
 
 Per ora non siamo interessati ad altri endpoints.
 
-[L'implementazione di questo piccolo progetto la potete trovare in questa mia repository pubblica](https://github.com/matitalatina/tdd-spring-boot-api), in questo modo se vi state perdendo potete ritrovare il filo del discorso direttamente leggendo il codice.
+[Potete trovare l'implementazione di questo piccolo progetto in questa mia repository pubblica](https://github.com/matitalatina/tdd-spring-boot-api), in questo modo se vi state perdendo potete ritrovare il filo del discorso direttamente leggendo il codice.
 
 ## Creiamo il progetto
 
@@ -1132,7 +1133,7 @@ Ora che abbiamo implementato il controller, manca il metodo `vehicleService.save
 
 È stata una lunga chiacchierata, spero proprio che dopo questa lettura abbiate imparato un po' di funzionalità offerte da JUnit 5, Spring Boot, Lombok, ma soprattutto sia entrato in voi la filosofia del TDD.
 
-La cosa importante che deve essere chiara è questa: **prima ci preoccupiamo di cosa vogliamo raggiungere, poi ci preoccupiamo come raggiungerlo**. Il cosa vogliamo raggiungere si traduce in test, il come si traduce nell'implementazione.
+La cosa importante che deve essere chiara è questa: **prima ci preoccupiamo di cosa vogliamo raggiungere, poi ci preoccupiamo di come raggiungerlo**. Il cosa vogliamo raggiungere si traduce in test, il come si traduce nell'implementazione.
 
 In questo modo abbiamo un codice ben testato, ben organizzato in classi isolate (se una classe è facile da testare, significa che è ben isolata dal resto dei componenti) e soprattutto facile da mantenere (i refactor sono semplici perchè ogni singola funzionalità è testata, le regressioni sono pressochè azzerate).
 
