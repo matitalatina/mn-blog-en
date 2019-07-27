@@ -573,13 +573,77 @@ In pratica abbiamo sostituito il metodo `.get` con `.orElseThrow(VehicleNotFound
 
 Facciamo girare il test ed ora funziona tutto!
 
-## Ricapitoliamo
+### Ricapitoliamo
 
-Fermiamoci un secondo per fare mente locale. La strada è ancora lunga per finire l'endpoint GET. Ci manca ancora da testare ed implementare il servizio `VehicleService` e il repository `VehicleRepository`. Però ora è importante focalizzare cosa abbiamo imparato e fatto fino ad ora:
+Fermiamoci un secondo per fare mente locale. Il lavoro per ultimare l'endpoint GET non è ancora concluso. Però ora è importante focalizzare cosa abbiamo imparato e fatto fino ad ora:
 
 - Abbiamo creato un nuovo progetto Spring Boot utilizzando [Spring Initializr](https://start.spring.io/).
 - Abbiamo migrato la suite di test a [JUnit 5](https://junit.org/junit5/).
 - Abbiamo imparato ad utilizzare alcune funzionalità di [Lombok](https://projectlombok.org/).
 - Abbiamo sviluppato in TDD il controller per la chiamata `GET`.
-- Abbiamo imparato a sfruttare la [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) e l'annotazione `@Autowired` di Spring Boot per testare in isolamento il controller, ancor prima di aver sviluppato il servizio `VehicleService`.
+- Abbiamo imparato a sfruttare la [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) e l'annotazione `@Autowired` di Spring Boot per testare in isolamento il controller, ancor prima di aver implementato il servizio `VehicleService`.
 - Abbiamo imparato a fare delle finte chiamate HTTP utilizzando `@WebMvcTest`.
+
+Prendiamoci una pausa, tutti i concetti appena esposti hanno bisogno di un attimo per essere assimilati. Poi continuiamo a sviluppare i due componenti rimanenti: il servizio `VehicleService` e il repository `VehicleRepository`.
+
+### Implementiamo il servizio VehicleService
+
+Ora che ci siamo rigenerati un attimo, svolgiamo un lavoro abbastanza semplice: l'implementazione di `VehicleService`. In questa classe ci dovrebbe andare tutta la logica di business, ma la logica che ha la chiamata get è davvero banale: recuperare il veicolo dato il suo id. Non preoccupatevi, nei progetti veri la logica di business diventa sempre complessa a piacere. Noi siamo solo fortunati perchè siamo all'inizio.
+Insomma nel nostro caso dobbiamo testare che venga invocato il `VehicleRepository` per recuperare il veicolo, il valore di ritorno deve essere esattamente lo stesso che otteniamo dal `VehicleRepository`. `VehicleRepository` non esiste ancora e quindi dobbiamo pensare al metodo che fa al caso nostro. Non reinventiamo niente e quindi immaginiamo di utilizzare il metodo `VehicleRepository.findById(Long id)` che ci fornice gratis [JpaRepository](https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/jpa.repositories.html).
+
+Scriviamo i test nel nuovo file `src/test/java/it/mattianatali/tddspringbootapi/vehicle/VehicleServiceTest.java`:
+
+```java
+package it.mattianatali.tddspringbootapi.vehicle;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@ExtendWith(MockitoExtension.class)
+class VehicleServiceTest {
+    @Mock
+    private VehicleRepository vehicleRepository;
+
+    @InjectMocks
+    private VehicleService vehicleService;
+
+    @Test
+    void get_shouldReturnVehicle() {
+        var vehicleId = 1L;
+        var returnedVehicle = Optional.of(
+                Vehicle.builder()
+                        .id(vehicleId)
+                        .brand("Ferrari")
+                        .model("488 GTB")
+                        .year(2019)
+                        .build()
+        );
+        when(vehicleRepository.findById(vehicleId))
+                .thenReturn(returnedVehicle);
+
+        assertEquals(
+                returnedVehicle,
+                vehicleService.get(vehicleId)
+        );
+
+    }
+
+    @Test
+    void get_shouldReturnOptionalEmptyIfNotFound() {
+        var vehicleId = 1L;
+        when(vehicleRepository.findById(vehicleId))
+                .thenReturn(Optional.empty());
+
+        assertTrue(vehicleService.get(vehicleId).isEmpty());
+    }
+}
+
+```
