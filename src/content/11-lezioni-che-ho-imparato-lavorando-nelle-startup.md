@@ -19,13 +19,13 @@ Siccome ora sto cambiando ambiente lavorativo è giunta l'ora di tirare le somme
 
 Nelle startup, i propri superiori sono spesso le stesse persone che hanno scritto il codice prima di te, quindi la tentazione di chiedere aiuto a loro è molto alta. Ma ricorda che ora il loro ruolo è cambiato, quindi hanno mille altre faccende per la testa. Infatti contano su di te per portare a termine il compito che ti è stato affidato. **Invece di chiedere aiuto, bisogna chiedere a loro che decisione prendere**. Il flusso corretto è che loro ti chiedano di fare X, tu analizzi il problema e porti le soluzioni con pro e contro di ognuna, infine il superiore deciderà la soluzione da intraprendere assumendosi la responsabilità. In questo modo tutti sono felici: tu sai perfettamente cosa fare, il superiore ha perso poco tempo e ha ricevuto solo le informazioni che gli interessavano.
 
-![Lo studio di wavein.ch](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/waveinch.jpg)
+![Lo studio di wavein.ch](img/startup-lesson/waveinch.jpg)
 
 ## Tieni traccia di ciò che stai facendo
 
 **La trasparenza nelle startup è fondamentale**: tu ovviamente sai benissimo su cosa stai lavorando, quale bug ti sta facendo impazzire... Ma tutto questo non è così scontato per il resto del mondo. Io usavo [YouTrack](https://www.jetbrains.com/youtrack/) e [Jira](https://it.atlassian.com/software/jira) come [issue tracking system](https://en.wikipedia.org/wiki/Issue_tracking_system), non c'è niente di peggio che avere giornate di fuoco al lavoro ed avere la board vuota. Questo può essere un problema per te che non sei in grado di mostrare agli altri su cosa stai lavorando, ma sopratutto è un problema per il Product Manager che non potrà mai schedulare correttamente i lavori, non avrà nessuna visibilità sui possibili ritardi e infine non può prioritizzare correttamente i lavori. Stesso discorso vale per i task che sono bloccati: **metti sempre nero su bianco su cosa stai lavorando**.
 
-![Postazione](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/Postazione.jpg)
+![Postazione](img/startup-lesson/Postazione.jpg)
 
 ## Ognuno di noi è diverso
 
@@ -50,7 +50,7 @@ Insomma questi sono solo dei piccoli esempi e comportarsi in modo diverso con pe
 *Il lavoro è come l'acqua: fluisce dove viene fatto*. Quindi bisogna stare attenti a dire troppi sì, altrimenti finisce che tutto il lavoro si riversa su di te e poi hai due problemi molto seri: rischi il burnout perchè non hai un attimo di respiro ed in più ti accusano di essere il collo di bottiglia! È importante aiutare gli altri, fare del lavoro extra, ma lo è di più finire i propri task assegnati. Per l'azienda è importante rispettare il proprio piano, se fallisci nel rispettare le tempistiche originarie, tutto ciò avrà ripercussioni sul planning e questo avrà una ripercussione negativa su tutta l'azienda. Più si è in pochi e più le conseguenze sono visibili. Quindi **non bisogna avere paura a dire 'No'** a chi ci chiede di fare altro lavoro in più. Prima fai il tuo poi, se avanza tempo, accetta del lavoro extra.
 Altri 'No' che sono portanti sono quelli dal punto di vista tecnico. Non è raro che vengano calati dall'alto dei task che da un punto di vista tecnico o di usabilità non stanno né in cielo né in terra. In questi casi **è nostro dovere dire 'No' e dare le proprie motivazioni**: è lo sviluppatore che può capire le conseguenze di requirement esotici (debito tecnico, logiche fumose già dall'inizio, eccessiva complessità della UX ecc).
 
-![Io e il team di CloudAcademy che lavoriamo seriamente](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/CAWork2.JPG)
+![Io e il team di CloudAcademy che lavoriamo seriamente](img/startup-lesson/CAWork2.JPG)
 
 ## Un fallimento è realmente tale se non si impara nulla
 
@@ -66,7 +66,7 @@ L'alternativa a tutto questo? Dire a tutti che è tutto ok, andare avanti sulla 
 
 Fallire non è bello, ma succede. Quindi se deve succedere fallo il prima possibile.
 
-![Classica foto con il Golden Gate Bridge a San Francisco](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/SF_Mattia.jpg)
+![Classica foto con il Golden Gate Bridge a San Francisco](img/startup-lesson/SF_Mattia.jpg)
 
 ## Chiedere aiuto è un'arma, non una debolezza
 
@@ -78,7 +78,7 @@ Purtroppo per molti chiedere aiuto è quasi una sconfitta personale, altri non l
 - **Si impara più velocemente!** Anche da un punto di vista personale è molto meglio chiedere aiuto: si impara molto più velocemente e sentire come ragionano altri sviluppatori è il miglior modo per migliorare se stessi...
 - Anche tu hai bisogno di aiuto... Cosa? Stai pensando che tu sei il migliore e che non hai niente da imparare soprattutto dai tuoi colleghi? Beh, tutti quelli che la pensano così sono quelli che crescono di meno e rimangono indietro, perchè pensano che non hanno più nulla da imparare e rimangono fermi con la loro conoscenza. Letteralmente chiunque può insegnarci qualcosa, anche la persona più junior in azienda, perchè semplicemente ogni persona ha un proprio, unico, background personale.
 
-![Io e Zacco che lavoriamo felici](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/IoEZacco2.jpg)
+![Io e Zacco che lavoriamo felici](img/startup-lesson/IoEZacco2.jpg)
 
 ## Il codice perfetto non interessa a nessuno
 
@@ -86,7 +86,7 @@ Ecco qui una lezione che può fare male a chi esce fresco fresco dall'universit�
 
 Quindi come si fa a far coesistere il buon codice con velocità di esecuzione? Tramite **iterazioni**: scrivi il minimo indispensabile per raggiungere l'obiettivo, non complicare le cose con costrutti strani. Scrivere il minimo indispensabile è ben diverso dallo scrivere un brutto codice: continua a seguire le best practice, mantieni il codice più pulito possibile, continua a valutare che più scorciatoie prendi più bisogna sacrificare la manutenibilità. Ma non fasciarti la testa prima del problema, perchè magari quel problema non arriverà mai... E se mai arrivasse, si itera, ma almeno la tua feature originale è già arrivata sul mercato e può essere validata dal cliente.
 
-![startup_weekend2](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/startup_weekend2.jpg)
+![startup_weekend2](img/startup-lesson/startup_weekend2.jpg)
 
 ## Raggiungi i tuoi obiettivi, punto
 
@@ -94,7 +94,7 @@ Altra lezione che ho imparato a mie spese e che l'ho ricevuto come un calcio rot
 
 Io ero abituato a [wavein.ch](http://wavein.ch/) ad avere molto più margine di manovra, ma semplicemente perchè eravamo più piccoli e io ero quasi capo di me stesso. Quindi tutto quello che facevo bene o male andava nella direzione che reputavo giusta. Ma in una startup si hanno dei task "ben definiti". Se si hanno dei task assegnati bisogna fare quelli e fare il minimo per raggiungere quell'obiettivo. Tutto il resto non è visto di buon occhio, viene visto come tempo perso. Ricorda che **il tempo è la risorsa più scarsa in una startup**. Quindi occhio con le funzionalità non richieste, anche se per te possono essere un grande miglioramento, per altri potrebbe non interessare "un ca@@o di niente".
 
-![Google](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/Google.jpg)
+![Google](img/startup-lesson/Google.jpg)
 
 ## La startup non è una famiglia
 
@@ -121,7 +121,7 @@ Con questo non sto dicendo che non si possono fare amici al lavoro. Anzi al lavo
 - **Arrabbiarsi è inutile**. Purtroppo capita di vedere persone che pretendono di aver ragione solamente urlando o mostrandosi visibilmente irritati. La cosa importante è mantenere comunque la calma, attendere qualche secondo prima di rispondere e, se proprio la situazione non si calma, è meglio concludere la conversazione e rinviarla quando i toni sono più calmi... Anche perchè il problema non si risolve in queste situazioni.
 - **Con la forza non si ottiene niente**: nessuno ti farà un favore/task sotto costrizione, bisogna motivare le persone, non obbligarle. Ho avuto la fortuna di vedere tre tipologie di leadership: chi ti costringe, chi ti "minaccia" e chi invece ti motiva a farle. I risultati migliori ovviamente di ottengono con l'ultima. Esasperare l'ambiente lavorativo per ottenere qualcosa non è mai una soluzione, magari può funzionare nel breve termine, ma nel lungo periodo può solo far nascere un problema ben più grave: far schizzare il [turnover](https://it.wikipedia.org/wiki/Ricambio_del_personale) alle stelle. Il problema è che costringere o minacciare una persona è semplice, motivare non lo è affatto. Ed è per questo che è importante scegliere bene i vari leader in azienda... Non tutti sono in grado di farlo.
 
-![Ping Pong](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/ping-pong2.gif)
+![Ping Pong](img/startup-lesson/ping-pong2.gif)
 
 ## La formazione personale è fondamentale
 
@@ -132,7 +132,7 @@ Per formarsi c'è solo l'imbarazzo della scelta: dalle piattaforme e-learning, p
 
 Spero che questo post possa essere d'aiuto a chi ha paura di iniziare una carriera lavorativa, specialmente in una startup. È sicuramente una buona palestra per apprendere velocemente, ma sono certo che può un po' spaventare a chi non ci ha mai lavorato.
 
-![Aperitivo d'addio a Cloud Academy](https://s3-eu-west-1.amazonaws.com/mattianataliblog/2018/04/spritz.jpg)
+![Aperitivo d'addio a Cloud Academy](img/startup-lesson/spritz.jpg)
 
 Se siete giovani non vi posso consigliare altro che lavorare in questi ambienti: ci si diverte, si conoscono persone veramente stupende che condividono la tua stessa passione e non ci si annoia mai!
 
