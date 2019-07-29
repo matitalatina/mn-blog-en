@@ -447,7 +447,7 @@ public class Vehicle {
 }
 ```
 
-Qui possiamo vedere Lombok in azione! Grazie all'annotation `@Data` non dobbiamo scrivere ne getter, ne setter, ne fare l'override di equals o hash, fa tutto lui! Con `@Builder(toBuilder = true)` invece ci viene gratis un comodo builder che abbiamo già usato nel test. `toBuilder = true` ci fornisce un comodo metodo sull'istanza che ci permette di avere un builder dall'istanza stessa, molto comodo per creare per esempio un clone modificando magari qualche suo campo.
+Qui possiamo vedere Lombok in azione! Grazie all'annotazione `@Data` non dobbiamo scrivere né getter, né setter, né fare l'override di equals o hash, fa tutto lui! Con `@Builder(toBuilder = true)` invece ci viene gratis un comodo builder che abbiamo già usato nel test. `toBuilder = true` ci fornisce un comodo metodo sull'istanza che ci permette di avere un builder dall'istanza stessa, molto comodo per creare per esempio un clone modificando magari qualche suo campo.
 `@NoArgsConstructor` e `@AllArgsConstructor` sono ancora due annotazioni di Lombok che ci forniscono sia il costruttore con tutti i parametri, sia il costruttore vuoto. Sono molto utili per la serializzazione delle istanze in JSON. Se infatti non mettiamo queste due annotazioni, [Jackson](https://github.com/FasterXML/jackson), che è la libreria che utilizza Spring Boot per creare i JSON di risposta, si lamenterà perché non riesce a serializzare l'oggetto.
 Meno codice da scrivere significa meno codice da gestire e testare!
 
@@ -473,7 +473,7 @@ public class VehicleService {
 
 ```
 
-- `@Service` serve a dire che la classe è un servizio e che può essere creata da Spring Boot tramite la *Dependency Injection (DI)* e iniettata nelle altre classi quando usano l'annotazione `@Autowired`.
+- `@Service` serve a dire che la classe è un servizio e che può essere creata da Spring Boot tramite la *Dependency Injection (DI)* e che può essere iniettata nelle altre classi quando usano l'annotazione `@Autowired`.
 
 Il metodo è ovviamente sbagliato, ma ripeto, ora ci interessa solo che compili in modo tale da far girare i test.
 
@@ -524,7 +524,7 @@ In questo modo possiamo creare delle classi disaccoppiate tra di loro e soprattu
 
 Dobbiamo infatti immaginare che durante il test, il controller riceve la nostra istanza mockata nel costruttore, quindi non va a toccare la vera implementazione di `VehicleService` (che per ora non esiste ancora... ritorna sempre `null`!).
 
-Magari vi state chiedendo perché c'è un doppio `get` in `vehicleService.get(id).get()`. Il primo è l'invocazione del nostro metodo di `VehicleService`, il secondo serve per estrapolare il valore contenuto in `Optional<Vehicle>`. **È fortemente sconsigliato chiamare `get` su un opzionale** perché non stiamo gestendo affatto il caso in cui l'opzionale sia vuoto, nel nostro caso quando il veicolo non esiste. Ma per ora il nostro obiettivo è di far passare il test, poi **quando faremo il test che testa il caso in cui il veicolo non esiste, lo sistemeremo**.
+Magari vi state chiedendo perché c'è un doppio `get` in `vehicleService.get(id).get()`. Il primo è l'invocazione del nostro metodo di `VehicleService`, il secondo serve per estrapolare il valore contenuto in `Optional<Vehicle>`. **È fortemente sconsigliato chiamare `get` su un opzionale** perché non stiamo gestendo il caso in cui l'opzionale sia vuoto, in altre parole quando il veicolo non esiste. Ma per ora il nostro obiettivo è di far passare il test, poi **quando faremo il test che testa il caso in cui il veicolo non esiste, lo sistemeremo**.
 
 Facendo girare il test vediamo che effettivamente funziona! Ritorniamo il JSON con tutti i campi.
 
@@ -560,7 +560,7 @@ Caused by: java.util.NoSuchElementException: No value present
 
 In pratica è il nostro famoso `get` sull'opzionale che abbiamo messo nel controller. Stiamo cercando di recuperare un dato che non esiste e quindi va in eccezione.
 
-Andiamo a modificare il controller in modo tale che ci restituisca uno status code `404 - Not Found` quando il service non ci restituisce alcun veicolo.
+Andiamo a modificare il controller in modo tale che ci restituisca uno status code `404 - Not Found` quando il servizio non ci restituisce alcun veicolo.
 Per rispondere `404` abbiamo bisogno di un'eccezione che ci generi quello status code.
 Quindi creiamo l'eccezione in  `src/main/java/it/mattianatali/tddspringbootapi/vehicle/errors/VehicleNotFoundException.java` e scriviamo
 
@@ -864,7 +864,7 @@ Finalmente ora abbiamo la chiamata GET completamente sviluppata in TDD! Abbiamo 
 Sembra che sia stato lungo e difficile, ma solamente perché abbiamo spiegato ogni singola riga di codice e anche perché abbiamo spiegato ogni singolo passo che abbiamo svolto.
 La buona notizia è che tramite questo processo possiamo creare qualsiasi endpoint che ci venga in mente: possiamo complicare la logica di business quanto vogliamo, ma il procedimento in TDD rimarrà sempre il medesimo.
 
-Ora andiamo ad implementare la chiamata POST, ma spiegheremo con lo stesso livello di dettaglio solo il controller, lo sviluppo dei metodi nel service e del repository sarà molto simile a quello che abbiamo fatto per la chiamata GET, quindi sarebbe poco utile ripetere le stesse cose.
+Ora andiamo ad implementare la chiamata POST, ma spiegheremo con lo stesso livello di dettaglio solo il controller dove posso condividere con voi alcuni trucchetti che non ho ancora trattato. Lo sviluppo dei metodi nel service e del repository sarà molto simile a quello che abbiamo fatto per la chiamata GET, quindi sarebbe poco utile ripetere le stesse cose.
 
 ## Implementiamo il controller per la chiamata POST
 
