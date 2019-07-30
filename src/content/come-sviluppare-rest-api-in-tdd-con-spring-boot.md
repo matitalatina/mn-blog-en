@@ -4,13 +4,13 @@ title: Come sviluppare delle API in TDD con Spring Boot
 description: Volete sviluppare delle API in TDD con Spring Boot, ma non sapete come iniziare? Questa guida fa per voi!
 image: img/tdd-spring-boot/intellij-spring-boot.jpg
 author: Mattia Natali
-date: 2019-08-13T07:03:47.149Z
+date: 2019-07-30T09:03:47.149Z
 tags: 
   - Dev
   - How-to
   - TDD
   - Testing
-draft: true
+draft: false
 ---
 
 [In questo articolo](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero) abbiamo visto cosa significa sviluppare in Test Driven Development (TDD) e i pregi che ne derivano. L'esempio utilizzato potrebbe sembrare un giochino fine a se stesso, ma il mio focus lì era di spiegare il TDD per chi proprio non ne aveva mai sentito parlare.
@@ -23,6 +23,8 @@ Come sempre iniziamo completamente da zero, per non lasciare nulla al caso. Oltr
 ## Requisiti
 
 Il lettore che mi sto immaginando è uno **sviluppatore che ha già sentito parlare di Spring Boot, non si spaventa se parliamo di API RESTful, ha voglia di utilizzare il TDD come driver principale di sviluppo ma che non riesce ad applicarlo in modo efficace**.
+
+Questo articolo **è una continuazione della mia [prima puntata sul TDD](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero)**, quindi vi consiglio caldamente di leggere prima ["Come sviluppare in TDD partendo da zero"](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero). Così avrete un'infarinatura iniziale sul TDD e siamo allineati su alcuni concetti che qui darò per scontato.
 
 La mia guida si basa su un sistema operativo UNIX-like (Mac OS X), ma può essere facilmente seguito anche da chi utilizza Windows.
 
@@ -518,7 +520,7 @@ public class VehicleController {
 }
 ```
 
-Possiamo vedere per la prima volta come si può sfruttare la [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) di Spring Boot. Possiamo chiedere a Spring Boot di fornirci delle istanze di classi che ci servono per svolgere il nostro compito (in questo caso il recupero del veicolo), senza che noi dobbiamo preoccuparci effettivamente di *come* queste istanze siano create. In altre parole, tramite l'annotazione `@Autowired` stiamo dicendo a Spring Boot di fornirci nel costruttore tutte le istanze che abbiamo bisogno, delegando al framework il come crearle.
+**Possiamo vedere per la prima volta come si può sfruttare la [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection) di Spring Boot**. Possiamo chiedere a Spring Boot di fornirci delle istanze di classi che ci servono per svolgere il nostro compito (in questo caso il recupero del veicolo), senza che noi dobbiamo preoccuparci effettivamente di *come* queste istanze siano create. In altre parole, tramite l'annotazione `@Autowired` stiamo dicendo a Spring Boot di fornirci nel costruttore tutte le istanze che abbiamo bisogno, delegando al framework il come crearle.
 
 In questo modo possiamo creare delle classi disaccoppiate tra di loro e soprattutto nei test possiamo *iniettare* delle istanze finte (mockate). Iniettando nei test delle classi mockate possiamo pilotare il flusso di esecuzione senza distogliere lo sguardo dalla classe sotto test. Perché infatti l'unica vera implementazione testata è il controller, il resto è tutta finzione (la finzione è data dall'annotazione `@MockBean` e dal metodo `when().thenReturn()`).
 
@@ -940,7 +942,7 @@ emuliamo il fatto che il nostro servizio ci restituisca lo stesso oggetto passat
 
 Infine testiamo che la chiamata HTTP risponda con lo statusCode `201 - Created` e che nel body abbiamo tutti i campi popolati.
 
-`objectMapper` è il serializzatore di default di Spring Boot [Jackson](https://github.com/FasterXML/jackson). Chiediamo una sua instanza a Spring Boot tramite `@Autowired`.
+`objectMapper` è il serializzatore di default di Spring Boot [Jackson](https://github.com/FasterXML/jackson). Chiediamo una sua istanza a Spring Boot tramite `@Autowired`.
 
 Il compilatore si sta lamentando che non esiste il metodo save sul `VehicleService`, andiamo ad aggiungerlo senza implementare la logica corretta.
 
@@ -1010,7 +1012,7 @@ In questo caso ci basta invocare il metodo `vehicleService.save` e di ritornare 
 
 Facendo girare i test è tutto ok!
 
-Abbiamo quasi finito, ma ci manca da implementare una regola che ci è stata data quando salviamo un veicolo. La ripropongo qui:
+Abbiamo quasi finito, ma dobbiamo ancora implementare la regola che ci è stata data quando salviamo un veicolo. La ripropongo qui:
 
 - Il `brand`, `model` e `year` sono obbligatori, l'anno di produzione del veicolo non può essere antecedente al `1950` per ragioni di business.
 
@@ -1071,11 +1073,11 @@ class VehicleControllerTest {
 }
 ```
 
-Qui possiamo vedere una bellissima funzionalità di JUnit 5: i test parametrici!
+Qui possiamo vedere una bellissima funzionalità di JUnit 5: i **test parametrici**!
 
 - Attraverso l'annotazione `@ParametrizedTest` definiamo un test che in input vuole un parametro.
 - `@MethodSource("getInvalidVehicles")` definiamo il metodo che ci fornirà i veicoli che sono invalidi e che dobbiamo testare.
-- Il medodo `getInvalidVehicles()` ci ritorna uno stream di veicoli invalidi, per creare questo stream partiamo da un veicolo valido che abbiamo già testato nell'altro test, poi da questo creiamo un veicolo invalido modificando i parametri. In questo modo creiamo 6 test che testa rispettivamente tutte le regole che il business ci ha imposto ossia:
+- Il medodo `getInvalidVehicles()` ci ritorna uno stream di veicoli invalidi, per creare questo stream partiamo da un veicolo valido che abbiamo già testato nell'altro test (`aValidVehicle()`), poi da questo creiamo un veicolo invalido modificando i parametri. In questo modo creiamo 6 test che testa rispettivamente tutte le regole che il business ci ha imposto ossia:
   - Il parametro `brand` non può essere nullo o stringa vuota.
   - Il parametro `model` non può essere nullo o stringa vuota.
   - Il parametro `year` non può essere nullo.
@@ -1141,12 +1143,13 @@ Vehicle saveVehicle(@RequestBody @Valid Vehicle vehicle) {
 Facciamo girare i test e ora sono tutti verdi! In questo modo abbiamo fatto in un colpo ben 6 test senza duplicare il codice.
 
 Ora che abbiamo implementato il controller, manca il metodo `vehicleService.save` da implementare, questo lo lascio come compito a casa dato che non darebbe nessun valore aggiunto a questo articolo: dobbiamo praticamente fare la stessa cosa che abbiamo fatto con la chiamata GET. E il metodo del `VehicleRepository.save`, lo abbiamo già testato quando abbiamo implementato la chiamata GET.
+In ogni caso [nel mio repository](https://github.com/matitalatina/tdd-spring-boot-api) potete trovare il progetto completo.
 
 # Conclusioni
 
-È stata una lunga chiacchierata, spero proprio che dopo questa lettura abbiate imparato un po' di funzionalità offerte da JUnit 5, Spring Boot, Lombok, ma soprattutto sia entrato in voi la filosofia del TDD.
+È stata una lunga chiacchierata, **spero proprio che** dopo questa lettura abbiate imparato un po' di funzionalità offerte da JUnit 5, Spring Boot, Lombok, ma soprattutto **sia entrato in voi la filosofia del TDD**.
 
-La cosa importante che deve essere chiara è questa: **prima ci preoccupiamo di cosa vogliamo raggiungere, poi ci preoccupiamo di come raggiungerlo**. Il *cosa* vogliamo raggiungere si traduce in test, il *come* si traduce nell'implementazione.
+La cosa che deve essere chiara è questa: **prima ci preoccupiamo di cosa vogliamo raggiungere, poi ci preoccupiamo di come raggiungerlo**. Il *cosa* vogliamo raggiungere si traduce in test, il *come* si traduce nell'implementazione.
 
 In questo modo abbiamo un codice ben testato, ben organizzato in classi isolate (se una classe è facile da testare, significa che è ben isolata dal resto dei componenti) e soprattutto facile da mantenere (i refactor sono semplici perché ogni singola funzionalità è testata, le regressioni sono pressochè azzerate).
 

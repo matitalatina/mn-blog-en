@@ -655,4 +655,6 @@ All'inizio il TDD sembra un freno, come tutte le cose nuove, ma una volta preso 
 
 Spero che questo articolo ti abbia fatto venire voglia di provare questa affascinante tecnica che, a primo impatto, può sembrare quasi assurda, ma una volta adottata, aumenta enormemente la qualità del codice e di conseguenza anche la qualità del prodotto finale.
 
+Se volete vedere il TDD in azione con Spring Boot potete leggere il mio articolo che parla di [come sviluppare delle API RESTful in TDD con Spring Boot](/come-sviluppare-rest-api-in-tdd-con-spring-boot).
+
 Alla prossima!

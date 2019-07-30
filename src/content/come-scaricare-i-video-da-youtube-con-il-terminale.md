@@ -9,7 +9,6 @@ tags:
   - Terminale
   - Mac
   - YouTube
-  - Dev
 ---
 
 Avete appena trovato un video bellissimo su YouTube e volete a tutti i costi scaricarlo, oppure volete scaricare solo la parte audio del video per inserirlo nella vostra playlist musicale? Il terminale non vi spaventa? Bene, allora questa guida fa per voi!

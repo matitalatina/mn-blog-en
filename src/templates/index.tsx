@@ -85,6 +85,10 @@ export interface IndexProps {
       }>;
     };
   };
+  pageContext: {
+    numPages: number;
+    currentPage: number;
+  }
 }
 
 const IndexPage: React.FC<IndexProps> = props => {
@@ -143,8 +147,8 @@ const IndexPage: React.FC<IndexProps> = props => {
                     alt={config.title}
                   />
                 ) : (
-                  config.title
-                )}
+                    config.title
+                  )}
               </SiteTitle>
               <SiteDescription>{config.description}</SiteDescription>
             </SiteHeaderContent>
@@ -167,7 +171,7 @@ const IndexPage: React.FC<IndexProps> = props => {
           </div>
         </main>
         {props.children}
-        <Pagination currentPage={props.pageContext.currentPage} numPages={props.pageContext.numPages} />
+        {props.pageContext.numPages > 1 && (<Pagination currentPage={props.pageContext.currentPage} numPages={props.pageContext.numPages} />)}
         <Footer />
       </Wrapper>
     </IndexLayout>
