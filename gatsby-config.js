@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: 'Mattia Natali',
     description: 'Il mio blog personale',
-    siteUrl: 'https://gatsby-casper.netlify.com', // full path to blog - no ending slash
+    siteUrl: 'https://www.mattianatali.it', // full path to blog - no ending slash
   },
   mapping: {
     'MarkdownRemark.frontmatter.author': 'AuthorYaml',
@@ -47,7 +47,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://gatsby-casper.netlify.com',
+        siteUrl: 'https://www.mattianatali.it',
       },
     },
     'gatsby-plugin-emotion',
@@ -63,7 +63,7 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: 'gatsby-plugin-google-analytics',
       options: {
         trackingId: 'UA-81893752-1',
         // Puts tracking script in the head instead of the body
