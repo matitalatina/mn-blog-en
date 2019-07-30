@@ -62,7 +62,7 @@ const config: WebsiteConfig = {
   coverImage: 'img/blog-cover.jpg',
   logo: 'img/ghost-logo.png',
   lang: 'it',
-  siteUrl: 'https://mattianatali.netlify.com',
+  siteUrl: 'https://www.mattianatali.it',
   facebook: 'https://www.facebook.com/mattia.natali',
   twitter: 'https://twitter.com/matitalatina',
   linkedin: 'https://www.linkedin.com/in/mattian/',
