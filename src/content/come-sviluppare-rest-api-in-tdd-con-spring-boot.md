@@ -15,7 +15,7 @@ draft: false
 
 [In questo articolo](/come-sviluppare-in-test-driven-development-tdd-partendo-da-zero) abbiamo visto cosa significa sviluppare in Test Driven Development (TDD) e i pregi che ne derivano. L'esempio utilizzato potrebbe sembrare un giochino fine a se stesso, ma il mio focus lì era di spiegare il TDD per chi proprio non ne aveva mai sentito parlare.
 
-In questa guida invece vediamo insieme un caso d'uso che ci sarà molto più familiare: lo sviluppo delle REST API. Per far ciò ho deciso di utilizzare il framework Spring Boot, il linguaggio scelto è Java.
+In questa guida invece vediamo insieme un caso d'uso che ci sarà molto più familiare: lo sviluppo delle API RESTful. Per far ciò ho deciso di utilizzare il framework Spring Boot, il linguaggio scelto è Java.
 Spring boot è molto utilizzato in ambito enterprise per creare un'architettura a microservizi. Anche [Netflix lo utilizza](https://hub.packtpub.com/netflix-adopts-spring-boot-as-its-core-java-framework/). Inoltre Java è un linguaggio di programmazione ormai noto a tutti e quindi penso sia una buona scelta per vedere insieme un esempio pratico.
 
 Come sempre iniziamo completamente da zero, per non lasciare nulla al caso. Oltre al TDD, vedremo insieme anche come strutturare in modo corretto il progetto e altre librerie molto comode che uso ogni giorno per aumentare la nostra produttività, come per esempio la libreria [Lombok](https://projectlombok.org/).
