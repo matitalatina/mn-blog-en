@@ -860,6 +860,25 @@ Eseguendolo vediamo che il test passa come ci aspettavamo, non dobbiamo implemen
 
 Dobbiamo ricordarci che il setup del DB solitamente è molto più impegnativo: ci sono migrazioni, creazioni di tabelle in modo esplicito, chiamate ad un DB remoto ecc. Noi ce la stiamo cavando facilmente con il DB H2 che abbiamo inserito durante la creazione del progetto. Purtroppo non tratteremo insieme queste tematiche per non perdere il focus dal TDD.
 
+### Test sui repository
+
+Nel nostro caso, a causa di questa semplificazione, stiamo testando su un DB in memory creato ad hoc per i test, tutto questo grazie con l'annotazione `@DataJpaTest`. Purtroppo, cosi facendo, i test sui repository perdono la maggior parte dell'efficacia. Ma ora proviamo ad immaginare di usare questo modus operandi su un progetto vero.
+
+Noi in Pirelli testiamo i repository su un DB molto simile a quello reale. In questo caso i vantaggi di testare i repo sono tanti, anche se l'implementazione viene fatta "magicamente" da Spring. Per esempio testando un banale `.save()` autogenerato:
+
+- Possiamo testare che tutte le proprietà proprietà del modello siano mappate a DB.
+- Possiamo verificare che le migrazioni rispecchino veramente il codice.
+- Possiamo verificare che non ci siano dei typo negli enum che si mappano nel DB, o che tutti gli enum siano presenti anche lato DB.
+- Possiamo verificare che il driver JDBC sia in grado di mappare tutte le proprietà presenti sul modello (e.g. driver vecchi potrebbero non mappare correttamente le classi `Date` di Java 8).
+- Possiamo verificare che le relazioni vengano salvate come ci aspettiamo.
+
+Poi il repository può crescere e possiamo creare nuovi metodi autogenerati da Spring ma anche qui:
+
+- Possiamo testare che le relazioni siano recuperate in modo corretto.
+- Possiamo verifiare che non ci siano errori logici nel metodo autogenerato (basta un attimo a confondere un id con un altro o dimenticarti un Not nel metodo).
+
+Infine non dobbiamo trarci in inganno pensando che l'implementazione è semplice (il metodo `.save()` è autogenerato!) e quindi è inutile il test: i test guidano il nostro sviluppo in TDD. Quindi prima testiamo che la funzionalità non esista, poi la implementiamo, infine **il test verifica che esista e rimanga tale per *tutti* i prossimi sviluppi**: il metodo `.save()` può complicarsi, magari non sarà più autogenerato perchè sono state aggiunte logiche ad hoc. Il nostro test sarà sempre lì a darci questa garanzia. Se non lo facciamo all'inizio, ci perdiamo questa opportunità e potremmo avere dei dispiaceri più avanti.
+
 ### Chiamata GET completata!
 
 Finalmente ora abbiamo la chiamata GET completamente sviluppata in TDD! Abbiamo 3 componenti ben isolati, facili da testare, con una coverage del 100%.
