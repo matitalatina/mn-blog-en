@@ -39,7 +39,7 @@ Durante questo sviluppo spiegherò tutti i passaggi e espliciterò tutti i vanta
 Per seguire la guida dovresti avere:
 
 - Installato Node.js.
-- Un minimo di esperienza con Node.js. TypeScript, se non lo hai mai usato, è JavaScript con i tipi, per ora è tutto quello che devi sapere ?.
+- Un minimo di esperienza con Node.js. TypeScript, se non lo hai mai usato, è JavaScript con i tipi, per ora è tutto quello che devi sapere.
 - Per la seconda parte c'è bisogno di sapere il concetto di programmazione asincrona in JavaScript: andremo ad utilizzare le [Promise](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Promise) e le keyword [async e await](https://javascript.info/async-await).
 - Un sistema UNIX (Linux o Mac). Oppure aver abilitato il [WSL su Windows](http://wsl-guide.org/en/latest/).
 
