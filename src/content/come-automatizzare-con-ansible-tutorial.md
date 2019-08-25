@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Come automatizzare la configurazione delle macchine con Ansible · DevOps
-description: Impariamo ad essere efficienti con Ansible.
+title: Impariamo ad automatizzare con Ansible · DevOps
+description: Aumentiamo la nostra efficienza sul lavoro delegando ad Ansible i task ripetitivi e le configurazioni delle macchine.
 image: img/vpn-ansible/ansible-cog-head.jpg
 author: Mattia Natali
 date: 2019-08-25T07:03:47.149Z
@@ -9,6 +9,7 @@ tags:
   - DevOps
   - Dev
   - Ansible
+  - Automazione
 draft: false
 ---
 
