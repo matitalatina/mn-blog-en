@@ -72,7 +72,7 @@ Ora abbiamo una terminologia comune, non è necessario capire tutto ora, sicuram
 
 Prima di automatizzare dobbiamo aver chiaro cosa dobbiamo fare, la prima volta magari non abbiamo proprio le idee chiare, facciamo molti tentativi e alcuni finiranno in un nulla di fatto. **Quindi la prima cosa da fare è provare manualmente** senza scomodare Ansible così da essere più veloci nella fase di "costruzione" dei vari task per raggiungere l'obiettivo. Nel nostro caso ci facciamo prima un po' di cultura sulla VPN, leggiamo come funziona [strongswan](https://www.strongswan.org/), che librerie ha bisogno per funzionare, come configurarlo ecc. Poi ci facciamo una cultura su [Let's Encrypt](https://letsencrypt.org/) per rilasciare un certificato valido per il nostro dominio `casamia.mattianatali.it` che punta a casa nostra, in modo tale da avere il punto di accesso alla nostra VPN.
 
-Tutta questa fase ve la risparmio, la cosa che dobbiamo tenere a mente è questa: **durante la fase manuale teniamo a mente ogni passaggio che svolgiamo per portare a termine il nostro compito**, ogni singolo file di configurazione che abbiamo modificato, qualsiasi cosa dobbiamo tenerne traccia perchè fra poco la automatizzeremo.
+Tutta questa fase ve la risparmio, la cosa che dobbiamo tenere a mente è questa: **durante la fase manuale teniamo a mente ogni passaggio che svolgiamo per portare a termine il nostro compito**, ogni singolo file di configurazione che abbiamo modificato, qualsiasi cosa dobbiamo tenerne traccia perché fra poco la automatizzeremo.
 
 ## Definiamo i ruoli
 
@@ -160,7 +160,7 @@ Il formato con cui viene scritto il file è [YAML](https://it.wikipedia.org/wiki
 
 Il nostro Playbook dovrà fare solo una cosa: creare un VPN Server. Nel gerco di Ansible, un playbook è formato da più **plays**. Noi abbiamo un solo *play* nel nostro playbook.
 
-**Come si fa a capire come e quando creare un play?** Solitamente se abbiamo *più ruoli* che influenzano *un unico gruppo* di macchine, allora questo è un buon candidato per essere un play. Se invece avessimo avuto *dei ruoli* che avevano come target il *Raspberry* ed *altri ruoli* che dovevano configurare *dei routers*, allora il nostro playbook sarebbe composto da due plays. Perchè un play andava a lavorare sui Raspberry Pi, l'altro sui routers.
+**Come si fa a capire come e quando creare un play?** Solitamente se abbiamo *più ruoli* che influenzano *un unico gruppo* di macchine, allora questo è un buon candidato per essere un play. Se invece avessimo avuto *dei ruoli* che avevano come target il *Raspberry* ed *altri ruoli* che dovevano configurare *dei routers*, allora il nostro playbook sarebbe composto da due plays. Perché un play andava a lavorare sui Raspberry Pi, l'altro sui routers.
 
 Spieghiamo i vari comandi che ci sono dentro ad un play:
 
@@ -306,7 +306,7 @@ Questi sono i "comandi" che dobbiamo tradurre in task Ansible, prendeteli per bu
 9. Abilitare [l'IP Masquerading](https://it.wikipedia.org/wiki/Network_address_translation#IP_masquerading_o_PAT_(Port_Address_Translation)), cambiando le regole del firewall del Raspberry Pi.
 10. Riavviare il Raspberry Pi.
 
-Queste sono tutte le operazioni che dobbiamo automatizzare per avere la nostra VPN funzionante sul Raspberry Pi. **Le operazioni sono tante, alcune complesse, noiose da fare manualmente, la possibilità di errore è alta, i comandi sono praticamente impossibili da ricordare a memoria per una futura configurazione**. Forse ora capite perchè ho subito pensato ad Ansible quando mi sono cimentato in questa impresa!
+Queste sono tutte le operazioni che dobbiamo automatizzare per avere la nostra VPN funzionante sul Raspberry Pi. **Le operazioni sono tante, alcune complesse, noiose da fare manualmente, la possibilità di errore è alta, i comandi sono praticamente impossibili da ricordare a memoria per una futura configurazione**. Forse ora capite perché ho subito pensato ad Ansible quando mi sono cimentato in questa impresa!
 
 Con Ansible possiamo fare tutto questo con poche righe di codice e con una chiarezza disarmante. Il risultato finale del nostro file `main.yml`, che include tutti i nostri comandi è il seguente. Ho aggiunto dei commenti nel file così da avere la giusta corrispondenza coi punti scritti appena sopra:
 
@@ -572,12 +572,12 @@ In meno di 2 minuti avrà finito di fare il tutto e noi possiamo connetterci all
 
 ![Configurazione della VPN sul mio Mac](img/vpn-ansible/vpn-mac-config.png)
 
-Alla fine ci manca di fare il port forwarding delle porte della VPN dal router al Raspberry Pi, questa parte non l'ho automatizzata con Ansible perchè i router sono tutti diversi tra di loro, [se volete avere la VPN completa vi consiglio di leggere il README del mio repository](https://github.com/matitalatina/vpn-raspberry-ansible/blob/master/README.md).
+Alla fine ci manca di fare il port forwarding delle porte della VPN dal router al Raspberry Pi, questa parte non l'ho automatizzata con Ansible perché i router sono tutti diversi tra di loro, [se volete avere la VPN completa vi consiglio di leggere il README del mio repository](https://github.com/matitalatina/vpn-raspberry-ansible/blob/master/README.md).
 
 
 ## Conclusioni
 
-Spero che questa guida vi abbia fornito delle linee guida su come automatizzare task anche complessi usando Ansible. Ho sorvolato di proposito parecchi punti che erano strettamente legati alla creazione della VPN, questo perchè **lo scopo della guida è di mostrarvi le potenzialità di Ansible con un esempio che non fosse il semplice "Hello World"**.
+Spero che questa guida vi abbia fornito delle linee guida su come automatizzare task anche complessi usando Ansible. Ho sorvolato di proposito parecchi punti che erano strettamente legati alla creazione della VPN, questo perché **lo scopo della guida è di mostrarvi le potenzialità di Ansible con un esempio che non fosse il semplice "Hello World"**.
 
 Quello che **deve essere chiaro è il modus operandi con cui siamo arrivati alla soluzione**:
 
@@ -587,7 +587,7 @@ Quello che **deve essere chiaro è il modus operandi con cui siamo arrivati alla
 - Per definire le macchine target, definiamo l'inventario e inseriamo tutte le variabili in `group_vars` e `host_vars`.
 - I task da eseguire li definiamo nel ruolo. I moduli ci aiuteranno nella definizione di questi task.
 
-**Ansible si basa molto sulle convenzioni e best practices**. Questo è un vantaggio enorme perchè se avete capito questo esempio, praticamente potete capire qualsiasi playbook di Ansible perchè la struttura è sempre la stessa! [Provate a sfogliare i vari esempi che fornisce Ansible](https://github.com/ansible/ansible-examples), ritroverete gli stessi concetti e cartelle in tutti.
+**Ansible si basa molto sulle convenzioni e best practices**. Questo è un vantaggio enorme perché se avete capito questo esempio, praticamente potete capire qualsiasi playbook di Ansible perché la struttura è sempre la stessa! [Provate a sfogliare i vari esempi che fornisce Ansible](https://github.com/ansible/ansible-examples), ritroverete gli stessi concetti e cartelle in tutti.
 
 Una volta internalizzato questi concetti, non importa se dobbiamo impostare una VPN, un'istanza ridondata di MongoDB, configurare l'NTP su 100 macchine, possiamo fare configurare tutto quello che vogliamo con Ansible in modo efficiente e chiaro.
 
