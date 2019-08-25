@@ -169,7 +169,6 @@ export const PostFullContent = styled.section`
   li code[class*="language-"] {
     word-break: break-all;
     padding: 0.15em 0.4em;
-    white-space: normal;
   }
 
   pre {
@@ -444,7 +443,7 @@ export const PostFullContent = styled.section`
   }
 
   .token.punctuation {
-    color: #f8f8f2;
+    color: #acfff1;
   }
 
   .namespace {
