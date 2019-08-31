@@ -9,6 +9,7 @@ tags:
   - Dev
   - Terminale
   - Mac
+  - How-to
 draft: false
 ---
 

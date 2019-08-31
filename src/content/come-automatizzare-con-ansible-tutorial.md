@@ -10,6 +10,7 @@ tags:
   - Dev
   - Ansible
   - Automazione
+  - How-to
 draft: false
 ---
 
