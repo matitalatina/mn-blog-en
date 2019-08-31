@@ -63,7 +63,7 @@ const Subscribe: React.FC<SubscribeProps> = props => {
   return (
     <SubscribeFormSection>
       <h3 css={SubscribeFormTitle}>Rimanere aggiornati è fondamentale</h3>
-      <p>Ricevi le ultime novità direttamente via email</p>
+      <p>Ricevi le ultime novità via email</p>
       <SubscribeForm />
     </SubscribeFormSection>
   );

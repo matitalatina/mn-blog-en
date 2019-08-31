@@ -184,7 +184,7 @@ class SubscribeModal extends React.Component<any, SubscribeState> {
           <SubscribeLogo />
           <SubscribeOverlayTitle>Rimanere aggiornati è fondamentale</SubscribeOverlayTitle>
           <SubscribeOverlayDescription>
-            Ricevi le ultime novità direttamente via email
+            Ricevi le ultime novità via email
           </SubscribeOverlayDescription>
           <SubscribeForm />
         </SubscribeOverlayContent>
