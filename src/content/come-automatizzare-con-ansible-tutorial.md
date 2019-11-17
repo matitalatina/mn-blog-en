@@ -89,7 +89,7 @@ Una volta raggiunto l'obiettivo manualmente, è tempo di organizzare le idee. Al
 
 Di tutti questi task **possiamo trovare due ruoli ben distinti** che possono essere separati.
 
-- **La generazione e il mantentimento dei certificati** per `casamia.mattianatali.it` usando Let's Encrypt.
+- **La generazione e il mantenimento dei certificati** per `casamia.mattianatali.it` usando Let's Encrypt.
 - **Installazione della VPN** che utilizza i certificati precedentemente creati.
 
 Che vantaggi porta separare i task trovati in questi due ruoli?
@@ -265,7 +265,7 @@ Per inserire i valori nelle doppie graffe, Ansible utilizza un template engine m
 
 ## Implementiamo il ruolo per installare la VPN
 
-Abbiamo definito il playbook, l'inventario, le variabili e il ruolo per installare i certificati che abbiamo trovato su Ansible Galaxy; ora **ci manca da implementarie il ruolo che installa il VPN server sul Raspberry Pi**.
+Abbiamo definito il playbook, l'inventario, le variabili e il ruolo per installare i certificati che abbiamo trovato su Ansible Galaxy; ora **ci manca da implementare il ruolo che installa il VPN server sul Raspberry Pi**.
 
 I ruoli vengono definiti nella cartella `roles/`, creiamo una cartella al suo interno che prenderà il nome del ruolo (`vpn-install`), lo stesso nome che abbiamo definito nel playbook in `vpn.yml`.
 La struttura delle nostre cartelle sarà definita così:
@@ -408,13 +408,13 @@ I moduli che ho utilizzato in questo ruolo sono i seguenti:
 - [*sysctl*](https://docs.ansible.com/ansible/latest/modules/sysctl_module.html): per modificare il file `sysctl.conf` e quindi modificare gli attributi del kernel di sistema. Nel nostro caso è servito per abilitare l'IP Forwarding.
 - [*template*](https://docs.ansible.com/ansible/latest/modules/template_module.html): per processare un file usando il template engine Jinja2, e copiare il risultato sul Raspberry Pi. **Abbiamo bisogno di Jinja2 per inserire un file che sia dinamico in base alle variabili dell'host e del gruppo su cui stiamo lavorando**.
 - [*copy*](https://docs.ansible.com/ansible/latest/modules/copy_module.html): per copiare un file da una cartella locale sul nostro Raspberry Pi, in questo caso non abbiamo bisogno di Jinja2 per inserire delle variabili.
-- [*file*](https://docs.ansible.com/ansible/latest/modules/file_module.html): per lavorare con i file e le cartelle sul Raspberry Pi, per sempio modificare dei permessi, creare o eliminare cartelle ecc.
+- [*file*](https://docs.ansible.com/ansible/latest/modules/file_module.html): per lavorare con i file e le cartelle sul Raspberry Pi, per esempio modificare dei permessi, creare o eliminare cartelle ecc.
 - [*shell*](https://docs.ansible.com/ansible/latest/modules/shell_module.html): per eseguire dei comandi classici tramite la cli sulla macchina di destinazione.
 - [*cron*](https://docs.ansible.com/ansible/latest/modules/cron_module.html): per modificare il file [crontab](https://it.wikipedia.org/wiki/Crontab) sulla macchina.
 - [*lineinfile*](https://docs.ansible.com/ansible/latest/modules/lineinfile_module.html): per verificare che esista una linea specifica in un determinato file.
 - [*reboot*]((https://docs.ansible.com/ansible/latest/modules/reboot_module.html)): per riavviare il Raspberry Pi a fine di tutto.
 
-Le opzioni dei vari moduli sono abbastanza esplicativi, in ogni caso se qualcuno non è chiaro potete leggere la documentazione dei singoli moduli. I nomi dei moduli, nella lista precedente, puntanto tutti alla guida di riferimento.
+Le opzioni dei vari moduli sono abbastanza esplicativi, in ogni caso se qualcuno non è chiaro potete leggere la documentazione dei singoli moduli. I nomi dei moduli, nella lista precedente, puntano tutti alla guida di riferimento.
 
 Ci sono alcuni però che meritano una descrizione più approfondita: per esempio il task
 
@@ -591,6 +591,6 @@ Quello che **deve essere chiaro è il modus operandi con cui siamo arrivati alla
 
 **Ansible si basa molto sulle convenzioni e best practices**. Questo è un vantaggio enorme perché se avete capito questo esempio, praticamente potete capire qualsiasi playbook di Ansible perché la struttura è sempre la stessa! [Provate a sfogliare i vari esempi che fornisce Ansible](https://github.com/ansible/ansible-examples), ritroverete gli stessi concetti e cartelle in tutti.
 
-Una volta internalizzato questi concetti, non importa se dobbiamo impostare una VPN, un'istanza ridondata di MongoDB, configurare l'NTP su 100 macchine, possiamo fare configurare tutto quello che vogliamo con Ansible in modo efficiente e chiaro.
+Una volta assimilato questi concetti, non importa se dobbiamo impostare una VPN, un'istanza ridondata di MongoDB, configurare l'NTP su 100 macchine, possiamo fare configurare tutto quello che vogliamo con Ansible in modo efficiente e chiaro.
 
 Alla prossima!
