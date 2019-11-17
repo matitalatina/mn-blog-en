@@ -168,6 +168,7 @@ export const PostFullContent = styled.section`
   p code[class*="language-"],
   li code[class*="language-"] {
     word-break: break-all;
+    white-space: normal;
     padding: 0.15em 0.4em;
   }
 
