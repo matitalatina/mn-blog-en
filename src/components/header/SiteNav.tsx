@@ -141,6 +141,9 @@ class SiteNav extends React.Component<SiteNavProps> {
             <li role="menuitem">
               <a href="https://slides.mattianatali.dev" target="_blank">Slides</a>
             </li>
+            <li role="menuitem">
+              <a href="https://wwww.mattianatali.it" target="_blank">Italiano</a>
+            </li>
             {/* <li role="menuitem">
               <Link to="/tags/dev/">Dev</Link>
             </li>
