@@ -349,7 +349,7 @@ export const query = graphql`
       frontmatter {
         title
         description
-        userDate: date(locale: "it", formatString: "D MMMM YYYY")
+        userDate: date(locale: "en", formatString: "D MMMM YYYY")
         date
         tags
         image {

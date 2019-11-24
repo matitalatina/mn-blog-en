@@ -181,9 +181,9 @@ const Author: React.FC<AuthorTemplateProps> = props => {
                   </div>
                 )}
                 <div css={HiddenMobile}>
-                  {totalCount > 1 && `${totalCount} articoli`}
-                  {totalCount === 1 && '1 articolo'}
-                  {totalCount === 0 && 'Nessun articolo'} <Bull>•</Bull>
+                  {totalCount > 1 && `${totalCount} posts`}
+                  {totalCount === 1 && '1 post'}
+                  {totalCount === 0 && 'No posts'} <Bull>•</Bull>
                 </div>
                 {author.website && (
                   <div>

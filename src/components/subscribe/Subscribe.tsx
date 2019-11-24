@@ -61,8 +61,8 @@ export interface SubscribeProps {
 const Subscribe: React.FC<SubscribeProps> = props => {
   return (
     <SubscribeFormSection>
-      <h3 css={SubscribeFormTitle}>Rimanere aggiornati è fondamentale</h3>
-      <p>Ricevi le ultime novità via email</p>
+      <h3 css={SubscribeFormTitle}>Keeping up to date is essential</h3>
+      <p>Get the latest news by email</p>
       <SubscribeForm />
     </SubscribeFormSection>
   );

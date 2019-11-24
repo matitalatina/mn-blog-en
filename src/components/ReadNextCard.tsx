@@ -213,9 +213,9 @@ const ReadNextCard: React.FC<ReadNextProps> = props => {
           <ReadNextCardFooter>
             <Link to={`/tags/${_.kebabCase(props.tags[0])}/`}>
               {props.relatedPosts.totalCount > 1 &&
-                `Leggi tutti i ${props.relatedPosts.totalCount} articoli`}
-              {props.relatedPosts.totalCount === 1 && '1 articolo'}
-              {props.relatedPosts.totalCount === 0 && 'Nessun articolo'} →
+                `See all ${props.relatedPosts.totalCount} posts`}
+              {props.relatedPosts.totalCount === 1 && '1 post'}
+              {props.relatedPosts.totalCount === 0 && 'No posts'} →
             </Link>
           </ReadNextCardFooter>
         </ReadNextCardStyles>

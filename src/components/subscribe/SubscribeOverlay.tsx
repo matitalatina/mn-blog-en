@@ -179,9 +179,9 @@ class SubscribeModal extends React.Component<any, SubscribeState> {
         <SubscribeOverlayClose onClick={this.close} />
         <SubscribeOverlayContent>
           <SubscribeLogo />
-          <SubscribeOverlayTitle>Rimanere aggiornati è fondamentale</SubscribeOverlayTitle>
+          <SubscribeOverlayTitle>Keeping up to date is essential</SubscribeOverlayTitle>
           <SubscribeOverlayDescription>
-            Ricevi le ultime novità via email
+            Get the latest news by email
           </SubscribeOverlayDescription>
           <SubscribeForm />
         </SubscribeOverlayContent>

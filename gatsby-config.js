@@ -3,8 +3,8 @@ const path = require('path');
 module.exports = {
   siteMetadata: {
     title: 'Mattia Natali',
-    description: 'Il mio blog personale',
-    siteUrl: 'https://www.mattianatali.it', // full path to blog - no ending slash
+    description: 'My technical personal blog',
+    siteUrl: 'https://blog.mattianatali.dev', // full path to blog - no ending slash
   },
   mapping: {
     'MarkdownRemark.frontmatter.author': 'AuthorYaml',
