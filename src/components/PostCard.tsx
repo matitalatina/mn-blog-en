@@ -240,7 +240,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               </Link>
             </AuthorListItem>
           </AuthorList>
-          <ReadingTime>{post.timeToRead} {post.timeToRead !== 1 ? 'minuti': 'minuto'}</ReadingTime>
+          <ReadingTime>{post.timeToRead} {post.timeToRead !== 1 ? 'minutes': 'minute'}</ReadingTime>
         </PostCardMeta>
       </PostCardContent>
     </article>
