@@ -57,11 +57,25 @@ We can achieve our acceptance criteria with these classes, now let's implement t
 
 ### Interfaces
 
-Building a single page application is very complex, it handles a lot of different objects and it's very difficult to keep track of them without a type system. TypeScript adds types to JavaScript and I exploit this as much as I can.
+Building a single page application is complex. It handles a lot of different objects and it's very difficult to keep track of them without a type system. TypeScript adds types to JavaScript and I exploit this as much as I can.
 So I always create a folder `/model` that keeps track of all the objects that I create or receive from the backend.
 In this tutorial, we will face with these interfaces:
 
 ```typescript
+export interface ILogin {
+    email: string;
+    password: string;
+}
+
+export interface ILoginResponse {
+    accessToken: string;
+    refreshToken: string;
+}
+
+export interface IRefreshRequest {
+  refreshToken: string;
+}
+
 ```
 
 ### AuthClient
@@ -72,14 +86,11 @@ In this tutorial, we will face with these interfaces:
 import { Injectable } from '@angular/core';
 import { ILogin } from './model/Login';
 import { ILoginResponse } from './model/LoginResponse';
+import { IRefreshRequest } from './model/RefreshRequest';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { INTERCEPTOR_NO_AUTH_HEADER } from './constants';
-
-export interface IRefreshRequest {
-  refreshToken: string;
-}
 
 @Injectable({
   providedIn: 'root'
