@@ -504,7 +504,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 export class AppModule { }
 ```
 
-And that's it! Now our app handles the JWT Authentication of our back-end!
+And that's it! Now our app handles the JWT authentication of our back-end!
 
 ### Conclusion
 
