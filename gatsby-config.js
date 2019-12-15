@@ -11,7 +11,12 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-sitemap',
-    'gatsby-plugin-sharp',
+    {
+      resolve: 'gatsby-plugin-sharp',
+      options: {
+        defaultQuality: 90,
+      },
+    },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -47,7 +52,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-canonical-urls',
       options: {
-        siteUrl: 'https://www.mattianatali.it',
+        siteUrl: 'https://blog.mattianatali.dev',
       },
     },
     'gatsby-plugin-emotion',

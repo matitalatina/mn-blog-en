@@ -4,12 +4,12 @@ title: JWT Token Auth integration with Angular
 description: Let's learn how to integrate our JWT Token Auth system in Angular
 image: img/angular-jwt-auth/angular-jwt-rxjs.jpg
 author: Mattia Natali
-date: 2019-12-20T07:03:47.149Z
+date: 2019-12-15T16:40:20.172Z
 tags: 
   - Dev
   - Auth
   - How-to
-draft: true
+draft: false
 ---
 
 At work, I had to create a new web portal that should communicate with our backend.
@@ -128,8 +128,8 @@ You can see `AuthClient` is quite simple. The only weird thing is the header `IN
 
 ### AuthStore
 
-It stores and persists the user credentials. My implementation is heavily inspired by the Bloc pattern + RxJS. This is a new pattern that raises in [Dart + Flutter world](https://medium.com/flutter-community/why-use-rxdart-and-how-we-can-use-with-bloc-pattern-in-flutter-a64ca2c7c52d). I like it and I ported the concept in Angular.
-I don't want to talk too much about BLOC pattern since there are a [huge amount of articles about it](https://www.google.com/search?q=BLoC+Pattern&oq=BLoC+Pattern).
+It stores and persists the user credentials. **My implementation is heavily inspired by the Bloc pattern + RxJS**. This is a new pattern that raises in [Dart + Flutter world](https://medium.com/flutter-community/why-use-rxdart-and-how-we-can-use-with-bloc-pattern-in-flutter-a64ca2c7c52d). I like it and I ported the concept in Angular.
+I don't want to talk too much about BLOC pattern since there are [many articles about it](https://www.google.com/search?q=BLoC+Pattern&oq=BLoC+Pattern).
 
 In a nutshell: I exploit RxJS to create a reactive credential store, anyone is interested in some auth data should subscribe to it. If someone wants to change auth data, he can call the auth methods. Very simple.
 
@@ -166,9 +166,9 @@ As you can see:
 - You can subscribe to state changes by subscribing to `state$` observable.
 - You can get the current state one-shot by `state` getter.
 
-The engine of my store is the private `stateSubject$` BehaviorSubject. If this is the [first time that you see a BehaviorSubject](https://www.learnrxjs.io/subjects/behaviorsubject.html), think about a stream that has also a "sink", where you can add a new element in the stream by calling `next` method. BehaviorSubject has also the initial state that you should provide in the constructor.
+**The engine of my store is the private `stateSubject$` BehaviorSubject**. If this is the [first time that you see a BehaviorSubject](https://www.learnrxjs.io/subjects/behaviorsubject.html), think about a stream that has also a "sink", where you can add a new element in the stream by calling `next` method. BehaviorSubject has also the initial state that you should provide in the constructor.
 
-Another cool thing about it, you can keep the "sink" part private and only expose its observable. I'm exposing only the `state$` variable that is the `Observable` created from `stateSubject$`.
+Another cool thing about it, you can keep the "sink" private and only expose its observable. I'm exposing only the `state$` variable that is the `Observable` created from `stateSubject$`.
 In this way, no one can add an element in this observable except calling `setState` method. In other words, you can only see the changes subscribing `state$` observable, and you can change the store data by `setState` method. The implementation of the store is managed by `stateSubject$` that is not exposed externally.
 
 #### Concrete implementation
@@ -264,7 +264,7 @@ There are a lot of helper methods to simplify the class usage. These are the key
 - A lot of getters method: both reactive (ends with `$`), and standard (classic variables).
 - Some helper methods to change the state of the store (`setAccessToken`, `login`, `refresh`).
 
-Now our AuthStore is ready to go! Let's go to the class that wires everything together, the `AuthService`!
+Now our AuthStore is ready to go! Let's go to the class that wires everything together: the `AuthService`!
 
 ### AuthService
 
@@ -315,10 +315,10 @@ This class uses both the `AuthClient`, to make API calls, and `AuthStore`, to pe
 There are three methods that we can call:
 
 - `login`: we call it when we want the user to login. It calls login API and then persists the credential in AuthStore.
-- `refresh`: used to refresh the token. Again, it makes API calls and then persists them.
+- `refresh`: used to refresh the token. It makes API calls and then persists them.
 - `logout`: it clears the `AuthStore` and then navigates users to login page.
 
-This is a simplified version of my implementation. During login, I made also an API calls to an endpoint to get user data (also called `auth/me`). I didn't add it because its implementation depends on your architecture and it's out of the blog post's scope. The key point is this: you should add all your authentication business logic here, delegating the persistence to `AuthStore` and the API calls to `AuthClient`.
+This is a simplified version of my implementation. During login, I made also an API calls to an endpoint to get user data (also called `auth/me`). I didn't add it because its implementation depends on your architecture and it's out of the blog post's scope. The key point is this: **you should add all your authentication business logic here**, delegating the persistence to `AuthStore` and the API calls to `AuthClient`.
 
 ### AuthInterceptor
 
@@ -327,10 +327,10 @@ We are in the last part of this blog post: we can authenticate the user and pers
 Now we focus on these goals:
 
 1. Not passing the token when we call a public API. 
-2. Passing the JWT token during API calls.
-3. Refreshing the token when the `accessToken` expires. We know the token expires only when we make some API calls: so when an API call fails because the token is expired, we need to call refresh API call to get the new token, then we need to make again the first call with the refreshed token.
+2. Passing the JWT token during authenticated API calls.
+3. Refreshing the token when the `accessToken` expires. We know the token expires only when we make some API calls: so when an API call fails, because the token is expired, we need to call refresh API call to get the new token, then we need to make again the first call with the refreshed token.
 
-All this stuff is managed by the `AuthInterceptor`. It is a subclass of [Angular HTTP Interceptor](https://angular.io/guide/http#http-interceptors). Briefly speaking, an HTTP Interceptor it's a layer that we can add between the API call we make and the real HTTP Request made by the browser. In this way, we can transparently inject all these auth behavior without changing our Client classes.
+All this stuff is managed by the `AuthInterceptor`. It is a subclass of [Angular HTTP Interceptor](https://angular.io/guide/http#http-interceptors). Briefly speaking, **an HTTP Interceptor is a layer that we can add between the API call we make and the real HTTP Request made by the browser**. In this way, we can transparently inject all these auth behavior without changing our Client classes.
 
 #### Understanding HTTP Interceptor
 
@@ -455,7 +455,7 @@ export class AuthInterceptor implements HttpInterceptor {
 }
 ```
 
-Take your time to read it... We see that the `intercept` method is more complex. I added tons of comments inside the code, so it's easier to understand what's happening.
+Take your time to read it... We see that the `intercept` method is more complex. **I added tons of comments inside the code**, so it's easier to understand what's happening.
 
 Let's see whether we reached all our prefixed goals:
 
@@ -465,14 +465,14 @@ Let's see whether we reached all our prefixed goals:
 
 The code is not so long, it has more or less 50 lines. But I think is pretty full of tricky concepts from RxJS like [mergeMap](https://www.learnrxjs.io/operators/transformation/mergemap.html), [tap](https://www.learnrxjs.io/operators/utility/do.html), [catchError](https://www.learnrxjs.io/operators/error_handling/catch.html).
 
-I used clojure to make `retryWhenExpiredToken` works. I created a function that returns a function. The first call gets the original request and the `next` handler and returns the function that we feed the method `catchError`.
+[I used closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to make `retryWhenExpiredToken` works. I created a function that returns a function. The first call gets the original request and the `next` handler and returns the function that we feed the method `catchError`.
 
-Writing this code without bugs in one-shot is very difficult, even if it's not long. Two things helped me reaching it:
+**Writing this code without bugs in one-shot is very difficult**, even if it's not long. Two things helped me reaching it:
 
-- Heavy usage of TypeScript typing system: TypeScript add types to JS, thank god! Adding types to everything is the best way to avoid nasty bugs. The transpiler can warn you as soon as possible if you're returning something wrong. If you put `any` everywhere, or you don't add types for your expected parameters, you're alone! The transpiler can't help you, soon or later you make a mistake. The only `any` you see in this code is because the `intercept` signature is coming from Angular and I can't do anything about it.
-- Use Test Driven Development (TDD) for the crucial part of your system, or use TDD as much as you can. Testing manually this authentication system takes much longer than writing some unit tests. And there's nothing worse than someone calls you saying users are logged out when the token should refresh. I made this using TDD and the result is these tiny classes that are easy to test thanks to the [Angular testing suite](https://angular.io/guide/testing).
+- **Heavy usage of TypeScript typing system**: TypeScript add types to JS, thank god! Adding types to everything is the best way to avoid nasty bugs. The transpiler can warn you as soon as possible if you're returning something wrong. If you put `any` everywhere, or you don't add types for your expected parameters, you're alone! The transpiler can't help you, soon or later you make a mistake. The only `any` you see in this code is because the `intercept` signature is coming from Angular and I can't do anything about it.
+- **Use Test Driven Development (TDD)** for the crucial part of your system, or use TDD as much as you can. Testing manually this authentication system takes much longer than writing some unit tests. And there's nothing worse than someone calls you saying users can't sign in. I made this using TDD and the result is these tiny classes that are easy to test thanks to the [Angular testing suite](https://angular.io/guide/testing).
 
-The perfect developer, that makes no bugs, doesn't exist. Some developers are better than others not because are perfect, but because they take more countermeasures to avoid bugs, so they write less buggy code. TypeScript and TDD are the most effective countermeasure that I know for front-end development. So use them.
+The perfect developer, that makes no bugs, doesn't exist. **Some developers are better than others not because are perfect, but because they take more countermeasures to avoid bugs**, so they write less buggy code. TypeScript and TDD are the most effective countermeasure that I know for front-end development. So use them.
 
 If you are interested in TDD, I wrote two articles about that. Unfortunately, they are written in Italian. If you are interested in the translation just let me know: [ping me on LinkedIn](https://www.linkedin.com/in/mattian/) and [subscribe to my newsletter](https://gmail.us4.list-manage.com/subscribe/post?u=a8dbd77c4662328d660883c64&amp;id=31345af945) to be notified about these topics.
 Here are the links:
