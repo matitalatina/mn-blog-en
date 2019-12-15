@@ -1,7 +1,7 @@
 ---
 layout: post
-title: JWT Token Auth integration with Angular
-description: Let's learn how to integrate our JWT Token Auth system in Angular
+title: JWT authentication with Angular
+description: Let's learn how to integrate our JWT authentication system in Angular
 image: img/angular-jwt-auth/angular-jwt-rxjs.jpg
 author: Mattia Natali
 date: 2019-12-15T16:40:20.172Z
@@ -13,7 +13,7 @@ draft: false
 ---
 
 At work, I had to create a new web portal that should communicate with our backend.
-Our frontend framework choice is Angular and our backend uses the JWT as an authentication system.
+**Our frontend framework choice is Angular and our backend uses the JWT (JSON Web Token) as the authentication system.**
 
 So my goal was to integrate that authentication system in Angular to communicate with the backend.
 Since this was an Angular project started from scratch, I had the chance to think about how to implement it.
