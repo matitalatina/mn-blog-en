@@ -128,8 +128,8 @@ You can see `AuthClient` is quite simple. The only weird thing is the header `IN
 
 ### AuthStore
 
-It stores and persists the user credentials. **My implementation is heavily inspired by the Bloc pattern + RxJS**. This is a new pattern that raises in [Dart + Flutter world](https://medium.com/flutter-community/why-use-rxdart-and-how-we-can-use-with-bloc-pattern-in-flutter-a64ca2c7c52d). I like it and I ported the concept in Angular.
-I don't want to talk too much about BLOC pattern since there are [many articles about it](https://www.google.com/search?q=BLoC+Pattern&oq=BLoC+Pattern).
+It stores and persists the user credentials. **My implementation is heavily inspired by the Business Logic Component (BLoC) pattern + RxJS**. This is a new pattern that raises in [Dart + Flutter world](https://medium.com/flutter-community/why-use-rxdart-and-how-we-can-use-with-bloc-pattern-in-flutter-a64ca2c7c52d). I like it and I ported the concept in Angular.
+I don't want to talk too much about BLoC pattern since there are [many articles about it](https://www.google.com/search?q=BLoC+Pattern&oq=BLoC+Pattern).
 
 In a nutshell: I exploit RxJS to create a reactive credential store, anyone is interested in some auth data should subscribe to it. If someone wants to change auth data, he can call the auth methods. Very simple.
 
