@@ -2,7 +2,7 @@
 layout: post
 title: JWT Token Auth integration with Angular
 description: Let's learn how to integrate our JWT Token Auth system in Angular
-image: img/computer.jpg
+image: img/angular-jwt-auth/angular-jwt-rxjs.jpg
 author: Mattia Natali
 date: 2019-12-20T07:03:47.149Z
 tags: 
