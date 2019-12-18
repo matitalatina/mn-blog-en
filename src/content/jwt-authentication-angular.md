@@ -263,6 +263,10 @@ There are a lot of helper methods to simplify the class usage. These are the key
 - A lot of getters method: both reactive (ends with `$`), and standard (classic variables).
 - Some helper methods to change the state of the store (`setAccessToken`, `login`, `refresh`).
 
+**Be aware**: storing `accessToken` and `refreshToken` inside the local storage can expose your application to security issues. Any JavaScript running on your web app can read it.
+So **if your web app is vulnerable to [cross-site scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)), then someone can steal them**. Web frameworks, like Angular, are aware of this issue: they adopt high-security standards to avoid XSS vulnerabilities. I recommend you to spend some time to read about [cross-site scripting (XSS)](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)).
+If you are scared about that, just don't save the tokens inside the local storage, you'll be safe... But if your user closes the page, it has to login again.
+
 Now our AuthStore is ready to go! Let's go to the class that wires everything together: the `AuthService`!
 
 ### AuthService
