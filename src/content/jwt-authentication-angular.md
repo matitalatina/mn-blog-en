@@ -190,7 +190,6 @@ export interface IAuthState {
 
 const ACCESS_TOKEN_LOCAL_STORAGE_KEY = 'auth.accessToken';
 const REFRESH_TOKEN_LOCAL_STORAGE_KEY = 'auth.refreshToken';
-const MANAGER_PORTAL_LOCAL_STORAGE_KEY = 'auth.managerPortal';
 
 @Injectable({
   providedIn: 'root'
