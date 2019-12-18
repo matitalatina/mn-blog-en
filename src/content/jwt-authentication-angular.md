@@ -188,16 +188,34 @@ export interface IAuthState {
   refreshToken: string;
 }
 
+const ACCESS_TOKEN_LOCAL_STORAGE_KEY = 'auth.accessToken';
+const REFRESH_TOKEN_LOCAL_STORAGE_KEY = 'auth.refreshToken';
+const MANAGER_PORTAL_LOCAL_STORAGE_KEY = 'auth.managerPortal';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthStoreService extends Store<IAuthState> {
   constructor() {
     const initialState: IAuthState = {
-      accessToken: null,
-      refreshToken: null,
+      accessToken: localStorage.getItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY),
+      refreshToken: localStorage.getItem(REFRESH_TOKEN_LOCAL_STORAGE_KEY),
     };
     super(initialState);
+  }
+
+  setState(nextState: IAuthState): void {
+    if (nextState.accessToken) {
+      localStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, nextState.accessToken);
+    } else {
+      localStorage.removeItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY);
+    }
+    if (nextState.refreshToken) {
+      localStorage.setItem(REFRESH_TOKEN_LOCAL_STORAGE_KEY, nextState.refreshToken);
+    } else {
+      localStorage.removeItem(REFRESH_TOKEN_LOCAL_STORAGE_KEY);
+    }
+    super.setState(nextState);
   }
 
   get isLoggedIn(): boolean {
@@ -241,7 +259,8 @@ export class AuthStoreService extends Store<IAuthState> {
 There are a lot of helper methods to simplify the class usage. These are the key points of this class:
 
 - It's a `Store` subclass, it has `IAuthState` interface as state. `IAuthState` is very simple, it contains only `accessToken` and `refreshToken`.
-- In the constructor, it provides the initial state for the superclass `State`.
+- Every time someone calls `setState`, it persists data in the local storage. In this way, if the user closes or reloads the page, the credentials are not lost. If `setState` is called with falsy credentials (e.g. `null` or `false`), it removes from local storage.
+- In the constructor, it provides the initial state for the superclass `State`. It tries to get the credential from the local storage.
 - A lot of getters method: both reactive (ends with `$`), and standard (classic variables).
 - Some helper methods to change the state of the store (`setAccessToken`, `login`, `refresh`).
 
