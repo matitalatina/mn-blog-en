@@ -63,7 +63,7 @@ const config: WebsiteConfig = {
   logo: 'img/ghost-logo.png',
   lang: 'it',
   siteUrl: 'https://www.mattianatali.it',
-  facebook: 'https://www.facebook.com/mattia.natali',
+  facebook: 'https://www.facebook.com/mattianatali.dev/',
   twitter: 'https://twitter.com/matitalatina',
   linkedin: 'https://www.linkedin.com/in/mattian/',
   github: 'https://github.com/matitalatina/',
