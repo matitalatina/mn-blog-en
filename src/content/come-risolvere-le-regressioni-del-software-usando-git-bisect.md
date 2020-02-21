@@ -11,7 +11,7 @@ tags:
   - Terminale
 ---
 
-Avevete aggiunto una funzionalità al software ed è andata in produzione. Dopo qualche settimana il Product Owner vi comunica che non funziona più. Don't panic. Usando solamente [Git](https://it.wikipedia.org/wiki/Git_(software)) si può risolvere tutto in pochi minuti!
+Avete aggiunto una funzionalità al software ed è andata in produzione. Dopo qualche settimana il Product Owner vi comunica che non funziona più. Don't panic. Usando solamente [Git](https://it.wikipedia.org/wiki/Git_(software)) si può risolvere tutto in pochi minuti!
 
 **A tutti può capitare una [regressione del software](https://en.wikipedia.org/wiki/Software_regression)** e non è mai piacevole. Ho visto molti sviluppatori che, in un caso come questo, cominciano a tentare di riprodurre il bug in locale e a rileggere furiosamente il codice nella speranza di risolvere il bug. Se nel codice ci lavorano molte mani, **la ricerca del bug può essere tutt'altro che semplice**.
 
