@@ -1,4 +1,5 @@
 import React from 'react';
+import { lighten, desaturate, darken, mix } from 'polished';
 import styled from '@emotion/styled';
 
 import { colors } from '../../styles/colors';
@@ -95,7 +96,12 @@ const SubscribeOverlay = styled.div<SubscribeOverlayProps>`
       color(var(--blue) lightness(-7%) saturation(-10%)) 90%,
       color(var(--blue) lightness(-4%) saturation(-10%))
     ); */
-    background: linear-gradient(#4fb7f0, #29a0e0 60%, #29a0e0 90%, #36a6e2);
+    background: linear-gradient(
+      ${mix('0.1', '#fff', colors.primary)},
+      ${desaturate('0.1', darken('0.07', colors.primary))} 60%,
+      ${desaturate('0.1', darken('0.07', colors.primary))} 90%,
+      ${desaturate('0.1', darken('0.04', colors.primary))}
+    );
     border-radius: 8px;
 
     -webkit-font-smoothing: subpixel-antialiased;

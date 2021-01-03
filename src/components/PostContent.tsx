@@ -655,7 +655,6 @@ export const PostFullContent = styled.section`
     max-width: 920px;
   }
   .gatsby-highlight pre[class*='language-'] {
-    float: left;
     min-width: 100%;
   }
   /* End Syntax Highlighting */

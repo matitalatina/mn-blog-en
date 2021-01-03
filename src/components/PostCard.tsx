@@ -7,6 +7,7 @@ import React from 'react';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { it } from 'date-fns/locale';
 
 import { colors } from '../styles/colors';
 import { PageContext } from '../templates/post';
@@ -22,7 +23,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, large = false }) => {
   // 2018-08-20
   const datetime = format(date, 'yyyy-MM-dd');
   // 20 AUG 2018
-  const displayDatetime = format(date, 'dd LLL yyyy');
+  const displayDatetime = format(date, 'dd LLL yyyy', { locale: it });
 
   return (
     <article
