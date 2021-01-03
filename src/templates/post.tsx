@@ -215,7 +215,7 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
                           {displayDatetime}
                         </time>
                         <span className="byline-reading-time">
-                          <span className="bull">&bull;</span> {post.timeToRead} min read
+                          <span className="bull">&bull;</span> {post.timeToRead} min
                         </span>
                       </div>
                     </section>
