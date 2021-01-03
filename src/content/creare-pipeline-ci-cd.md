@@ -3,7 +3,7 @@ layout: post
 title: Come creare una pipeline di Continuous Integration e Continuous Deployment (CI/CD) · DevOps
 description: Creare una pipeline CI/CD su un progetto già avviato è un lavoro sfidante. In questa guida vi mostro come raggiungere al meglio questo obiettivo!
 image: img/ci/ci-cd-frontpage.png
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2019-03-16T07:03:47.149Z
 tags: 
   - DevOps

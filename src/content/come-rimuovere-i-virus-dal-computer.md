@@ -2,7 +2,7 @@
 layout: post
 title: Come rimuovere i virus dal computer
 image: img/virus-computer/security.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2016-08-07T07:03:47.149Z
 tags: 
   - Malware

@@ -3,7 +3,7 @@ layout: post
 title: Come programmare in Test-Driven Development (TDD) partendo da zero
 description: In questa guida scopriamo insieme come sviluppare in TDD e quali benefici porta al nostro codice.
 image: img/tdd/coding-man.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2018-12-28T07:03:47.149Z
 tags: 
   - Dev

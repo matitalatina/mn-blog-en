@@ -3,8 +3,9 @@ layout: post
 title: Impariamo ad automatizzare con Ansible · DevOps
 description: Aumentiamo la nostra efficienza sul lavoro delegando ad Ansible i task ripetitivi e le configurazioni delle macchine.
 image: img/vpn-ansible/ansible-cog-head.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2019-08-25T07:03:47.149Z
+excerpt: Aumentiamo la nostra efficienza sul lavoro delegando ad Ansible i task ripetitivi e le configurazioni delle macchine.
 tags: 
   - DevOps
   - Dev
@@ -58,7 +59,7 @@ Il primo scoglio che si incontra con Ansible è imparare e ricordarsi i vari ter
 - *Task*: per esempio un task è "installa il programma nginx". Possiamo vederli come l'unità più piccola che abbiamo in Ansible, sostanzialmente è il richiamo di un modulo con i vari parametri. Un esempio di task è il seguente
   
   ```yml
-    - name: Install nginx
+  - name: Install nginx
       apt: 
         name:
           - nginx

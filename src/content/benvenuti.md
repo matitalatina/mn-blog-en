@@ -2,7 +2,7 @@
 layout: post
 title: Benvenuti!
 image: img/benvenuti/sbb.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2016-08-03T07:03:47.149Z
 tags: 
   - Blog

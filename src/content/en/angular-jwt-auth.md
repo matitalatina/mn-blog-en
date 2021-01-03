@@ -3,7 +3,7 @@ layout: post
 title: JWT Token Auth integration with Angular
 description: Let's learn how to integrate our JWT Token Auth system in Angular
 image: img/vpn-ansible/ansible-cog-head.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2019-08-25T07:03:47.149Z
 tags: 
   - Dev

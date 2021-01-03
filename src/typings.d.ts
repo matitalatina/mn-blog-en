@@ -1,6 +1,4 @@
-interface CSSModule {
-  [className: string]: string;
-}
+type CSSModule = Record<string, string>;
 
 // type shims for CSS modules
 
@@ -20,7 +18,7 @@ declare module 'rehype-react' {
     components: any;
   }
   class RehypeReact {
-    Compiler: any
+    Compiler: any;
     constructor(options: RehypeOptions);
   }
   export default RehypeReact;

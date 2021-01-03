@@ -2,7 +2,7 @@
 layout: post
 title: Come scaricare le canzoni da Soundcloud in pochi semplici click
 image: img/soundcloud-download/music.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2016-11-13T07:03:47.149Z
 tags: 
   - Soundcloud

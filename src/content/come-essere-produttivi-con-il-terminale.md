@@ -3,7 +3,7 @@ layout: post
 title: Come essere produttivi con il terminale
 description: Siete uno sviluppatore e notate che 8 ore al giorno di lavoro sembrano non bastare? Vi condivido alcuni miei trucchi per risparmiare tempo.
 image: img/productivity/monitors.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2017-10-06T07:03:47.149Z
 tags: 
   - Dev

@@ -2,7 +2,7 @@
 layout: post
 title: Come giocare ai videogiochi di due o tre ere fa
 image: img/old-games/Ignition.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2017-01-02T07:03:47.149Z
 tags: 
   - Videogames

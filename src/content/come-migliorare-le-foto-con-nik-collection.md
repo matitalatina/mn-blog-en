@@ -2,7 +2,7 @@
 layout: post
 title: Come migliorare le foto con Nik Collection
 image: img/nik-collection/notre-dame.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2016-08-11T07:03:47.149Z
 tags: 
   - Fotografia

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 
 module.exports = {
@@ -15,6 +16,7 @@ module.exports = {
       resolve: 'gatsby-plugin-sharp',
       options: {
         defaultQuality: 90,
+        stripMetadata: true,
       },
     },
     {
@@ -41,8 +43,9 @@ module.exports = {
           {
             resolve: 'gatsby-remark-images',
             options: {
-              maxWidth: 1170,
+              maxWidth: 2000,
               quality: 90,
+              backgroundColor: `none`,
             },
           },
         ],
@@ -55,8 +58,8 @@ module.exports = {
         siteUrl: 'https://www.mattianatali.it',
       },
     },
-    'gatsby-plugin-emotion',
     'gatsby-plugin-typescript',
+    'gatsby-plugin-emotion',
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
     'gatsby-transformer-yaml',

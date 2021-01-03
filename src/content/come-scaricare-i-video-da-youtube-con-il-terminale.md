@@ -3,7 +3,7 @@ layout: post
 title: Come scaricare i video da YouTube con il terminale
 description: Avete appena trovato un video bellissimo su YouTube e volete a tutti i costi scaricarlo, oppure volete scaricare solo la parte audio del video per inserirlo nella vostra playlist musicale? Siete pure anche Nerd inside? Bene, allora questa guida fa per voi!
 image: img/youtube-download/youtube-terminal.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2017-09-17T15:10:47.149Z
 tags: 
   - Terminale
