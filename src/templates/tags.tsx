@@ -160,7 +160,6 @@ export const pageQuery = graphql`
           timeToRead
           frontmatter {
             title
-            description
             excerpt
             tags
             date

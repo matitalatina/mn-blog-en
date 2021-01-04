@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 11 lezioni che ho imparato lavorando nelle startup
-description: Dopo 4 anni di lavoro nelle startup è il momento di tirare le somme. Ecco qui 11 lezioni che ho imparato.
+excerpt: Dopo 4 anni di lavoro nelle startup è il momento di tirare le somme. Ecco qui 11 lezioni che ho imparato.
 image: img/startup-lesson/CA.jpg
 author: [Mattia Natali]
 date: 2018-04-21T07:03:47.149Z

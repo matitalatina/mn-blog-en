@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Come risolvere le regressioni del software usando git bisect
-description: Avevate aggiunto una funzionalità al software ma dopo qualche settimana non funziona più. Usando Git si può risolvere tutto in pochi minuti!
+excerpt: Avevate aggiunto una funzionalità al software ma dopo qualche settimana non funziona più. Usando Git si può risolvere tutto in pochi minuti!
 image: img/git-bisect/fail.jpg
 author: [Mattia Natali]
 date: 2018-01-15T07:03:47.149Z

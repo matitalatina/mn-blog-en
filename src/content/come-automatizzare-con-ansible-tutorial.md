@@ -1,11 +1,10 @@
 ---
 layout: post
 title: Impariamo ad automatizzare con Ansible · DevOps
-description: Aumentiamo la nostra efficienza sul lavoro delegando ad Ansible i task ripetitivi e le configurazioni delle macchine.
+excerpt: Aumentiamo la nostra efficienza sul lavoro delegando ad Ansible i task ripetitivi e le configurazioni delle macchine.
 image: img/vpn-ansible/ansible-cog-head.jpg
 author: [Mattia Natali]
 date: 2019-08-25T07:03:47.149Z
-excerpt: Aumentiamo la nostra efficienza sul lavoro delegando ad Ansible i task ripetitivi e le configurazioni delle macchine.
 tags: 
   - DevOps
   - Dev

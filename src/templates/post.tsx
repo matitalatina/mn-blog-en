@@ -47,7 +47,6 @@ interface PageTemplateProps {
       timeToRead: string;
       frontmatter: {
         title: string;
-        description: string;
         date: string;
         userDate: string;
         image: {
@@ -96,7 +95,6 @@ export interface PageContext {
     };
     excerpt: string;
     title: string;
-    description: string;
     date: string;
     draft?: boolean;
     tags: string[];
@@ -455,7 +453,6 @@ export const query = graphql`
       timeToRead
       frontmatter {
         title
-        description
         userDate: date(locale: "it", formatString: "D MMMM YYYY")
         date
         tags

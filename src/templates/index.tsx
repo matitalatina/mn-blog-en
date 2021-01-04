@@ -176,7 +176,6 @@ export const pageQuery = graphql`
           timeToRead
           frontmatter {
             title
-            description
             date
             tags
             draft

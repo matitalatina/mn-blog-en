@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Come sviluppare delle API in TDD con Spring Boot
-description: Volete sviluppare delle API in TDD con Spring Boot, ma non sapete come iniziare? Questa guida fa per voi!
+excerpt: Volete sviluppare delle API in TDD con Spring Boot, ma non sapete come iniziare? Questa guida fa per voi!
 image: img/tdd-spring-boot/intellij-spring-boot.jpg
 author: [Mattia Natali]
 date: 2019-07-30T09:03:47.149Z
