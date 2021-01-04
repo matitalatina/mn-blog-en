@@ -1,9 +1,9 @@
 ---
 layout: post
 title: JWT authentication with Angular
-description: Let's learn how to integrate our JWT authentication system in Angular
+excerpt: Let's learn how to integrate our JWT authentication system in Angular
 image: img/angular-jwt-auth/angular-jwt-rxjs.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2019-12-15T16:40:20.172Z
 tags: 
   - Dev

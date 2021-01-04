@@ -1,7 +1,7 @@
 export interface WebsiteConfig {
   title: string;
   description: string;
-  coverImage: string;
+  coverImage?: string;
   logo: string;
   /**
    * Specifying a valid BCP 47 language helps screen readers announce text properly.

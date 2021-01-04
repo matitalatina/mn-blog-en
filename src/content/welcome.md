@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Welcome
-description: Let the new journey begin!
+excerpt: Let the new journey begin!
 image: img/computer.jpg
-author: Mattia Natali
+author: [Mattia Natali]
 date: 2019-08-25T07:03:47.149Z
 tags: 
   - Welcome
