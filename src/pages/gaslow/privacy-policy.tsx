@@ -1,7 +1,7 @@
 import IndexLayout from '../../layouts';
 import { Wrapper } from '../../components/Wrapper';
-import SiteNav from '../../components/header/SiteNav';
-import { SiteHeader, outer, inner, SiteMain } from '../../styles/shared';
+import SiteNav, { SiteNavMain } from '../../components/header/SiteNav';
+import { SiteHeader, outer, inner, SiteMain, SiteArchiveHeader } from '../../styles/shared';
 import * as React from 'react';
 import { css } from '@emotion/react';
 
@@ -12,8 +12,7 @@ import Helmet from 'react-helmet';
 
 const PageTemplate = css`
   .site-main {
-    background: #fff;
-    padding-bottom: 4vw;
+    padding-top: 2vw;
   }
 `;
 
@@ -23,9 +22,11 @@ const About: React.FC = () => (
       <title>Gaslow - Privacy Policy</title>
     </Helmet>
     <Wrapper css={PageTemplate}>
-      <header css={[outer, SiteHeader]}>
-        <div css={inner}>
-          <SiteNav />
+      <header className="site-archive-header no-image" css={[SiteHeader, SiteArchiveHeader]}>
+        <div css={[outer, SiteNavMain]}>
+          <div css={inner}>
+            <SiteNav isHome={false} />
+          </div>
         </div>
       </header>
       <main id="site-main" className="site-main" css={[SiteMain, outer]}>
