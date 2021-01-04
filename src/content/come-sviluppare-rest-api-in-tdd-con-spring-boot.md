@@ -1172,6 +1172,6 @@ La cosa che deve essere chiara è questa: **prima ci preoccupiamo di cosa voglia
 
 In questo modo abbiamo un codice ben testato, ben organizzato in classi isolate (se una classe è facile da testare, significa che è ben isolata dal resto dei componenti) e soprattutto facile da mantenere (i refactor sono semplici perché ogni singola funzionalità è testata, le regressioni sono pressochè azzerate).
 
-All'inizio può essere difficile, ma poi una volta internalizzato esce naturale e si ha un valore aggiunto che non si può capire fino a che si ha un produzione un progetto sviluppato in TDD. Provare per credere!
+All'inizio può essere difficile, ma poi una volta internalizzato esce naturale e si ha un valore aggiunto che non si può capire fino a che si ha in produzione un progetto sviluppato in TDD. Provare per credere!
 
 Alla prossima!
