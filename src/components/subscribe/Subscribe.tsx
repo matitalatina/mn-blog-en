@@ -1,10 +1,7 @@
 import React from 'react';
-import { css } from '@emotion/react';
 
-import { colors } from '../../styles/colors';
 import { SubscribeForm } from './SubscribeForm';
 import { Hero } from '../ui/hero/Hero';
-import styled from '@emotion/styled';
 import { HeroTitle } from '../ui/hero/HeroTitle';
 
 export interface SubscribeProps {
