@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { btnGradient, ButtonLink } from '../ui/Button';
+import { btnColor, ButtonLink } from '../ui/Button';
 import { colors } from '../../styles/colors';
 
 export const SponsorGithubBtn: React.FC<{className?: string}> = ({ className }) => {
@@ -8,5 +8,5 @@ export const SponsorGithubBtn: React.FC<{className?: string}> = ({ className }) 
 };
 
 const ButtonFlex = styled(ButtonLink)`
-  background: ${btnGradient(colors.pink)}
+  ${btnColor(colors.pink)}
 `;
