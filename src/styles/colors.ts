@@ -9,7 +9,7 @@ export const colors = {
   midgrey: '#738a94',
   lightgrey: '#c5d2d9',
   whitegrey: '#e5eff5',
-  pink: '#fa3a57',
+  pink: '#D04790',
   brown: '#a3821a',
   // darkmode: color(var(--darkgrey) l(+2%)),
   darkmode: '#191b1f',

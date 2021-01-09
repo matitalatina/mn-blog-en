@@ -21,6 +21,7 @@ import { colors } from '../styles/colors';
 import { inner, outer, SiteMain } from '../styles/shared';
 import config from '../website-config';
 import { AuthorList } from '../components/AuthorList';
+import { SponsorCall } from '../components/sponsor/SponsorCall';
 
 export interface Author {
   id: string;
@@ -232,6 +233,7 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
               )}
               <PostContent htmlAst={post.htmlAst} />
 
+              <SponsorCall />
               {/* The big email subscribe modal content */}
               {config.showSubscribe && <Subscribe title={config.title} />}
             </article>
