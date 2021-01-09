@@ -6,6 +6,7 @@ import { css } from '@emotion/react';
 
 import { colors } from '../../styles/colors';
 import config from '../../website-config';
+import { buttonStyle } from '../ui/Button';
 
 export const SubscribeForm: React.FC = () => {
   return (
@@ -45,6 +46,7 @@ const SubscribeFormStyles = css`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  width: 100%;
   max-width: 460px;
 
   @media (max-width: 500px) {
@@ -94,47 +96,9 @@ const SubscribeEmail = styled.input`
   }
 `;
 
-const SubscribeFormButton = styled.button`
-  position: relative;
-  display: inline-block;
+export const SubscribeFormButton = styled.button`
+  ${buttonStyle}
   margin: 0 0 0 10px;
-  padding: 0 20px;
-  height: 43px;
-  outline: none;
-  color: #fff;
-  font-size: 1.5rem;
-  line-height: 39px;
-  font-weight: 400;
-  text-align: center;
-  /* background: linear-gradient(
-    color(var(--blue) whiteness(+7%)),
-    color(var(--blue) lightness(-7%) saturation(-10%)) 60%,
-    color(var(--blue) lightness(-7%) saturation(-10%)) 90%,
-    color(var(--blue) lightness(-4%) saturation(-10%))
-  ); */
-  background: linear-gradient(
-    ${mix('0.1', '#fff', colors.primary)},
-    ${desaturate('0.1', darken('0.07', colors.primary))} 60%,
-    ${desaturate('0.1', darken('0.07', colors.primary))} 90%,
-    ${desaturate('0.1', darken('0.04', colors.primary))}
-  );
-  border-radius: 5px;
-
-  -webkit-font-smoothing: subpixel-antialiased;
-
-  :active,
-  :focus {
-    /* background: color(var(--blue) lightness(-9%) saturation(-10%)); */
-    background: ${desaturate('0.1', darken('0.09', colors.primary))};
-  }
-  @media (max-width: 500px) {
-    margin: 10px 0 0 0;
-    width: 100%;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    opacity: 0.9;
-  }
 `;
 
 const FormGroup = styled.div`
