@@ -2,7 +2,7 @@
 layout: post
 title: How to build an Air Quality Sensor using a Raspberry Pi
 excerpt: Let's learn how to build a resilient Air Quality Sensors with the Raspberry Pi
-image: img/angular-jwt-auth/angular-jwt-rxjs.jpg
+image: img/air-quality-rpi/raspberrypi-air-quality.jpg
 author: [Mattia Natali]
 date: 2021-01-06T16:40:20.172Z
 tags: 
@@ -17,11 +17,13 @@ I live in Milan and I was wondering how much the air is polluted. So I started l
 
 Now I want to share my learning and how to create the same air quality sensor I built and how to read this data into Home Assistant just like this
 
-************
+or how to see the WiFi SSID and its signal strength directly on Home Assistant.
+
+![Home Assistant - Air Quality and WiFi signal](img/air-quality-rpi/home-assistant-air-wifi.png)
 
 or via Grafana
 
-************
+![Grafana](img/air-quality-rpi/grafana-air-quality.png)
 
 ## The hardware we need
 
@@ -46,7 +48,7 @@ Someone can say "Hey! You are a liar! You're not building an air quality sensor,
 
 In fact the overall architecture we want to build is shown in the next figure
 
-************** Architecture ************
+![Architecture](img/air-quality-rpi/rasberrypi-air-architecture.png)
 
 So through this tutorial, we will learn:
 
@@ -407,9 +409,127 @@ The scheduled time is always represented by five values. The order of them chang
 
 But we put `*`... Not numbers. We added asterisk because it has a special meaning. `*` means "any". So we wrote this: "Please Linux, run the script `/home/pi/check-wifi.sh` every minute of every hour of every day of month of every day of the week". Linux is smart enough to understand the he should trigger the script every minute from now on.
 
+We have a very robust air quality sensor now! We can put outside our home and no matter what happens, it should keep always the connection as long as it reaches our router WiFi signal.
+
+Using `mosquitto_sub` is the only way to see the data from the sensor. This is ok only for debugging purposes, we should have a better way to seen those data. [Home Assistant](https://www.home-assistant.io) will solve this problem.
+
+## Add sensor to Home Assistant
+
+### Install and learn Home Assistant
+
+[Home Assistant](https://www.home-assistant.io) is a great piece of software. If you are a tech enthusiast that love automating home, I think you have already installed.
+
+If you don't know yet: you can attach smart devices on it and you can create rules to automate things. You can also attach sensors like we have just created to easily see the data. In other words, if you decide to install it, Home Assistant can become the control center of your home.
+
+Seeing the sensor data in Home Assistant is our goal here.
+
+As first step, [we need to install it](https://www.home-assistant.io/docs/installation/) on the Raspberry Pi Hub.
+Then, I suggest you reading the [configuration manual](https://www.home-assistant.io/docs/configuration/). Home Assistant heavily uses [YAML files](https://learnxinyminutes.com/docs/yaml/) to install custom sensor like our.
+
+Maybe you're thinking that Home Assistant is overkill for seeing just a sensor data. But I think this is only the starting point: I'm sure that at the end you will have more than 20 devices with a total of 200 sensors attached and dozens of automation that orchestrate everything!
+
+![Home Assistant - My home](img/air-quality-rpi/home-assistant-serina.png)
+
+So it's not overkill, it's only our starting point, trust me 😊.
+
+Now that we have installed Home Assistant and learned about [where its configuration is installed](https://www.home-assistant.io/docs/configuration/), **it's time to add our sensor**.
+
+### Add MQTT integration
+
+We need to add the MQTT integration to Home Assistant. Go to the Home Assistant portal, it should be exposed on port `8123`. So open the browser and type the URL `http://<RPI_HUB_IP>:8123` where `<RPI_HUB_IP>` is the IP of our Raspberry Pi Hub. Click the cog icon (Configuration) and click on "Add integration". We can see a huge list of integration, we are interested in MQTT. So search for that and then it will ask for two mandatory field:
+
+- Broker: you need to add the Raspberry Pi Hub IP. It's where we installed Mosquitto, our MQTT broker.
+- Port: it's `1883`. We put that in the mosquitto configuration.
+
+Click submit and now we have linked Home Assistant to our MQTT broker Mosquitto.
+
+We should see the brand new integration in Configuration -> Integration Tab. We click on configure
+
+![Home Assistant - MQTT configure](img/air-quality-rpi/home-assistant-mqtt-configure.png)
+
+and then we can listen to our MQTT topic, just to check if Home Assistant can see our data.
+
+In the section "Listen to a topic", write down our chosen MQTT topic, click "start listening" and wait at least 1 minute. The wait depends on the configuration you set on our Go program. If you don't change my value, it should publish one date per minute.
+
+If you see the data like the figure below, you have successfully attached Home Assistant to our MQTT Broker!
+
+![Home Assistant - MQTT test](img/air-quality-rpi/home-assistant-mqtt-test.png)
 
 
+### Add air quality sensors through MQTT platform
+
+We know that the values are published on a MQTT topic (you chose the name, mine is `home/serina/edge-rpi/air-quality`). We should create two sensors that subscribe to that topic and extract data. These sensors will be
+
+- Air Quality PM 10.
+- Air Quality PM 2.5.
+
+To achieve this goal, we edit the Home assistant `configuration.yaml` file. We need to add these two sensors inside the `sensor:` section.
+
+```yaml
+sensor:
+  - platform: mqtt
+    state_topic: "home/serina/edge-rpi/air-quality"
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:weather-fog"
+    value_template: '{{value_json.PM10 | float}}'
+    name: 'Air Quality PM 10'
+    unique_id: 'rpi-edge:air-quality-pm-10'
+  - platform: mqtt
+    state_topic: "home/serina/edge-rpi/air-quality"
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:weather-fog"
+    value_template: '{{value_json.PM25 | float}}'
+    name: 'Air Quality PM 2.5'
+    unique_id: 'rpi-edge:air-quality-pm-2.5'
+```
+
+Luckily, the YAML file is very readable. We are using [MQTT sensor platform](https://www.home-assistant.io/integrations/sensor.mqtt/). We restart the Home Assistant.
+
+You should change `state_topic` with yours. You can also change the `unique_id` with any value unless is unique, of course.
+
+`value_template` is the field where we extract the value from JSON in the topic with they keyword `value_json` and then we take the interesting values `PM10` and `PM25`. Finally we say that we are interested in a `float` value. All this stuff is surrounded by `{{ }}`: when you see this syntax means we are exploiting the [template system](https://www.home-assistant.io/docs/configuration/templating/) that is powered by [Jinja2](https://www.home-assistant.io/docs/configuration/templating/).
+
+If you want to change the icon of the sensor, I usually [use this website](https://materialdesignicons.com), I search
+for a keyword, for example `fog`, and finally I hover the mouse on the chosen icon. You should prepend the name it appears with `mdi:`. In our example is `mdi:weather-fog`.
 
 
+![Material Design Icons](img/air-quality-rpi/material-icon-fog.png)
 
+## Add sensors to Home Assistant UI
+
+Now we should have two new entities that show air quality. To see them, we should go to configuration -> entities and search for "Air quality"
+
+![Home Assistant - Entity page](img/air-quality-rpi/home-assistant-entity-page.png)
+
+as you can see, it's quite uncomfortable. It's better to put those entities in the overview / dashboard page.
+
+It's very easy: in the home assistant, click on overview on the left bar, the three dots on the right, edit dashboard and finally "Add card" on the bottom. A modal should appear, click on "Entities" choice.
+
+![Home Assistant - Add card](img/air-quality-rpi/home-assistant-add-card.png)
+
+Write the title that you want; in "entities" section, search for the entities we saw earlier. You should see a preview of the new card at the bottom. When you're satisfied click "Save" and we're done!
+
+![Home Assistant - Add entity card](img/air-quality-rpi/home-assistant-add-entity-card.png)
+
+Now we should have this nice card every time we open Home Assistant! If we click on that, we should see also a graph of the last day.
+
+![Home Assistant - Finalized card](img/air-quality-rpi/home-assistant-card-final.png)
+
+## Conclusions
+
+We finally reach the end of this journey. I hope you learn something new and appreciate the beauty of making an air quality sensor by yourself.
+
+I would like to tell you more about it: for example I don't explain how to see this data on [Grafana](http://grafana.com)
+
+![Home Assistant - Air Quality and WiFi signal](img/air-quality-rpi/grafana-air-quality.png)
+
+or how to see the WiFi SSID and its signal strength directly on Home Assistant.
+
+![Grafana](img/air-quality-rpi/home-assistant-air-wifi.png)
+
+I'll talk about them in other blog posts because this is already very long.
+
+If you want to be updated, leave your email below and I'll notify you. Or simply visit my blog from time to time.
+
+See you!
 
