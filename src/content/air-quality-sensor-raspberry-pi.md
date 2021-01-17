@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to build an Air Quality Sensor using a Raspberry Pi
-excerpt: Let's learn how to build resilient air quality sensors with the Raspberry Pi
+excerpt: Let's learn how to build a resilient air quality sensor with the Raspberry Pi
 image: img/air-quality-rpi/raspberrypi-air-quality.jpg
 author: [Mattia Natali]
 date: 2021-01-17T16:40:20.172Z
