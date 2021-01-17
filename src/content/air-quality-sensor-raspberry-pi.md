@@ -1,40 +1,32 @@
 ---
 layout: post
 title: How to build an Air Quality Sensor using a Raspberry Pi
-excerpt: Let's learn how to build resilient Air Quality Sensors with the Raspberry Pi
+excerpt: Let's learn how to build resilient air quality sensors with the Raspberry Pi
 image: img/air-quality-rpi/raspberrypi-air-quality.jpg
 author: [Mattia Natali]
-date: 2021-01-06T16:40:20.172Z
+date: 2021-01-17T16:40:20.172Z
 tags: 
  - IoT
  - How-to
-draft: true
+draft: false
 ---
 
-# How to build an Air Quality Sensor using a Raspberry Pi
+I live in Milan and I was wondering how much the air is polluted. So I started learning how to build an air quality sensor and how to integrate it in my Home Assistant. Then I regretted it because I understood the Milan air quality is very awful! It's not breaking news, but it's different having your air quality sensor that analyzes the air you're breathing instead of hearing the news on TV that says: "Milan had stopped the traffic to lower the emissions because it's above the limits". Then I moved the sensor to Serina, a little town lost in the mountains, where the air quality is much better!
 
-I live in Milan and I was wondering how much the air is polluted. So I started learning how to build an air quality sensor and how to integrate it in my Home Assistant. Then I regretted it because I understood the Milan air quality is very awful! It's not breaking news, but it's different having your air quality sensor that analyzes the air you're breathing instead of hearing the news on TV that says "Milan had stopped the traffic to lower the emissions because it's above the limits".
-
-Now I want to share my learning and how to create the same air quality sensor I built and how to read this data into Home Assistant just like this
-
-or how to see the WiFi SSID and its signal strength directly on Home Assistant.
+Now I want to share my learning: how to create the same air quality sensor I built, and how to read this data into Home Assistant just like this
 
 ![Home Assistant - Air Quality and WiFi signal](img/air-quality-rpi/home-assistant-air-wifi.png)
-
-or via Grafana
-
-![Grafana](img/air-quality-rpi/grafana-air-quality.png)
 
 ## The hardware we need
 
 To reach this goal we need:
 
-- 2 Raspberry Pi and related power adapter and SD Cards: one will be the air quality sensor, the other one will be our receiver with Home assistant. You also need a WiFi USB dongle if the air quality Raspberry Pi doesn't have built-in.
+- 2 Raspberry Pis and related power adapter and SD Cards: one will be the air quality sensor (*Rpi Sensor*), the other one will be our receiver with Home assistant (*Rpi Hub*). You also need a WiFi USB dongle if the air quality Raspberry Pi doesn't have built-in.
 - The air quality sensor SDS011: this hardware is commonly shipped with the USB dongle, so it's easy to attach to the Raspberry Pi.
 
 ## The software we use
 
-- [Mosquitto](https://mosquitto.org): open source message broker that implements MQTT protocol. [MQTT protocol](https://en.wikipedia.org/wiki/MQTT) is widely used in IoT system because it performs very well under extreme conditions like weak WiFi signal very limited WiFi bandwidth.
+- [Mosquitto](https://mosquitto.org): open source message broker that implements MQTT protocol. [MQTT protocol](https://en.wikipedia.org/wiki/MQTT) is widely used in IoT system because it performs very well under extreme conditions like weak WiFi signal, and very limited WiFi bandwidth.
 - [Home Assistant](https://www.home-assistant.io): open-source home automation system.
 
 I'm currently using a Mac, so all the commands you see will work on Mac or Linux terminal. If you are using Windows you have two options:
@@ -44,7 +36,7 @@ I'm currently using a Mac, so all the commands you see will work on Mac or Linux
 
 ## What we learn
 
-Someone can say "Hey! You are a liar! You're not building an air quality sensor, you've just bought that!". Maybe he is right, but I think the sensor is just one piece of the puzzle. We have a lot of work to extract the data from the sensor and make them useful.
+Someone can say: "Hey! You are a liar! You're not building an air quality sensor, you've just bought that!". Maybe he is right, but I think the sensor is just the tip of the iceberg. We have a lot of work to extract the data from the sensor and make them useful.
 
 The overall architecture we want to build is shown in the next figure
 
@@ -52,7 +44,7 @@ The overall architecture we want to build is shown in the next figure
 
 So through this tutorial, we will learn:
 
-- How to create a program that extracts data from the sensor. We will write it in Go. To simplify the development we will learn how to cross-compile the binary for ARM architecture using our PC/Mac that has a different architecture than the Raspberry Pi.
+- How to create a program that extracts data from the sensor. We will write it in [Go](https://golang.org). To simplify the development we will learn how to cross-compile the binary for ARM architecture using our PC/Mac that has a different architecture than the Raspberry Pi.
 - How to automatically connect the Raspberry Pi with the sensor to the WiFi with the strongest signal, how to automatically reconnect if we have some outage.
 - How to start automatically the Go program if there are some issues.
 - How to pass data using MQTT protocol and how to digest those inside [Home Assistant](https://www.home-assistant.io).
@@ -62,9 +54,11 @@ Now that we have the overall picture in our minds, let's get started!
 ## Build the Raspberry Pi with the air quality sensor
 
 Let's start with the Raspberry Pi with the air quality sensor.
-The first thing we need is [install the Raspberry Pi OS Lite](https://www.raspberrypi.org/documentation/installation/). We just need the lite because we just use the terminal and [we will connect using SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md).
+**The first thing we need is [install the Raspberry Pi OS Lite](https://www.raspberrypi.org/documentation/installation/)**. We just need the lite because we just use the terminal and [we will connect using SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md).
 
-Now we are ready to attach the SD card to the Raspberry, attach the ethernet port to connect it to our home network for the first setup, attach the SDS011 sensor using the USB. The Raspberry Pi should automatically detect it. Let's check it out: connect to this Raspberry Pi using via SSH using `ssh pi@<RPI_SENSOR_IP>`, with password `raspberry`. Change `<RPI_SENSOR_IP>` with the Raspberry Pi sensor IP address. I usually find the IP address of it through my router control panel, or just type on the terminal `ping raspberrypi.local`. You should find something like this
+Now we are ready to attach the SD card to the Raspberry, attach the ethernet port to connect it to our home network for the first setup, attach the SDS011 sensor using the USB. The Raspberry Pi should automatically detect it.
+
+Let's check it out: connect to this Raspberry Pi using via SSH using `ssh pi@<RPI_SENSOR_IP>`, with password `raspberry`. Change `<RPI_SENSOR_IP>` with the Raspberry Pi sensor IP address. I usually find its IP address through my router control panel, or just type on the terminal `ping raspberrypi.local`. You should find something like this
 
 ```bash
 PING raspberrypi.local (192.168.1.123): 56 data bytes
@@ -97,7 +91,7 @@ Now we should create a program that fetches data from `/dev/ttyUSB0` created by 
 If you don't know MQTT, don't worry: [Wikipedia explains briefly what it is](https://en.wikipedia.org/wiki/MQTT). This is my explanation: it's a lightweight protocol that relies on topics. Someone publish something on a topic, like the air quality sensor data. **Someone else can subscribe to that topic, in that way he's notified whenever there's new data on that topic**. Maybe you are more comfortable with the HTTP protocol, but I think that MQTT is best suited for this kind of application.
 
 I made this application for you in Go. [You can find it on GitHub](https://github.com/matitalatina/sds011-mqtt).
-We should change the configuration that is in `cmd/sensor/main.go` the file should be like this
+We should change the configuration that is in `cmd/sensor/main.go`, the file should be like this
 
 ```go
 package main
@@ -105,25 +99,26 @@ package main
 import "mattianatali.it/sds011-mqtt/internal/sensor"
 
 func main() {
- c := sensor.Config{
- Topic: "home/serina/edge-rpi/air-quality",
- SensorPortPath: "/dev/ttyUSB0",
- CycleMinutes: 1,
- MqttBroker: "tcp://192.168.1.117:1883",
- }
- sensor.Start(c)
+  c := sensor.Config{
+    Topic: "home/serina/edge-rpi/air-quality",
+    SensorPortPath: "/dev/ttyUSB0",
+    CycleMinutes: 1,
+    MqttBroker: "tcp://192.168.1.117:1883",
+  }
+  sensor.Start(c)
 }
 ```
 
-- Change the `Topic` with a string of your choice. I had his convention `home/<HOME_IDENTIFIER>/<DEVICE_IDENTIFIED>/<DATA>`
+- Change the `Topic` with a string of your choice. I had his convention `home/<HOME_IDENTIFIER>/<DEVICE_IDENTIFIED>/<DATA>`. The topic is just a string that refers to where we want to publish the data and then where we want to subscribe to fetch them.
 - `SensorPortPath`: should be the same, it's where we fetch the sensor data.
 - `CycleMinutes`: Change it if 1 sample/minute is too much for you. You can't put less than 1 minute.
-- `MqttBroker`: You should put the IP address of the Raspberry Pi where we put Mosquitto, the message broker that handles our MQTT topics. I suggest you to use the same Raspberry Pi where you install also Home Assistant.
+- `MqttBroker`: You should put the IP address of the Raspberry Pi where we put Mosquitto, the message broker that handles our MQTT topics. I suggest you use the same Raspberry Pi where you install also Home Assistant.
 
-If you are curious, you can see the implementation if you see `internal/sensor/main.go`.
+If you are curious, you can see the implementation in `internal/sensor/main.go`.
 
-Now it's time to cross-compile it for our Raspberry Pi! I'm expecting that you have downloaded this source code on your Mac/PC and you have [Go installed](https://golang.org/doc/install). Then, we need to know what type of architecture your Raspberry Pi has.
-Launch these command on the Raspberry Pi: `cat /proc/cpuinfo`
+**Now it's time to cross-compile it for our Raspberry Pi!** I'm expecting that you have downloaded this source code on your Mac/PC and you have [Go installed](https://golang.org/doc/install). Then, we need to know what type of architecture your Raspberry Pi has.
+
+Launch this command on the Raspberry Pi: `cat /proc/cpuinfo`
 You should see something like this
 
 ```bash
@@ -157,7 +152,7 @@ Now we should have a binary file located in `dist/pm-sensor`. We should transfer
 scp dist/pm-sensor pi@<RPI_SENSOR_IP>:
 ```
 
-As usual, change `<RPI_SENSOR_IP>` with the real IP, but leave the colon at the end. This means we're going to place the `pm-sensor` in the folder home of our user `pi` inside the Raspberry Pi.
+As usual, change `<RPI_SENSOR_IP>` with the real IP, but leave the colon at the end. This means we're going to place the `pm-sensor` in the home folder of our user `pi` inside the Raspberry Pi.
 
 Now we can enter via SSH in the Raspberry Pi, we should see our new binary file called `pm-sensor`. If we try to run, it fails
 
@@ -182,7 +177,7 @@ Now we leave the sensor for a moment, and we'll work on the Raspberry Pi that is
 
 ## Add mosquitto to the Raspberry Pi Hub
 
-Now it's time to set up the "receiver" part of the architecture. So we need the other Raspberry Pi with a clean Raspberry OS installed.
+**Now it's time to set up the "receiver" part of the architecture.** So we need the other Raspberry Pi with a clean Raspberry OS installed.
 
 Then [we install Mosquitto](https://mosquitto.org/blog/2013/01/mosquitto-debian-repository/)
 
@@ -202,9 +197,9 @@ listener 1883
 allow_anonymous true
 ```
 
-The first one enables the incoming messages from different hosts to the port 1883. This is required because our sensor is not on this Raspberry Hub. The second one enables anonymous users.
+The first one enables the incoming messages from different hosts to the port 1883. This is required because our sensor is not on this Rpi Hub. The second one enables anonymous users.
 
-We make sure that Mosquitto is working and it takes the new config file and it's starting every time we boot the Raspberry.
+**We make sure that Mosquitto is working**, it takes the new config file, and **it's starting on Raspberry boot**.
 
 
 ```bash
@@ -215,7 +210,7 @@ sudo systemctl restart mosquitto
 sudo systemctl enable mosquitto
 ```
 
-Now we have the MQTT Broker up and running! It means that our sensor can send the data to this broker. Let's test if our sensor can send data to this broker.
+**Now we have the MQTT Broker up and running!** It means that our sensor can send the data to this broker. Let's test if our sensor can send data to this broker.
 
 ```bash
 # Connect to Raspberry Pi sensor and type the password
@@ -258,9 +253,11 @@ Now we know what our Go program publish on the topic: it sends a JSON file with 
 
 ### Recap
 
-Congratulation! Now we have a sensor that fetches air quality data and sends them to an MQTT broker, every application that wants this data should subscribe to the chosen topic and that's it! Are we finished?
+Congratulation! **Now we have a sensor that fetches air quality data and sends them to an MQTT broker, every application that wants this data should subscribe to the chosen topic** and that's it! Are we finished?
 
-Well... Not exactly, I think you want to put the sensor outside, so we should use the WiFi and detach the Ethernet port, and I think you don't want to connect to the sensor to start the program and leave the SSH connection opened. We are not mentioned that if you put the sensor far away from your router or you want to reboot the router, the sensor should be able to reconnect every time automatically.
+Well... Not exactly.
+
+We want to put the sensor outside, so we should use the WiFi and detach the Ethernet port. We don't want to connect to the sensor to start the program. If we put the sensor far away from our router, the sensor should be able to reconnect every time automatically, it should do the same if we restart the router. We have all these issues to fix!
 
 So let's pimp up our sensor to make it wireless and smart enough to keep the connection on automatically.
 
@@ -268,9 +265,9 @@ So let's pimp up our sensor to make it wireless and smart enough to keep the con
 
 ### Make the program start automatically
 
-As we said, the program doesn't start automatically. We have to connect inside the sensor by SSH and start it with the command `./pm-sensor`. This is very frustrating and we need to make it start automatically.
+The program doesn't start automatically. We have to connect via SSH and start it with the command `./pm-sensor`. This is very frustrating.
 
-To reach this goal, we take leverage of [systemd](https://en.wikipedia.org/wiki/Systemd). Systemd is the system and service manager for the Raspberry Pi. Did you notice that we have already used systemd in this tutorial? When we started mosquitto we wrote
+To reach this goal, **we take leverage of [systemd](https://en.wikipedia.org/wiki/Systemd)**. Systemd is the system and service manager for the Raspberry Pi. Did you notice we have already used systemd in this tutorial? When we started mosquitto we wrote
 
 ```bash
 sudo systemctl restart mosquitto
@@ -279,7 +276,7 @@ sudo systemctl enable mosquitto
 
 using the command `systemctl` we can start/stop/restart the services on a Linux machine. And we can also start automatically a service on boot if we write `sudo systemctl enable <SERVICE>`. So we need to create a service for our pm-sensor program.
 
-Luckily it's very easy: the custom services are stored in the folder `/etc/systemd/system`. So we can add the new service if we add the file called `pm-sensor.service` in that folder. The content of that file is the following
+Luckily it's very easy: the custom services are stored in the folder `/etc/systemd/system`. So we can add the new service, if we add the file called `pm-sensor.service` in that folder. The content of that file is the following
 
 ```
 [Unit]
@@ -305,9 +302,9 @@ As you can see, the service declaration consists of three sections: `[Unit]`, `[
 - `[Service]` declare the type of the service, the name, and the group of the user that should start the script, where the program is located and we define how systemd should behave if the service panics. We want the program to always restart.
 - `[Install]` defines that this service does not need the graphical user interface.
 
-Systemd is a very big topic and it deserves a complete book on it, I know that this explanation scratches only the surface, but it's enough for our purposes. But I know you're very curious! So if you want to dig deeper you can type `man systemd.unit` and `man systemd.service` on your Linux machine. In linux, if you want to know something more just type `man <PROGRAM_YOU_WANT_TO_LEARN_MORE>`.
+Systemd is a very big topic and it deserves a complete book on it. I know this explanation scratches only the surface, but it's enough for our purposes. But I know you're very curious! So if you want to dig deeper you can type `man systemd.unit` and `man systemd.service` on your Linux machine. In linux, if you want to know something more just type `man <PROGRAM_YOU_WANT_TO_LEARN_MORE>`.
 
-Now that we created the service, we need to reload the systemd configuration, start the program, and enable it during startup.
+Now that we have created the service, we need to reload the systemd configuration, start the program, and enable it during startup.
 
 ```bash
 sudo systemctl daemon-reload
@@ -341,11 +338,11 @@ We don't need to start manually the program anymore! But we are still connected 
 
 The best way to add the WiFi in the Raspberry Sensor is by [reading the official documentation](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md), it's useless to copy-paste. I suggest adding all your WiFi SSID that you have in your home. In this way, you set up the sensor just one time. If you want to move it to another place, it tries to connect to the nearest WiFi access point.
 
-Be aware that now the sensor IP address could be changed. So remember to get the new address.
+Be aware that now **the sensor IP address could be changed**. So remember to get the new address.
 
 ### Keep WiFi persistent
 
-Now we can put our sensor outside! It automatically connects to our WiFi and starts our program that fetches the sensor. We should be proud of our work until now... But we realize soon that there's a problem. We realize it when we reboot our router or we put our sensor too far from it: the Raspberry Pi doesn't try to reconnect the WiFi if it loses the connection!
+Now we can put our sensor outside! It automatically connects to our WiFi and starts our program that fetches the sensor. We should be proud of our work until now... But we realize soon that there's a problem. We realize it when we reboot our router or we put our sensor too far from it: **the Raspberry Pi doesn't try to reconnect the WiFi if it loses the connection**!
 
 Let's fix it. I found a little script on the web and I adapted it for our purposes. We create the file `check-wifi.sh`
 
@@ -376,12 +373,12 @@ pingip='192.168.1.1'
 echo "Performing Network check for $wlan"
 /bin/ping -c 1 -I $wlan $pingip > /dev/null 2> /dev/null
 if [ $? -ge 1 ] ; then
- echo "Network connection down! Attempting reconnection."
- sudo ip link set $wlan down
- sleep 5
- sudo ip link set $wlan up
+  echo "Network connection down! Attempting reconnection."
+  sudo ip link set $wlan down
+  sleep 5
+  sudo ip link set $wlan up
 else
- echo "Network is Okay"
+  echo "Network is Okay"
 fi
 ```
 
@@ -389,7 +386,7 @@ The script should be self-explanatory. We have two variables at the top: `wlan` 
 
 The script tries to ping the router, if it reaches the router, everything is fine. If it can't do it, it disables the WiFi, and then it enables again. It should trigger the reconnection.
 
-We need someone that calls this script every minute... [cron](https://en.wikipedia.org/wiki/Cron) to the rescue! This is the common way to do such things on Linux.
+**We need someone that calls this script every minute... [cron](https://en.wikipedia.org/wiki/Cron) to the rescue!** This is the common way to do such things on Linux.
 
 To add a scheduled job that triggers our script every minute, we need to write `crontab -e` in the terminal. It will open a text editor.
 On that page write this stuff
@@ -407,11 +404,11 @@ The scheduled time is always represented by five values. The order of them chang
 - Month (1 - 12)
 - Day of the week (0 - 6): Sunday to Saturday
 
-But we put `*`... Not numbers. We added asterisks because it has a special meaning. `*` means "any". So we wrote this: "Please Linux, run the script `/home/pi/check-wifi.sh` every minute of every hour of every day of the month of every day of the week". Linux is smart enough to understand he should trigger the script every minute from now on.
+But we put `*`... Not numbers. We added asterisks because it has a special meaning. `*` means "any". So we wrote: "Please Linux, run the script `/home/pi/check-wifi.sh` every minute of every hour of every day of the month of every day of the week". Linux is smart enough to understand he should trigger the script every minute from now on.
 
-We have a very robust air quality sensor now! We can put it outside our home and no matter what happens, it should keep always the connection as long as it reaches our router WiFi signal.
+**We have a very robust air quality sensor now!** We can put it outside our home and no matter what happens, it should keep always the connection as long as it reaches our router WiFi signal.
 
-Using `mosquitto_sub` is the only way to see the data from the sensor. This is ok only for debugging purposes, we should have a better way to see those data. [Home Assistant](https://www.home-assistant.io) will solve this problem.
+**Using `mosquitto_sub` is the only way to see the data from the sensor**. This is ok only for debugging purposes, we should have a better way to see those data. **[Home Assistant](https://www.home-assistant.io) will solve this problem**.
 
 ## Add sensor to Home Assistant
 
@@ -419,9 +416,9 @@ Using `mosquitto_sub` is the only way to see the data from the sensor. This is o
 
 [Home Assistant](https://www.home-assistant.io) is a great piece of software. If you are a tech enthusiast that loves automating home, I think you have already installed it.
 
-If you don't know yet: you can attach smart devices to it and you can create rules to automate things. You can also attach sensors as we have just created to easily see the data. In other words, if you decide to install it, Home Assistant can become the control center of your home.
+If you don't know yet: you can attach smart devices to it and you can create rules to automate things. You can also attach sensors to easily see the data. In other words, if you decide to install it, Home Assistant can become the control center of your home.
 
-Seeing the sensor data in the Home Assistant is our goal here.
+**Seeing the sensor data in the Home Assistant is our goal here.**
 
 As the first step, [we need to install it](https://www.home-assistant.io/docs/installation/) on the Raspberry Pi Hub.
 Then, I suggest you read the [configuration manual](https://www.home-assistant.io/docs/configuration/). Home Assistant heavily uses [YAML files](https://learnxinyminutes.com/docs/yaml/) to install custom sensors like ours.
@@ -436,7 +433,7 @@ Now that we have installed Home Assistant and learned about [where its configura
 
 ### Add MQTT integration
 
-We need to add the MQTT integration to Home Assistant. Go to the Home Assistant portal, it should be exposed on port `8123`. So open the browser and type the URL `http://<RPI_HUB_IP>:8123` where `<RPI_HUB_IP>` is the IP of our Raspberry Pi Hub. Click the cog icon (Configuration) and click on "Add integration". We can see a huge list of integration, we are interested in MQTT. So search for that and then it will ask for two mandatory fields:
+**We need to add the MQTT integration to Home Assistant.** Go to the Home Assistant portal, it should be exposed on port `8123`. So open the browser and type the URL `http://<RPI_HUB_IP>:8123` where `<RPI_HUB_IP>` is the IP of our Raspberry Pi Hub. Click the cog icon (Configuration) and click on "Add integration". We can see a huge list of integration, we are interested in MQTT. So search for that and then it will ask for two mandatory fields:
 
 - Broker: you need to add the Raspberry Pi Hub IP. It's where we installed Mosquitto, our MQTT broker.
 - Port: it's `1883`. We put that in the mosquitto configuration.
@@ -467,20 +464,20 @@ To achieve this goal, we edit the Home assistant `configuration.yaml` file. We n
 
 ```yaml
 sensor:
- - platform: mqtt
- state_topic: "home/serina/edge-rpi/air-quality"
- unit_of_measurement: "μg/m³"
- icon: "mdi:weather-fog"
- value_template: '{{value_json.PM10 | float}}'
- name: 'Air Quality PM 10'
- unique_id: 'rpi-edge:air-quality-pm-10'
- - platform: mqtt
- state_topic: "home/serina/edge-rpi/air-quality"
- unit_of_measurement: "μg/m³"
- icon: "mdi:weather-fog"
- value_template: '{{value_json.PM25 | float}}'
- name: 'Air Quality PM 2.5'
- unique_id: 'rpi-edge:air-quality-pm-2.5'
+  - platform: mqtt
+    state_topic: "home/serina/edge-rpi/air-quality"
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:weather-fog"
+    value_template: '{{value_json.PM10 | float}}'
+    name: 'Air Quality PM 10'
+    unique_id: 'rpi-edge:air-quality-pm-10'
+  - platform: mqtt
+    state_topic: "home/serina/edge-rpi/air-quality"
+    unit_of_measurement: "μg/m³"
+    icon: "mdi:weather-fog"
+    value_template: '{{value_json.PM25 | float}}'
+    name: 'Air Quality PM 2.5'
+    unique_id: 'rpi-edge:air-quality-pm-2.5'
 ```
 
 Luckily, the YAML file is very readable. We are using [MQTT sensor platform](https://www.home-assistant.io/integrations/sensor.mqtt/). We restart the Home Assistant.
@@ -503,7 +500,7 @@ Now we should have two new entities that show air quality. To see them, we shoul
 
 as you can see, it's quite uncomfortable. It's better to put those entities on the overview/dashboard page.
 
-It's very easy: in the home assistant, click on overview on the left bar, the three dots on the right, edit dashboard, and finally "Add card" on the bottom. A modal should appear, click on the "Entities" choice.
+In the Home Assistant, click on overview on the left bar, the three dots on the right, edit dashboard, and finally "Add card" on the bottom. A modal should appear, click on the "Entities" choice.
 
 ![Home Assistant - Add card](img/air-quality-rpi/home-assistant-add-card.png)
 
