@@ -446,7 +446,7 @@ We should see the brand new integration in Configuration -> Integration Tab. We 
 
 and then we can listen to our MQTT topic, just to check if Home Assistant can see our data.
 
-In the section "Listen to a topic", write down our chosen MQTT topic, click "start listening" and wait at least 1 minute. The wait depends on the configuration you set on our Go program. If you don't change my value, it should publish one date per minute.
+In the section "Listen to a topic", write down our chosen MQTT topic, click "start listening" and wait at least 1 minute. The wait depends on the configuration you set on our Go program. If you don't change my value, it should publish one datum per minute.
 
 If you see the data like the figure below, you have successfully attached Home Assistant to our MQTT Broker!
 
@@ -482,7 +482,7 @@ sensor:
 
 Luckily, the YAML file is very readable. We are using [MQTT sensor platform](https://www.home-assistant.io/integrations/sensor.mqtt/). We restart the Home Assistant.
 
-You should change `state_topic` with yours. You can also change the `unique_id` with any value unless is unique, of course.
+You should change `state_topic` with yours. You can also change the `unique_id` with any value, it just need to be unique, of course.
 
 `value_template` is the field where we extract the value from JSON in the topic with the keyword `value_json` and then we take the interesting values `PM10` and `PM25`. Finally, we say that we are interested in a `float` value. All this stuff is surrounded by `{{ }}`: when you see this syntax means we are exploiting the [template system](https://www.home-assistant.io/docs/configuration/templating/) that is powered by [Jinja2](https://www.home-assistant.io/docs/configuration/templating/).
 
@@ -514,9 +514,9 @@ Now we should have this nice card every time we open Home Assistant! If we click
 
 ## Conclusions
 
-We finally reach the end of this journey. I hope you learn something new and appreciate the beauty of making an air quality sensor by yourself.
+We finally reach the end of this journey. I hope you've learned something new and appreciate the beauty of making an air quality sensor by yourself.
 
-I would like to tell you more about it: for example, I don't explain how to see this data on [Grafana](http://grafana.com)
+I would like to tell you more about it: for example, I haven't explained how to see this data on [Grafana](http://grafana.com)
 
 ![Home Assistant - Air Quality and WiFi signal](img/air-quality-rpi/grafana-air-quality.png)
 
