@@ -433,7 +433,7 @@ Now that we have installed Home Assistant and learned about [where its configura
 
 ### Add MQTT integration
 
-**We need to add the MQTT integration to Home Assistant.** Go to the Home Assistant portal, it should be exposed on port `8123`. So open the browser and type the URL `http://<RPI_HUB_IP>:8123` where `<RPI_HUB_IP>` is the IP of our Raspberry Pi Hub. Click the cog icon (Configuration) and click on "Add integration". We can see a huge list of integration, we are interested in MQTT. So search for that and then it will ask for two mandatory fields:
+**We need to add the MQTT integration to Home Assistant.** Go to the Home Assistant portal, it should be exposed on port `8123`. So open the browser and type the URL `http://<RPI_HUB_IP>:8123` where `<RPI_HUB_IP>` is the IP of our Raspberry Pi Hub. Click the cog icon (Configuration) and click on "Add integration". We can see a huge list of integrations, we are interested in MQTT. So search for that and then it will ask for two mandatory fields:
 
 - Broker: you need to add the Raspberry Pi Hub IP. It's where we installed Mosquitto, our MQTT broker.
 - Port: it's `1883`. We put that in the mosquitto configuration.
