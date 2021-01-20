@@ -391,9 +391,9 @@ Lo script tenta di eseguire il ping del router: se raggiunge il router, va tutto
 Per aggiungere un lavoro pianificato che attivi il nostro script ogni minuto, dobbiamo scrivere `crontab -e` nel terminale. Si aprirà un editor di testo.
 In quella pagina scrivi questa cosa
 
-`` bash
+```bash
 * * * * * /home/pi/check-wifi.sh
-`` `
+```
 
 Questa strana sintassi può spaventare ma è molto semplice. La prima parte, `* * * * *` indica quando lo script deve essere attivato. L'ultima parte si riferisce allo script che vogliamo lanciare.
 L'orario programmato è sempre rappresentato da cinque valori. L'ordine di questi cambia il significato di quegli asterischi. Da sinistra a destra si riferiscono a:
