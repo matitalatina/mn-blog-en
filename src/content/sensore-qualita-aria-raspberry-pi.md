@@ -51,7 +51,7 @@ Quindi, attraverso questo tutorial, impareremo:
 
 Ora che abbiamo in mente il quadro generale, iniziamo!
 
-## Costruisci il Raspberry Pi con il sensore per la qualità dell'aria
+## Prepariamo il Raspberry Pi con il sensore per la qualità dell'aria
 
 Cominciamo con il Raspberry Pi con il sensore per la qualità dell'aria.
 **La prima cosa di cui abbiamo bisogno è [installare il sistema operativo Raspberry Pi Lite](https://www.raspberrypi.org/documentation/installation/)**. Abbiamo solo bisogno della lite perché usiamo solo il terminale e [ci collegheremo usando SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/README.md).
