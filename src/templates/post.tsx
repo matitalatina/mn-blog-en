@@ -22,6 +22,7 @@ import { inner, outer, SiteMain } from '../styles/shared';
 import config from '../website-config';
 import { AuthorList } from '../components/AuthorList';
 import { SponsorCall } from '../components/sponsor/SponsorCall';
+import { ShareButtons } from '../components/social/ShareBtns';
 
 export interface Author {
   id: string;
@@ -233,6 +234,12 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
               )}
               <PostContent htmlAst={post.htmlAst} />
 
+              <ShareButtons
+                title={`Davvero interessante! 👇\n${post.frontmatter.title}`}
+                subject="Ho trovato questo articolo online"
+                url={location.href} tags={post.frontmatter.tags}
+                twitterAuthor={config.twitter?.match(/([^/]*)\/*$/)?.[1]}
+              />
               <SponsorCall />
               {/* The big email subscribe modal content */}
               {config.showSubscribe && <Subscribe title={config.title} />}
