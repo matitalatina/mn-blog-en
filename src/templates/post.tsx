@@ -235,8 +235,8 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
               <PostContent htmlAst={post.htmlAst} />
 
               <ShareButtons
-                title={`Davvero interessante! 👇\n${post.frontmatter.title}`}
-                subject="Ho trovato questo articolo online"
+                title={`Very interesting! 👇\n${post.frontmatter.title}`}
+                subject="I found this post online"
                 url={location.href} tags={post.frontmatter.tags}
                 twitterAuthor={config.twitter?.match(/([^/]*)\/*$/)?.[1]}
               />
