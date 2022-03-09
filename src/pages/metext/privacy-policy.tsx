@@ -12,7 +12,7 @@ import Helmet from 'react-helmet';
 
 const PageTemplate = css`
   .site-main {
-    padding-top: 2vw;
+    margin-top: 64px;
   }
 `;
 

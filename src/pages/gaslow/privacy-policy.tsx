@@ -12,7 +12,7 @@ import Helmet from 'react-helmet';
 
 const PageTemplate = css`
   .site-main {
-    padding-top: 2vw;
+    margin-top: 64px;
   }
 `;
 
@@ -40,9 +40,15 @@ const About: React.FC = () => (
               <div className="post-content">
                 <p>
                   I am Mattia Natali, the data controller. <a href="m&#97;il&#116;o&#58;ma&#116;t&#37;69anat%&#54;1l&#37;69de&#37;76&#64;gm&#97;il%2Ec&#111;m">You can contact me</a> if you have any questions regarding your privacy.
-              </p>
+                </p>
                 <h2>Information we collect</h2>
-                <p>I may collect data about:</p>
+                <h3>Functional data</h3>
+                <p>We collect your exact position and the position of the location you entered in the search field only to give you the gas stations you requested.<br/>
+                <b>We do not store your position in our backend.</b> It's used only to give you the service you required.
+                <p>We do not collect your favorite stations. That list doesn't leave your device.</p>
+                </p>
+                <h4>Non functional data</h4>
+                <p>We may collect data about:</p>
                 <ul>
                   <li>device type and locale settings (English, Italian, etc.)</li>
                   <li>IP Address</li>
@@ -50,8 +56,8 @@ const About: React.FC = () => (
                 </ul>
                 <p>
                   when you&apos;re using my app.
-              </p>
-                <h2>Use of information</h2>
+                </p>
+                <h4>Use of non functional data</h4>
                 <p>We use this data to:</p>
                 <ul>
                   <li>provide the app with your preferred language.</li>
