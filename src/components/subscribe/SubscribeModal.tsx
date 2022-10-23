@@ -1,6 +1,6 @@
-import React from 'react';
-import { lighten, desaturate, darken, mix } from 'polished';
 import styled from '@emotion/styled';
+import { darken, desaturate, mix } from 'polished';
+import React from 'react';
 
 import { colors } from '../../styles/colors';
 import { SubscribeForm } from './SubscribeForm';

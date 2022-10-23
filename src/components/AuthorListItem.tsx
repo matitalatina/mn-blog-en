@@ -40,7 +40,7 @@ export const AuthorListItem: React.FC<AuthorListItemProps> = props => {
       onMouseLeave={() => handleMouseLeave()}
     >
       {props.tooltip === 'small' && (
-        <AuthorNameTooltip className="author-name-tooltip">{props.author.id}</AuthorNameTooltip>
+        <AuthorNameTooltip className="author-name-tooltip">{props.author.name}</AuthorNameTooltip>
       )}
       {props.tooltip === 'large' && (
         <div css={[AuthorCardStyles, hovered && Hovered]} className="author-card">
@@ -54,11 +54,11 @@ export const AuthorListItem: React.FC<AuthorListItemProps> = props => {
           )}
           <div className="author-info">
             <div className="bio">
-              <h2>{props.author.id}</h2>
+              <h2>{props.author.name}</h2>
               <p>{props.author.bio}</p>
               <p>
-                <Link to={`/author/${_.kebabCase(props.author.id)}/`}>More posts</Link> by{' '}
-                {props.author.id}.
+                <Link to={`/author/${_.kebabCase(props.author.name)}/`}>More posts</Link> by{' '}
+                {props.author.name}.
               </p>
             </div>
           </div>
@@ -67,13 +67,13 @@ export const AuthorListItem: React.FC<AuthorListItemProps> = props => {
       <Link
         css={AuthorAvatar}
         className="author-avatar"
-        to={`/author/${_.kebabCase(props.author.id)}/`}
+        to={`/author/${_.kebabCase(props.author.name)}/`}
       >
         <Img
           css={AuthorProfileImage}
           className="author-profile-image"
           fluid={props.author.avatar.children[0].fluid}
-          alt={props.author.id}
+          alt={props.author.name}
           fadeIn={false}
         />
       </Link>

@@ -5,7 +5,9 @@ module.exports = {
     jest: true,
     browser: true,
   },
-  extends: ['xo-space/esnext', 'xo-react/space', 'xo-typescript'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   rules: {
     'object-curly-spacing': ['error', 'always'],
     '@typescript-eslint/indent': ['error', 2, { SwitchCase: 1 }],

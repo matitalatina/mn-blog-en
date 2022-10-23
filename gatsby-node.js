@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-var-requires */
 const path = require('path');
 const _ = require('lodash');
+const readingTime = require(`reading-time`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -40,6 +41,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         name: 'primaryTag',
         value: primaryTag || '',
       });
+
+      createNodeField({
+        node,
+        name: `timeToRead`,
+        value: readingTime(node.internal.content).minutes,
+      })
     }
   }
 };
@@ -56,8 +63,7 @@ exports.createPages = async ({ graphql, actions }) => {
       ) {
         edges {
           node {
-            excerpt
-            timeToRead
+            excerpt(format: PLAIN)
             frontmatter {
               title
               tags
@@ -76,7 +82,7 @@ exports.createPages = async ({ graphql, actions }) => {
                 }
               }
               author {
-                id
+                name
                 bio
                 avatar {
                   children {
@@ -96,6 +102,7 @@ exports.createPages = async ({ graphql, actions }) => {
             fields {
               layout
               slug
+              timeToRead
             }
           }
         }
@@ -103,7 +110,7 @@ exports.createPages = async ({ graphql, actions }) => {
       allAuthorYaml {
         edges {
           node {
-            id
+            name
           }
         }
       }
@@ -186,10 +193,10 @@ exports.createPages = async ({ graphql, actions }) => {
   const authorTemplate = path.resolve('./src/templates/author.tsx');
   result.data.allAuthorYaml.edges.forEach(edge => {
     createPage({
-      path: `/author/${_.kebabCase(edge.node.id)}/`,
+      path: `/author/${_.kebabCase(edge.node.name)}/`,
       component: authorTemplate,
       context: {
-        author: edge.node.id,
+        author: edge.node.name,
       },
     });
   });

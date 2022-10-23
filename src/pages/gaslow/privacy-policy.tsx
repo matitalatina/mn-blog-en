@@ -44,8 +44,8 @@ const About: React.FC = () => (
                 <h2>Information we collect</h2>
                 <h3>Functional data</h3>
                 <p>We collect your exact position and the position of the location you entered in the search field only to give you the gas stations you requested.<br/>
-                <b>We do not store your position in our backend.</b> It's used only to give you the service you required.
-                <p>We do not collect your favorite stations. That list doesn't leave your device.</p>
+                  <b>We do not store your position in our backend.</b> It's used only to give you the service you required.
+                  <p>We do not collect your favorite stations. That list doesn't leave your device.</p>
                 </p>
                 <h4>Non functional data</h4>
                 <p>We may collect data about:</p>

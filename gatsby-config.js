@@ -8,7 +8,7 @@ module.exports = {
     siteUrl: 'https://blog.mattianatali.dev', // full path to blog - no ending slash
   },
   mapping: {
-    'MarkdownRemark.frontmatter.author': 'AuthorYaml',
+    'MarkdownRemark.frontmatter.author': 'AuthorYaml.name',
   },
   plugins: [
     'gatsby-plugin-sitemap',
@@ -39,7 +39,6 @@ module.exports = {
           'gatsby-remark-prismjs',
           'gatsby-remark-copy-linked-files',
           'gatsby-remark-smartypants',
-          'gatsby-remark-abbr',
           {
             resolve: 'gatsby-remark-images',
             options: {
@@ -63,7 +62,6 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-plugin-react-helmet',
     'gatsby-transformer-yaml',
-    'gatsby-plugin-feed',
     {
       resolve: 'gatsby-plugin-postcss',
       options: {

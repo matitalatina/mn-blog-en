@@ -25,6 +25,7 @@ import { ShareButtons } from '../components/social/ShareBtns';
 
 export interface Author {
   id: string;
+  name: string;
   bio: string;
   avatar: {
     children: Array<{
@@ -156,7 +157,7 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
           />
         )}
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content={post.frontmatter.author[0].id} />
+        <meta name="twitter:data1" content={post.frontmatter.author[0].name} />
         <meta name="twitter:label2" content="Filed under" />
         {post.frontmatter.tags && <meta name="twitter:data2" content={post.frontmatter.tags[0]} />}
         {config.twitter && (
@@ -204,8 +205,8 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
                     <section className="post-full-byline-meta">
                       <h4 className="author-name">
                         {post.frontmatter.author.map(author => (
-                          <Link key={author.id} to={`/author/${_.kebabCase(author.id)}/`}>
-                            {author.id}
+                          <Link key={author.name} to={`/author/${_.kebabCase(author.name)}/`}>
+                            {author.name}
                           </Link>
                         ))}
                       </h4>
@@ -474,6 +475,7 @@ export const query = graphql`
         }
         author {
           id
+          name
           bio
           avatar {
             children {

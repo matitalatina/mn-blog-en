@@ -28,6 +28,7 @@ import config from '../website-config';
 import { PageContext } from './post';
 
 export interface IndexProps {
+  children: React.ReactNode;
   pageContext: {
     currentPage: number;
     numPages: number;
@@ -110,8 +111,8 @@ const IndexPage: React.FC<IndexProps> = props => {
                     alt={config.title}
                   />
                 ) : (
-                    config.title
-                  )}
+                  config.title
+                )}
               </SiteTitle>
               <SiteDescription>{config.description}</SiteDescription>
             </SiteHeaderContent>
@@ -189,6 +190,7 @@ export const pageQuery = graphql`
             }
             author {
               id
+              name
               bio
               avatar {
                 children {

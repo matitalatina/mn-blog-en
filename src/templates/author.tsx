@@ -43,6 +43,7 @@ interface AuthorTemplateProps {
     };
     authorYaml: {
       id: string;
+      name: string;
       website?: string;
       twitter?: string;
       facebook?: string;
@@ -71,7 +72,7 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
     let authorParticipated = false;
     if (edge.node.frontmatter.author) {
       edge.node.frontmatter.author.forEach(element => {
-        if (element.id === author.id) {
+        if (element.name === author.name) {
           authorParticipated = true;
         }
       });
@@ -86,17 +87,17 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
       <Helmet>
         <html lang={config.lang} />
         <title>
-          {author.id} - {config.title}
+          {author.name} - {config.title}
         </title>
         <meta name="description" content={author.bio} />
         <meta property="og:site_name" content={config.title} />
         <meta property="og:type" content="profile" />
-        <meta property="og:title" content={`${author.id} - ${config.title}`} />
+        <meta property="og:title" content={`${author.name} - ${config.title}`} />
         <meta property="article:publisher" content="https://blog.mattianatali.dev" />
         <meta property="article:author" content="https://blog.mattianatali.dev" />
         <meta property="og:url" content={config.siteUrl + location.pathname} />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content={`${author.id} - ${config.title}`} />
+        <meta name="twitter:title" content={`${author.name} - ${config.title}`} />
         <meta name="twitter:url" content={config.siteUrl + location.pathname} />
         {config.twitter && (
           <meta
@@ -130,10 +131,10 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
                   style={{ marginTop: '8px' }}
                   css={[AuthorProfileImage, AuthorProfileBioImage]}
                   src={data.authorYaml.avatar.childImageSharp.fluid.src}
-                  alt={author.id}
+                  alt={author.name}
                 />
                 <AuthHeaderContent className="author-header-content">
-                  <SiteTitle className="site-title">{author.id}</SiteTitle>
+                  <SiteTitle className="site-title">{author.name}</SiteTitle>
                   {author.bio && <AuthorBio className="author-bio">{author.bio}</AuthorBio>}
                   <div css={AuthorMeta} className="author-meta">
                     {author.location && (
@@ -202,8 +203,9 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
 
 export const pageQuery = graphql`
   query($author: String) {
-    authorYaml(id: { eq: $author }) {
+    authorYaml(name: { eq: $author }) {
       id
+      name
       website
       twitter
       bio
@@ -248,6 +250,7 @@ export const pageQuery = graphql`
             }
             author {
               id
+              name
               bio
               avatar {
                 children {

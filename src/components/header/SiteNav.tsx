@@ -111,28 +111,28 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
           </SiteNavLeft>
           <SiteNavRight>
             <SocialLinks>
-            {config.linkedin && (
-              <a
-                css={SocialLink}
-                href={config.linkedin}
-                target="_blank"
-                title="LinkedIn"
-                rel="noopener noreferrer"
-              >
-                <LinkedIn />
-              </a>
-            )}
-            {config.github && (
-              <a
-                css={SocialLink}
-                href={config.github}
-                target="_blank"
-                title="GitHub"
-                rel="noopener noreferrer"
-              >
-                <GitHub />
-              </a>
-            )}
+              {config.linkedin && (
+                <a
+                  css={SocialLink}
+                  href={config.linkedin}
+                  target="_blank"
+                  title="LinkedIn"
+                  rel="noopener noreferrer"
+                >
+                  <LinkedIn />
+                </a>
+              )}
+              {config.github && (
+                <a
+                  css={SocialLink}
+                  href={config.github}
+                  target="_blank"
+                  title="GitHub"
+                  rel="noopener noreferrer"
+                >
+                  <GitHub />
+                </a>
+              )}
               {config.facebook && (
                 <a
                   className="social-link-fb"

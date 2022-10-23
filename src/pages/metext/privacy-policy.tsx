@@ -40,7 +40,7 @@ const About: React.FC = () => (
               <div className="post-content">
                 <p>
                   I am Mattia Natali, the data controller. <a href="m&#97;il&#116;o&#58;ma&#116;t&#37;69anat%&#54;1l&#37;69de&#37;76&#64;gm&#97;il%2Ec&#111;m">You can contact me</a> if you have any questions regarding your privacy.
-              </p>
+                </p>
                 <h2>Information we collect</h2>
                 <p>I may collect data about:</p>
                 <ul>
@@ -50,7 +50,7 @@ const About: React.FC = () => (
                 </ul>
                 <p>
                   when you&apos;re using my app.
-              </p>
+                </p>
                 <h2>Use of information</h2>
                 <p>We use this data to:</p>
                 <ul>
