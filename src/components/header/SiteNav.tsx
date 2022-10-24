@@ -89,7 +89,7 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
         <nav css={SiteNavStyles}>
           <SiteNavLeft className="site-nav-left">
             {!isHome && <SiteNavLogo />}
-            <SiteNavContent css={[this.state.showTitle ? HideNav : '']}>
+            <SiteNavContent css={this.state.showTitle ? HideNav : ''}>
               <ul css={NavStyles} role="menu">
                 {/* TODO: mark current nav item - add class nav-current */}
                 <li role="menuitem">
@@ -135,8 +135,7 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
               )}
               {config.facebook && (
                 <a
-                  className="social-link-fb"
-                  css={[SocialLink, SocialLinkFb]}
+                  css={SocialLink}
                   href={config.facebook}
                   target="_blank"
                   title="Facebook"
