@@ -1,9 +1,9 @@
+import React from 'react';
 import { format } from 'date-fns';
 import { graphql, Link } from 'gatsby';
-import Img, { FluidObject } from 'gatsby-image';
+import { GatsbyImage, getSrc, IGatsbyImageData } from "gatsby-plugin-image";
 import * as _ from 'lodash';
 import { lighten, setLightness } from 'polished';
-import React from 'react';
 import { Helmet } from 'react-helmet';
 
 import { css } from '@emotion/react';
@@ -29,7 +29,7 @@ export interface Author {
   bio: string;
   avatar: {
     children: Array<{
-      fluid: FluidObject;
+      gatsbyImageData: IGatsbyImageData;
     }>;
   };
 }
@@ -39,7 +39,7 @@ interface PageTemplateProps {
   data: {
     logo: {
       childImageSharp: {
-        fixed: any;
+        gatsbyImageData: IGatsbyImageData;
       };
     };
     markdownRemark: {
@@ -53,7 +53,7 @@ interface PageTemplateProps {
         userDate: string;
         image: {
           childImageSharp: {
-            fluid: any;
+            gatsbyImageData: IGatsbyImageData;
           };
         };
         excerpt: string;
@@ -92,7 +92,7 @@ export interface PageContext {
   frontmatter: {
     image: {
       childImageSharp: {
-        fluid: FluidObject;
+        gatsbyImageData: IGatsbyImageData;
       };
     };
     excerpt: string;
@@ -106,12 +106,7 @@ export interface PageContext {
 
 const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
   const post = data.markdownRemark;
-  let width = '';
-  let height = '';
-  if (post.frontmatter.image?.childImageSharp) {
-    width = post.frontmatter.image.childImageSharp.fluid.sizes.split(', ')[1].split('px')[0];
-    height = String(Number(width) / post.frontmatter.image.childImageSharp.fluid.aspectRatio);
-  }
+  const { width, height } = post.frontmatter.image.childImageSharp.gatsbyImageData;
 
   const date = new Date(post.frontmatter.date);
   // 2018-08-20
@@ -134,7 +129,7 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
         {post.frontmatter.image?.childImageSharp && (
           <meta
             property="og:image"
-            content={`${config.siteUrl}${post.frontmatter.image.childImageSharp.fluid.src}`}
+            content={`${config.siteUrl}${getSrc(post.frontmatter.image.childImageSharp.gatsbyImageData)}`}
           />
         )}
         <meta property="article:published_time" content={post.frontmatter.date} />
@@ -153,7 +148,7 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
         {post.frontmatter.image?.childImageSharp && (
           <meta
             name="twitter:image"
-            content={`${config.siteUrl}${post.frontmatter.image.childImageSharp.fluid.src}`}
+            content={`${config.siteUrl}${getSrc(post.frontmatter.image.childImageSharp.gatsbyImageData)}`}
           />
         )}
         <meta name="twitter:label1" content="Written by" />
@@ -172,8 +167,8 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
             content={`@${config.twitter.split('https://twitter.com/')[1]}`}
           />
         )}
-        {width && <meta property="og:image:width" content={width} />}
-        {height && <meta property="og:image:height" content={height} />}
+        {width && <meta property="og:image:width" content={`${width}`} />}
+        {height && <meta property="og:image:height" content={`${height}`} />}
       </Helmet>
       <Wrapper css={PostTemplate}>
         <header className="site-header">
@@ -225,11 +220,10 @@ const PageTemplate = ({ data, pageContext, location }: PageTemplateProps) => {
 
               {post.frontmatter.image?.childImageSharp && (
                 <PostFullImage>
-                  <Img
+                  <GatsbyImage
+                    image={post.frontmatter.image.childImageSharp.gatsbyImageData}
                     style={{ height: '100%', borderRadius: '5px' }}
-                    fluid={post.frontmatter.image.childImageSharp.fluid}
-                    alt={post.frontmatter.title}
-                  />
+                    alt={post.frontmatter.title} />
                 </PostFullImage>
               )}
               <PostContent htmlAst={post.htmlAst} />
@@ -446,71 +440,64 @@ const PostFullImage = styled.figure`
   }
 `;
 
-export const query = graphql`
-  query($slug: String, $primaryTag: String) {
-    logo: file(relativePath: { eq: "img/ghost-logo.png" }) {
-      childImageSharp {
-        fixed {
-          ...GatsbyImageSharpFixed
-        }
-      }
+export const query = graphql`query ($slug: String, $primaryTag: String) {
+  logo: file(relativePath: {eq: "img/ghost-logo.png"}) {
+    childImageSharp {
+      gatsbyImageData(layout: FIXED)
     }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
-      htmlAst
+  }
+  markdownRemark(fields: {slug: {eq: $slug}}) {
+    html
+    htmlAst
+    excerpt
+    timeToRead
+    frontmatter {
+      title
+      userDate: date(locale: "en", formatString: "D MMMM YYYY")
+      date
+      tags
       excerpt
-      timeToRead
-      frontmatter {
-        title
-        userDate: date(locale: "en", formatString: "D MMMM YYYY")
-        date
-        tags
-        excerpt
-        image {
-          childImageSharp {
-            fluid(maxWidth: 3720) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-        author {
-          id
-          name
-          bio
-          avatar {
-            children {
-              ... on ImageSharp {
-                fluid(quality: 100, srcSetBreakpoints: [40, 80, 120]) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-          }
+      image {
+        childImageSharp {
+          gatsbyImageData(layout: FULL_WIDTH)
         }
       }
-    }
-    relatedPosts: allMarkdownRemark(
-      filter: { frontmatter: { tags: { in: [$primaryTag] }, draft: { ne: true } } }
-      limit: 5
-      sort: { fields: [frontmatter___date], order: DESC }
-    ) {
-      totalCount
-      edges {
-        node {
-          id
-          timeToRead
-          excerpt
-          frontmatter {
-            title
-            date
-          }
-          fields {
-            slug
+      author {
+        id
+        name
+        bio
+        avatar {
+          children {
+            ... on ImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
+            }
           }
         }
       }
     }
   }
+  relatedPosts: allMarkdownRemark(
+    filter: {frontmatter: {tags: {in: [$primaryTag]}, draft: {ne: true}}}
+    limit: 5
+    sort: {fields: [frontmatter___date], order: DESC}
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        timeToRead
+        excerpt
+        frontmatter {
+          title
+          date
+        }
+        fields {
+          slug
+        }
+      }
+    }
+  }
+}
 `;
 
 export default PageTemplate;

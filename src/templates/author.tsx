@@ -1,9 +1,10 @@
-import { graphql } from 'gatsby';
 import React from 'react';
-import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { FluidObject } from 'gatsby-image';
+import styled from '@emotion/styled';
+import { graphql } from 'gatsby';
+import { getSrc, IGatsbyImageData } from 'gatsby-plugin-image';
 
+import { Helmet } from 'react-helmet';
 import { Footer } from '../components/Footer';
 import SiteNav from '../components/header/SiteNav';
 import { PostCard } from '../components/PostCard';
@@ -14,25 +15,24 @@ import {
   inner,
   outer,
   PostFeed,
-  SiteHeader,
-  SiteHeaderContent,
-  SiteTitle,
-  SiteMain,
-  SiteArchiveHeader,
-  SiteNavMain,
   ResponsiveHeaderBackground,
+  SiteArchiveHeader,
+  SiteHeader,
   SiteHeaderBackground,
+  SiteHeaderContent,
+  SiteMain,
+  SiteNavMain,
+  SiteTitle,
 } from '../styles/shared';
-import { PageContext } from './post';
-import { Helmet } from 'react-helmet';
 import config from '../website-config';
+import { PageContext } from './post';
 
 interface AuthorTemplateProps {
   location: Location;
   data: {
     logo: {
       childImageSharp: {
-        fluid: any;
+        gatsbyImageData: IGatsbyImageData;
       };
     };
     allMarkdownRemark: {
@@ -50,13 +50,13 @@ interface AuthorTemplateProps {
       location?: string;
       profile_image?: {
         childImageSharp: {
-          fluid: FluidObject;
+          gatsbyImageData: IGatsbyImageData;
         };
       };
       bio?: string;
       avatar: {
         childImageSharp: {
-          fluid: FluidObject;
+          gatsbyImageData: IGatsbyImageData;
         };
       };
     };
@@ -121,7 +121,11 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
           </div>
 
           <ResponsiveHeaderBackground
-            backgroundImage={author.profile_image?.childImageSharp.fluid.src}
+            backgroundImage={
+              author.profile_image?.childImageSharp?.gatsbyImageData
+                ? getSrc(author.profile_image?.childImageSharp?.gatsbyImageData)
+                : undefined
+            }
             css={[outer, SiteHeaderBackground]}
             className="site-header-background"
           >
@@ -130,7 +134,7 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
                 <img
                   style={{ marginTop: '8px' }}
                   css={[AuthorProfileImage, AuthorProfileBioImage]}
-                  src={data.authorYaml.avatar.childImageSharp.fluid.src}
+                  src={getSrc(data.authorYaml.avatar.childImageSharp.gatsbyImageData)}
                   alt={author.name}
                 />
                 <AuthHeaderContent className="author-header-content">
@@ -202,7 +206,7 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
 };
 
 export const pageQuery = graphql`
-  query($author: String) {
+  query ($author: String) {
     authorYaml(name: { eq: $author }) {
       id
       name
@@ -213,16 +217,12 @@ export const pageQuery = graphql`
       location
       profile_image {
         childImageSharp {
-          fluid(maxWidth: 3720) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(layout: FULL_WIDTH)
         }
       }
       avatar {
         childImageSharp {
-          fluid(quality: 100, srcSetBreakpoints: [40, 80, 120]) {
-            ...GatsbyImageSharpFluid
-          }
+          gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
         }
       }
     }
@@ -243,9 +243,7 @@ export const pageQuery = graphql`
             draft
             image {
               childImageSharp {
-                fluid(maxWidth: 3720) {
-                  ...GatsbyImageSharpFluid
-                }
+                gatsbyImageData(layout: FULL_WIDTH)
               }
             }
             author {
@@ -255,9 +253,7 @@ export const pageQuery = graphql`
               avatar {
                 children {
                   ... on ImageSharp {
-                    fluid(quality: 100) {
-                      ...GatsbyImageSharpFluid
-                    }
+                    gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
                   }
                 }
               }

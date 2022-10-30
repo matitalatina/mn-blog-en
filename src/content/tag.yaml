@@ -1,6 +1,6 @@
-- id: Dev
-  description: La mia professione, la mia passione.
+- name: Dev
+  description: My job, my passion.
   image: img/tags/dev.jpg
-- id: How-to
-  description: Quando una cosa è negativa, tienila per te; quando è positiva, condividila.
+- name: How-to
+  description: When something is bad, keep it for you; when it's good, share it.
   image: img/tags/books.jpg

@@ -1,6 +1,6 @@
-import { graphql } from 'gatsby';
-import { FixedObject } from 'gatsby-image';
 import React from 'react';
+import { graphql } from 'gatsby';
+import { getSrc, IGatsbyImageData } from "gatsby-plugin-image";
 import { Helmet } from 'react-helmet';
 
 import { css } from '@emotion/react';
@@ -18,11 +18,9 @@ import {
   Posts,
   SiteDescription,
   SiteHeader,
-  SiteHeaderContent,
-  SiteMain,
+  SiteHeaderContent, SiteHeaderDim,
+  SiteHeaderStyles, SiteMain,
   SiteTitle,
-  SiteHeaderDim,
-  SiteHeaderStyles,
 } from '../styles/shared';
 import config from '../website-config';
 import { PageContext } from './post';
@@ -36,12 +34,12 @@ export interface IndexProps {
   data: {
     logo: {
       childImageSharp: {
-        fixed: FixedObject;
+        gatsbyImageData: IGatsbyImageData;
       };
     };
     header: {
       childImageSharp: {
-        fixed: FixedObject;
+        gatsbyImageData: IGatsbyImageData;
       };
     };
     allMarkdownRemark: {
@@ -53,7 +51,7 @@ export interface IndexProps {
 }
 
 const IndexPage: React.FC<IndexProps> = props => {
-  const { width, height } = props.data.header.childImageSharp.fixed;
+  const { width, height } = props.data.header.childImageSharp.gatsbyImageData;
 
   return (
     <IndexLayout css={HomePosts}>
@@ -68,7 +66,7 @@ const IndexPage: React.FC<IndexProps> = props => {
         <meta property="og:url" content={config.siteUrl} />
         <meta
           property="og:image"
-          content={`${config.siteUrl}${props.data.header.childImageSharp.fixed.src}`}
+          content={`${config.siteUrl}${getSrc(props.data.header.childImageSharp.gatsbyImageData)}`}
         />
         {config.facebook && <meta property="article:publisher" content={config.facebook} />}
         {config.googleSiteVerification && (
@@ -80,7 +78,7 @@ const IndexPage: React.FC<IndexProps> = props => {
         <meta name="twitter:url" content={config.siteUrl} />
         <meta
           name="twitter:image"
-          content={`${config.siteUrl}${props.data.header.childImageSharp.fixed.src}`}
+          content={`${config.siteUrl}${getSrc(props.data.header.childImageSharp.gatsbyImageData)}`}
         />
         {config.twitter && (
           <meta
@@ -96,7 +94,7 @@ const IndexPage: React.FC<IndexProps> = props => {
           css={[outer, SiteHeader, SiteHeaderStyles]}
           className="site-header-background"
           style={{
-            backgroundImage: `url('${props.data.header.childImageSharp.fixed.src}')`,
+            backgroundImage: `url('${getSrc(props.data.header.childImageSharp.gatsbyImageData)}')`,
           }}
         >
           <div css={SiteHeaderDim}></div>
@@ -107,7 +105,7 @@ const IndexPage: React.FC<IndexProps> = props => {
                 {props.data.logo ? (
                   <img
                     style={{ maxHeight: '55px' }}
-                    src={props.data.logo.childImageSharp.fixed.src}
+                    src={getSrc(props.data.logo.childImageSharp.gatsbyImageData)}
                     alt={config.title}
                   />
                 ) : (
@@ -146,72 +144,59 @@ const IndexPage: React.FC<IndexProps> = props => {
   );
 };
 
-export const pageQuery = graphql`
-  query blogPageQuery($skip: Int!, $limit: Int!) {
-    logo: file(relativePath: { eq: "img/ghost-logo.png" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        # Makes it trivial to update as your page's design changes.
-        fixed {
-          ...GatsbyImageSharpFixed
-        }
-      }
+export const pageQuery = graphql`query blogPageQuery($skip: Int!, $limit: Int!) {
+  logo: file(relativePath: {eq: "img/ghost-logo.png"}) {
+    childImageSharp {
+      gatsbyImageData(layout: FIXED)
     }
-    header: file(relativePath: { eq: "img/blog-cover.jpg" }) {
-      childImageSharp {
-        # Specify the image processing specifications right in the query.
-        # Makes it trivial to update as your page's design changes.
-        fixed(width: 2000, quality: 100) {
-          ...GatsbyImageSharpFixed
-        }
-      }
+  }
+  header: file(relativePath: {eq: "img/blog-cover.jpg"}) {
+    childImageSharp {
+      gatsbyImageData(width: 2000, quality: 100, layout: FIXED)
     }
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { draft: { ne: true } } }
-      limit: $limit
-      skip: $skip
-    ) {
-      edges {
-        node {
-          timeToRead
-          frontmatter {
-            title
-            date
-            tags
-            draft
-            excerpt
-            image {
-              childImageSharp {
-                fluid(maxWidth: 3720) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-            author {
-              id
-              name
-              bio
-              avatar {
-                children {
-                  ... on ImageSharp {
-                    fluid(quality: 100, srcSetBreakpoints: [40, 80, 120]) {
-                      ...GatsbyImageSharpFluid
-                    }
-                  }
-                }
-              }
-            }
-          }
+  }
+  allMarkdownRemark(
+    sort: {fields: [frontmatter___date], order: DESC}
+    filter: {frontmatter: {draft: {ne: true}}}
+    limit: $limit
+    skip: $skip
+  ) {
+    edges {
+      node {
+        timeToRead
+        frontmatter {
+          title
+          date
+          tags
+          draft
           excerpt
-          fields {
-            layout
-            slug
+          image {
+            childImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH)
+            }
           }
+          author {
+            id
+            name
+            bio
+            avatar {
+              children {
+                ... on ImageSharp {
+                  gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
+                }
+              }
+            }
+          }
+        }
+        excerpt
+        fields {
+          layout
+          slug
         }
       }
     }
   }
+}
 `;
 
 const HomePosts = css`

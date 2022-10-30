@@ -6,11 +6,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 import { colors } from '../../styles/colors';
-import { SocialLink, SocialLinkFb } from '../../styles/shared';
+import { SocialLink } from '../../styles/shared';
 import config from '../../website-config';
+import { Facebook } from '../icons/facebook';
 import GitHub from '../icons/github';
 import LinkedIn from '../icons/linkedin';
-import { Facebook } from '../icons/facebook';
 import { Twitter } from '../icons/twitter';
 import { SubscribeModal } from '../subscribe/SubscribeModal';
 import { SiteNavLogo } from './SiteNavLogo';

@@ -47,68 +47,55 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  const result = await graphql(`
-    {
-      allMarkdownRemark(
-        limit: 2000
-        sort: { fields: [frontmatter___date], order: ASC }
-        filter: { frontmatter: { draft: { ne: true } } }
-      ) {
-        edges {
-          node {
-            excerpt(format: PLAIN)
-            timeToRead
-            frontmatter {
-              title
-              tags
-              date
-              draft
-              excerpt
-              image {
-                childImageSharp {
-                  fluid(maxWidth: 3720) {
-                    aspectRatio
-                    base64
-                    sizes
-                    src
-                    srcSet
-                  }
-                }
-              }
-              author {
-                name
-                bio
-                avatar {
-                  children {
-                    ... on ImageSharp {
-                      fluid(quality: 100) {
-                        aspectRatio
-                        base64
-                        sizes
-                        src
-                        srcSet
-                      }
-                    }
-                  }
-                }
-              }
+  const result = await graphql(`{
+  allMarkdownRemark(
+    limit: 2000
+    sort: {fields: [frontmatter___date], order: ASC}
+    filter: {frontmatter: {draft: {ne: true}}}
+  ) {
+    edges {
+      node {
+        excerpt(format: PLAIN)
+        timeToRead
+        frontmatter {
+          title
+          tags
+          date
+          draft
+          excerpt
+          image {
+            childImageSharp {
+              gatsbyImageData(placeholder: BLURRED, layout: FULL_WIDTH)
             }
-            fields {
-              layout
-              slug
+          }
+          author {
+            name
+            bio
+            avatar {
+              children {
+                ... on ImageSharp {
+                  gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
+                }
+              }
             }
           }
         }
-      }
-      allAuthorYaml {
-        edges {
-          node {
-            name
-          }
+        fields {
+          layout
+          slug
         }
       }
     }
-  `);
+  }
+  allAuthorYaml {
+    edges {
+      node {
+        name
+      }
+    }
+  }
+}
+`);
 
   if (result.errors) {
     console.error(result.errors);
