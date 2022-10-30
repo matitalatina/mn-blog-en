@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands, @typescript-eslint/no-var-requires */
 const path = require('path');
 const _ = require('lodash');
-const readingTime = require(`reading-time`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -41,12 +40,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         name: 'primaryTag',
         value: primaryTag || '',
       });
-
-      createNodeField({
-        node,
-        name: `timeToRead`,
-        value: readingTime(node.internal.content).minutes,
-      })
     }
   }
 };
@@ -64,6 +57,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             excerpt(format: PLAIN)
+            timeToRead
             frontmatter {
               title
               tags
@@ -102,7 +96,6 @@ exports.createPages = async ({ graphql, actions }) => {
             fields {
               layout
               slug
-              timeToRead
             }
           }
         }
