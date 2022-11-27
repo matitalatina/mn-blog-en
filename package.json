@@ -20,7 +20,7 @@
     "@emotion/styled": "^11.10.4",
     "cssnano": "^5.1.13",
     "date-fns": "^2.29.3",
-    "gatsby": "^4.24.4",
+    "gatsby": "^5.2.0",
     "gatsby-plugin-canonical-urls": "^4.24.0",
     "gatsby-plugin-emotion": "^7.24.0",
     "gatsby-plugin-feed": "^4.24.0",
