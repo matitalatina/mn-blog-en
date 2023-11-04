@@ -96,10 +96,10 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
                   <Link to="/">Home</Link>
                 </li>
                 <li role="menuitem">
-                  <a href="https://slides.mattianatali.dev" target="_blank">Slides</a>
+                  <a href="https://slides.mattianatali.dev" target="_blank" rel="noreferrer">Slides</a>
                 </li>
                 <li role="menuitem">
-                  <a href="https://www.mattianatali.it" target="_blank">Italiano</a>
+                  <a href="https://www.mattianatali.it" target="_blank" rel="noreferrer">Italiano</a>
                 </li>
               </ul>
               {isPost && (
