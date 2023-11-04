@@ -69,8 +69,6 @@ const TwitterIcon = createIcon({
   path: 'm 40.26875,19 h 4.4125 L 35.04375,30.0125 46.38125,45 h -8.875 L 30.55,35.9125 22.6,45 H 18.18125 L 28.4875,33.21875 17.61875,19 h 9.1 L 33,27.30625 Z m -1.55,23.3625 H 41.1625 L 25.3875,21.5 h -2.625 z',
 });
 
-export default TwitterIcon;
-
 export const ShareButtons: React.FC<ShareButtonsProps> = ({ title, subject, url, twitterAuthor, tags }) => {
   const iconSize = 40;
   return (
