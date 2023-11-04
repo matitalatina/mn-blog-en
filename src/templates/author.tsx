@@ -205,69 +205,67 @@ const Author = ({ data, location }: AuthorTemplateProps) => {
   );
 };
 
-export const pageQuery = graphql`
-  query ($author: String) {
-    authorYaml(name: { eq: $author }) {
-      id
-      name
-      website
-      twitter
-      bio
-      facebook
-      location
-      profile_image {
-        childImageSharp {
-          gatsbyImageData(layout: FULL_WIDTH)
-        }
-      }
-      avatar {
-        childImageSharp {
-          gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
-        }
+export const pageQuery = graphql`query ($author: String) {
+  authorYaml(name: {eq: $author}) {
+    id
+    name
+    website
+    twitter
+    bio
+    facebook
+    location
+    profile_image {
+      childImageSharp {
+        gatsbyImageData(layout: FULL_WIDTH)
       }
     }
-    allMarkdownRemark(
-      filter: { frontmatter: { draft: { ne: true } } }
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: 2000
-    ) {
-      edges {
-        node {
+    avatar {
+      childImageSharp {
+        gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
+      }
+    }
+  }
+  allMarkdownRemark(
+    filter: {frontmatter: {draft: {ne: true}}}
+    sort: {frontmatter: {date: DESC}}
+    limit: 2000
+  ) {
+    edges {
+      node {
+        excerpt
+        timeToRead
+        frontmatter {
+          title
           excerpt
-          timeToRead
-          frontmatter {
-            title
-            excerpt
-            tags
-            date
-            draft
-            image {
-              childImageSharp {
-                gatsbyImageData(layout: FULL_WIDTH)
-              }
+          tags
+          date
+          draft
+          image {
+            childImageSharp {
+              gatsbyImageData(layout: FULL_WIDTH)
             }
-            author {
-              id
-              name
-              bio
-              avatar {
-                children {
-                  ... on ImageSharp {
-                    gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
-                  }
+          }
+          author {
+            id
+            name
+            bio
+            avatar {
+              children {
+                ... on ImageSharp {
+                  gatsbyImageData(layout: FULL_WIDTH, breakpoints: [40, 80, 120])
                 }
               }
             }
           }
-          fields {
-            layout
-            slug
-          }
+        }
+        fields {
+          layout
+          slug
         }
       }
     }
   }
-`;
+}`;
 
 const HiddenMobile = css`
   @media (max-width: 500px) {

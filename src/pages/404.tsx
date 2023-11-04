@@ -59,7 +59,7 @@ const NotFoundPage: React.FC<NotFoundTemplateProps> = props => {
 };
 
 export const pageQuery = graphql`{
-  allMarkdownRemark(limit: 3, sort: {fields: [frontmatter___date], order: DESC}) {
+  allMarkdownRemark(limit: 3, sort: {frontmatter: {date: DESC}}) {
     edges {
       node {
         timeToRead
@@ -93,8 +93,7 @@ export const pageQuery = graphql`{
       }
     }
   }
-}
-`;
+}`;
 
 const ErrorContent = css`
   padding: 14vw 4vw 6vw;

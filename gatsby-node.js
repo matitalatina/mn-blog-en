@@ -50,7 +50,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(`{
   allMarkdownRemark(
     limit: 2000
-    sort: {fields: [frontmatter___date], order: ASC}
+    sort: {frontmatter: {date: ASC}}
     filter: {frontmatter: {draft: {ne: true}}}
   ) {
     edges {
@@ -94,8 +94,7 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   }
-}
-`);
+}`);
 
   if (result.errors) {
     console.error(result.errors);

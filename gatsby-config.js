@@ -91,26 +91,26 @@ module.exports = {
               guid: `${site.siteMetadata.siteUrl}${edge.node.fields.slug}`,
               custom_elements: [{ 'content:encoded': edge.node.html }],
             })),
-            query: `
-              {
-                allMarkdownRemark(
-                  filter: { frontmatter: { draft: { ne: true } } }
-                  sort: { order: DESC, fields: [frontmatter___date] },
-                ) {
-                  edges {
-                    node {
-                      excerpt
-                      html
-                      fields { slug }
-                      frontmatter {
-                        title
-                        date
-                      }
-                    }
-                  }
-                }
-              }
-            `,
+            query: `{
+  allMarkdownRemark(
+    filter: {frontmatter: {draft: {ne: true}}}
+    sort: {frontmatter: {date: DESC}}
+  ) {
+    edges {
+      node {
+        excerpt
+        html
+        fields {
+          slug
+        }
+        frontmatter {
+          title
+          date
+        }
+      }
+    }
+  }
+}`,
             output: '/rss.xml',
             title: 'Mattia Natali\'s Blog',
             match: '^/blog/',

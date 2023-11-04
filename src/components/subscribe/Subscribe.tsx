@@ -8,7 +8,7 @@ export interface SubscribeProps {
   title: string;
 }
 
-export const Subscribe: React.FC<SubscribeProps> = props => {
+export const Subscribe: React.FC<SubscribeProps> = () => {
   return (
     <SubscribeFormSection>
       <SubscribeFormTitle>Keeping up to date is essential</SubscribeFormTitle>
