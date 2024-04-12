@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookMessengerIcon, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, TelegramIcon, TelegramShareButton, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
-import FacebookShareButton from 'react-share/lib/FacebookShareButton';
+import { FacebookShareButton } from 'react-share';
 
 type Props = Omit<React.SVGProps<SVGSVGElement>, 'width' | 'height'> & {
   bgStyle?: React.CSSProperties;
