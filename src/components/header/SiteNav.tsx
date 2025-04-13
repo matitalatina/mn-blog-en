@@ -18,7 +18,9 @@ import { SiteNavLogo } from './SiteNavLogo';
 interface SiteNavProps {
   isHome?: boolean;
   isPost?: boolean;
-  post?: any;
+  post?: {
+    title: string;
+  };
 }
 
 interface SiteNavState {
@@ -82,7 +84,7 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
   };
 
   render() {
-    const { isHome = false, isPost = false, post = {} } = this.props;
+    const { isHome = false, isPost = false, post = { title: '' } } = this.props;
     return (
       <>
         {config.showSubscribe && <SubscribeModal ref={this.subscribe} />}
@@ -94,6 +96,9 @@ class SiteNav extends React.Component<SiteNavProps, SiteNavState> {
                 {/* TODO: mark current nav item - add class nav-current */}
                 <li role="menuitem">
                   <Link to="/">Home</Link>
+                </li>
+                <li role="menuitem">
+                  <Link to="/projects">Projects</Link>
                 </li>
                 <li role="menuitem">
                   <a href="https://slides.mattianatali.dev" target="_blank" rel="noreferrer">Slides</a>
