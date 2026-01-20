@@ -1,26 +1,16 @@
 module.exports = {
-    "env": {
-        "es2021": true,
-        "node": true
-    },
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "react-app"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
     "rules": {
-      "react/no-unknown-property": ["error", { "ignore": ["css"] }]
+        "react/no-unknown-property": ["error", { "ignore": ["css"] }],
+        "@typescript-eslint/no-require-imports": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "react/no-unescaped-entities": "error"
     }
 };
