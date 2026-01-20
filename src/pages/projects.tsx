@@ -51,7 +51,7 @@ const ProjectContent = styled.div`
   gap: 2rem;
   align-items: flex-start;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1170px) {
     flex-direction: column;
   }
 `;
@@ -63,7 +63,7 @@ const ProjectImage = styled.img`
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
-  @media (max-width: 800px) {
+  @media (max-width: 1170px) {
     width: 180px;
     margin-bottom: 1rem;
   }
@@ -300,7 +300,7 @@ const Projects: React.FC = () => (
                   <ProjectContent>
                     <ProjectImage src={pricemetImage} alt="PriceMet" />
                     <ProjectInfo>
-                      <ProjectTitle>PriceMet</ProjectTitle>
+                      <ProjectTitle>PriceMet (Discontinued)</ProjectTitle>
                       <ProjectDescription>
                         PriceMet is a mobile application that notifies users when prices on Amazon
                         drop. This app helps users save money by monitoring product prices and
@@ -313,20 +313,6 @@ const Projects: React.FC = () => (
                           rel="noopener noreferrer"
                         >
                           Visit Website
-                        </ProjectLink>
-                        <ProjectLink
-                          href="https://play.google.com/store/apps/details?id=com.mattianatali.pricemet&hl=it&gl=US"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          View on Google Play
-                        </ProjectLink>
-                        <ProjectLink
-                          href="https://apps.apple.com/us/app/pricemet-notifica-prezzi/id6443516529"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          View on App Store
                         </ProjectLink>
                       </ProjectLinksContainer>
                     </ProjectInfo>
