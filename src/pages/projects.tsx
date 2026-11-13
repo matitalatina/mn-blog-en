@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
@@ -7,6 +6,7 @@ import styled from '@emotion/styled';
 import { Footer } from '../components/Footer';
 import SiteNav from '../components/header/SiteNav';
 import { PostFullContent } from '../components/PostContent';
+import { SiteHead } from '../components/SiteHead';
 import { Wrapper } from '../components/Wrapper';
 import IndexLayout from '../layouts';
 import {
@@ -142,11 +142,14 @@ const Divider = styled.hr`
   }
 `;
 
+export const Head = () => (
+  <SiteHead>
+    <title>My Projects - Mattia Natali</title>
+  </SiteHead>
+);
+
 const Projects: React.FC = () => (
   <IndexLayout>
-    <Helmet>
-      <title>My Projects - Mattia Natali</title>
-    </Helmet>
     <Wrapper css={PageTemplate}>
       <header className="site-archive-header no-image" css={[SiteHeader, SiteArchiveHeader]}>
         <div css={[outer, SiteNavMain]}>

@@ -1,3 +1,4 @@
+import type { Root } from 'hast';
 import { lighten } from 'polished';
 import React from 'react';
 import styled from '@emotion/styled';
@@ -11,13 +12,18 @@ const renderAst = new RehypeReact({
   components: {},
 }).Compiler;
 
-const Ast = ({ ast, ...props }: any) => {
+interface AstProps {
+  ast: Root & { properties?: Record<string, unknown> };
+  [key: string]: unknown;
+}
+
+const Ast = ({ ast, ...props }: AstProps) => {
   ast.properties = props;
   return renderAst(ast);
 };
 
 export interface PostContentProps {
-  htmlAst: any;
+  htmlAst: Root;
 }
 
 const PostContent: React.FC<PostContentProps> = ({ htmlAst }) => {

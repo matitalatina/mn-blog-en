@@ -14,11 +14,11 @@ declare module '*.module.css' {
 
 declare module 'rehype-react' {
   interface RehypeOptions {
-    createElement: any;
-    components: any;
+    createElement: typeof import('react').createElement;
+    components: Record<string, unknown>;
   }
   class RehypeReact {
-    Compiler: any;
+    Compiler: (ast: import('hast').Root) => import('react').ReactNode;
     constructor(options: RehypeOptions);
   }
   export default RehypeReact;

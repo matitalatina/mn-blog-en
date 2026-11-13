@@ -61,7 +61,7 @@ const config: WebsiteConfig = {
   description: '',
   coverImage: 'img/blog-cover.jpg',
   logo: 'img/ghost-logo.png',
-  lang: 'it',
+  lang: 'en',
   siteUrl: 'https://blog.mattianatali.dev',
   facebook: 'https://www.facebook.com/mattianatali.dev/',
   twitter: 'https://twitter.com/matitalatina',

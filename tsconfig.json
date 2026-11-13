@@ -2,8 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "esnext",
-    "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
+    "jsx": "preserve",
     "lib": ["dom", "esnext"],
     "strict": true,
     "noEmit": true,

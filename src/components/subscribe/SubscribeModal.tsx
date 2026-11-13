@@ -10,7 +10,7 @@ interface SubscribeState {
   isOpen: boolean;
 }
 
-export class SubscribeModal extends React.Component<any, SubscribeState> {
+export class SubscribeModal extends React.Component<Record<string, unknown>, SubscribeState> {
   state = { isOpen: false };
 
   componentWillUnmount() {

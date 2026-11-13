@@ -7,8 +7,8 @@ import { css } from '@emotion/react';
 
 import { PostFullHeader, PostFullTitle, NoImage, PostFull } from '../../templates/post';
 import { PostFullContent } from '../../components/PostContent';
+import { SiteHead } from '../../components/SiteHead';
 import { Footer } from '../../components/Footer';
-import Helmet from 'react-helmet';
 
 const PageTemplate = css`
   .site-main {
@@ -16,11 +16,14 @@ const PageTemplate = css`
   }
 `;
 
+export const Head = () => (
+  <SiteHead>
+    <title>Metext - Privacy Policy</title>
+  </SiteHead>
+);
+
 const About: React.FC = () => (
   <IndexLayout>
-    <Helmet>
-      <title>Metext - Privacy Policy</title>
-    </Helmet>
     <Wrapper css={PageTemplate}>
       <header className="site-archive-header no-image" css={[SiteHeader, SiteArchiveHeader]}>
         <div css={[outer, SiteNavMain]}>
