@@ -62,7 +62,12 @@ module.exports = {
       },
     },
     'gatsby-plugin-typescript',
-    'gatsby-plugin-emotion',
+    {
+      resolve: 'gatsby-plugin-emotion',
+      options: {
+        sourceMap: false,
+      },
+    },
     'gatsby-transformer-sharp',
     'gatsby-plugin-image',
     'gatsby-transformer-yaml',
