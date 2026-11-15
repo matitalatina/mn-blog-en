@@ -1,0 +1,68 @@
+# Redirect the old English blog to the merged bilingual site.
+# All rules are forced because the old static pages still exist in this deploy.
+
+/  https://www.mattianatali.it/en/  301!
+
+# Feeds and sitemap
+/rss.xml  https://www.mattianatali.it/en/rss.xml  301!
+/rss.xml/  https://www.mattianatali.it/en/rss.xml  301!
+/sitemap-index.xml  https://www.mattianatali.it/sitemap-index.xml  301!
+/sitemap-0.xml  https://www.mattianatali.it/sitemap-0.xml  301!
+
+# Privacy pages stay at the root paths on the merged site
+/gaslow/privacy-policy  https://www.mattianatali.it/gaslow/privacy-policy/  301!
+/gaslow/privacy-policy/  https://www.mattianatali.it/gaslow/privacy-policy/  301!
+/metext/privacy-policy  https://www.mattianatali.it/metext/privacy-policy/  301!
+/metext/privacy-policy/  https://www.mattianatali.it/metext/privacy-policy/  301!
+/randommet/privacy-policy  https://www.mattianatali.it/randommet/privacy-policy/  301!
+/randommet/privacy-policy/  https://www.mattianatali.it/randommet/privacy-policy/  301!
+
+# Posts
+/11-lessons-i-learned-working-in-startups  https://www.mattianatali.it/en/11-lessons-i-learned-working-in-startups/  301!
+/11-lessons-i-learned-working-in-startups/  https://www.mattianatali.it/en/11-lessons-i-learned-working-in-startups/  301!
+/air-quality-sensor-raspberry-pi  https://www.mattianatali.it/en/air-quality-sensor-raspberry-pi/  301!
+/air-quality-sensor-raspberry-pi/  https://www.mattianatali.it/en/air-quality-sensor-raspberry-pi/  301!
+/how-to-automate-with-ansible  https://www.mattianatali.it/en/how-to-automate-with-ansible/  301!
+/how-to-automate-with-ansible/  https://www.mattianatali.it/en/how-to-automate-with-ansible/  301!
+/how-to-be-productive-with-the-terminal  https://www.mattianatali.it/en/how-to-be-productive-with-the-terminal/  301!
+/how-to-be-productive-with-the-terminal/  https://www.mattianatali.it/en/how-to-be-productive-with-the-terminal/  301!
+/how-to-create-a-ci-cd-pipeline  https://www.mattianatali.it/en/how-to-create-a-ci-cd-pipeline/  301!
+/how-to-create-a-ci-cd-pipeline/  https://www.mattianatali.it/en/how-to-create-a-ci-cd-pipeline/  301!
+/how-to-develop-in-test-driven-development-tdd-from-scratch  https://www.mattianatali.it/en/how-to-develop-in-test-driven-development-tdd-from-scratch/  301!
+/how-to-develop-in-test-driven-development-tdd-from-scratch/  https://www.mattianatali.it/en/how-to-develop-in-test-driven-development-tdd-from-scratch/  301!
+/how-to-develop-rest-apis-in-tdd-with-spring-boot  https://www.mattianatali.it/en/how-to-develop-rest-apis-in-tdd-with-spring-boot/  301!
+/how-to-develop-rest-apis-in-tdd-with-spring-boot/  https://www.mattianatali.it/en/how-to-develop-rest-apis-in-tdd-with-spring-boot/  301!
+/how-to-download-songs-from-soundcloud-in-a-few-clicks  https://www.mattianatali.it/en/how-to-download-songs-from-soundcloud-in-a-few-clicks/  301!
+/how-to-download-songs-from-soundcloud-in-a-few-clicks/  https://www.mattianatali.it/en/how-to-download-songs-from-soundcloud-in-a-few-clicks/  301!
+/how-to-download-youtube-videos-with-the-terminal  https://www.mattianatali.it/en/how-to-download-youtube-videos-with-the-terminal/  301!
+/how-to-download-youtube-videos-with-the-terminal/  https://www.mattianatali.it/en/how-to-download-youtube-videos-with-the-terminal/  301!
+/how-to-fix-software-regressions-using-git-bisect  https://www.mattianatali.it/en/how-to-fix-software-regressions-using-git-bisect/  301!
+/how-to-fix-software-regressions-using-git-bisect/  https://www.mattianatali.it/en/how-to-fix-software-regressions-using-git-bisect/  301!
+/how-to-improve-your-photos-with-nik-collection  https://www.mattianatali.it/en/how-to-improve-your-photos-with-nik-collection/  301!
+/how-to-improve-your-photos-with-nik-collection/  https://www.mattianatali.it/en/how-to-improve-your-photos-with-nik-collection/  301!
+/how-to-play-videogames-from-two-or-three-eras-ago  https://www.mattianatali.it/en/how-to-play-videogames-from-two-or-three-eras-ago/  301!
+/how-to-play-videogames-from-two-or-three-eras-ago/  https://www.mattianatali.it/en/how-to-play-videogames-from-two-or-three-eras-ago/  301!
+/how-to-remove-viruses-from-your-computer  https://www.mattianatali.it/en/how-to-remove-viruses-from-your-computer/  301!
+/how-to-remove-viruses-from-your-computer/  https://www.mattianatali.it/en/how-to-remove-viruses-from-your-computer/  301!
+/jwt-authentication-angular  https://www.mattianatali.it/en/jwt-authentication-angular/  301!
+/jwt-authentication-angular/  https://www.mattianatali.it/en/jwt-authentication-angular/  301!
+/store-secrets-in-public-repositories  https://www.mattianatali.it/en/store-secrets-in-public-repositories/  301!
+/store-secrets-in-public-repositories/  https://www.mattianatali.it/en/store-secrets-in-public-repositories/  301!
+/things-i-wish-i-knew-before-becoming-engineering-manager  https://www.mattianatali.it/en/things-i-wish-i-knew-before-becoming-engineering-manager/  301!
+/things-i-wish-i-knew-before-becoming-engineering-manager/  https://www.mattianatali.it/en/things-i-wish-i-knew-before-becoming-engineering-manager/  301!
+/welcome  https://www.mattianatali.it/en/welcome/  301!
+/welcome/  https://www.mattianatali.it/en/welcome/  301!
+/welcome-2016  https://www.mattianatali.it/en/welcome-2016/  301!
+/welcome-2016/  https://www.mattianatali.it/en/welcome-2016/  301!
+
+# Sections
+/projects  https://www.mattianatali.it/en/projects/  301!
+/projects/  https://www.mattianatali.it/en/projects/  301!
+/about  https://www.mattianatali.it/en/about/  301!
+/about/  https://www.mattianatali.it/en/about/  301!
+
+# Tags and author
+/tags/:tag  https://www.mattianatali.it/en/tags/:tag/  301!
+/tags/:tag/  https://www.mattianatali.it/en/tags/:tag/  301!
+/author/:author  https://www.mattianatali.it/en/author/:author/  301!
+/author/:author/  https://www.mattianatali.it/en/author/:author/  301!
